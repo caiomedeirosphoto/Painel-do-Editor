@@ -333,6 +333,7 @@
     transition:border-color var(--fast) var(--ease), color var(--fast) var(--ease), background var(--fast) var(--ease);
   }
   .folga-btn:hover{border-color:var(--soft);color:var(--ink)}
+  .folga-btn:disabled{cursor:default}
   .folga-marca{
     width:17px;height:17px;border-radius:6px;border:2px solid var(--line);flex:none;
     display:flex;align-items:center;justify-content:center;
@@ -892,6 +893,11 @@
   .stat.accent-dem b{color:var(--plum)}
 
   .two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+  .eq-topo{display:flex;align-items:flex-start;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;margin:0 0 18px}
+  .eq-topo .filters-title{margin:0}
+  .eq-topo .cap{margin:6px 0 0;line-height:1.5}
+  .eq-pill{display:inline-flex;align-items:center;padding:8px 14px;border-radius:999px;background:var(--orange-wash);border:1px solid var(--orange-border);color:var(--orange-deep);font-size:13.5px;font-weight:700;white-space:nowrap}
+  .eq-aviso{margin:0 0 16px;padding:14px 18px;border-radius:var(--radius);background:var(--sun-wash);border:1px solid var(--sun-border);color:var(--sun-text);font-size:14px;line-height:1.5}
   .box{
     background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
     padding:24px;box-shadow:var(--shadow);
@@ -1326,6 +1332,7 @@
     <button role="tab" id="tab-arquivados" aria-controls="panel-arquivados" aria-selected="false" tabindex="-1" data-tab="arquivados">Arquivados</button>
     <button role="tab" id="tab-excluidos" aria-controls="panel-excluidos" aria-selected="false" tabindex="-1" data-tab="excluidos">Excluídos</button>
     <button role="tab" id="tab-resumo" aria-controls="panel-resumo" aria-selected="false" tabindex="-1" data-tab="resumo">Resumo</button>
+    <button role="tab" id="tab-equipe" aria-controls="panel-equipe" aria-selected="false" tabindex="-1" data-tab="equipe">Equipe</button>
   </nav>
 
   <!-- HOJE -->
@@ -1653,14 +1660,47 @@
     <div id="lixoList"></div>
   </section>
 
+  <!-- EQUIPE -->
+  <section class="panel" id="panel-equipe" role="tabpanel" tabindex="-1" aria-labelledby="tab-equipe">
+    <div class="eq-topo">
+      <div>
+        <h2 class="filters-title">Resumo da equipe</h2>
+        <p class="cap">Soma de todos os editores em <span id="eqAno">2026</span>. O individual fica no Resumo de cada conta.</p>
+      </div>
+      <span class="eq-pill" id="eqPill">Carregando</span>
+    </div>
+    <div class="eq-aviso" id="eqAviso" hidden></div>
+    <div class="stats">
+      <div class="stat accent"><b id="eTotVid">0</b><span>Vídeos da equipe</span></div>
+      <div class="stat accent-alt"><b id="eTotAlt">0</b><span>Alterações da equipe</span></div>
+      <div class="stat accent-dem"><b id="eTotDem">0</b><span id="eDemLabel">Demandas da equipe</span></div>
+      <div class="stat"><b id="eMediaEd">0</b><span>Média de vídeos por editor em cada dia útil</span></div>
+      <div class="stat"><b id="eMediaDia">0</b><span>Média de vídeos da equipe por dia útil</span></div>
+    </div>
+    <div class="two">
+      <div class="box">
+        <h3>Clientes com mais entregas</h3>
+        <ul class="rank" id="eqClientes"></ul>
+      </div>
+      <div class="box">
+        <h3>Melhores dias da equipe</h3>
+        <ul class="rank" id="eqDias"></ul>
+      </div>
+    </div>
+    <div class="box" style="margin-top:14px">
+      <h3>Mês a mês da equipe</h3>
+      <ul class="rank" id="eqMeses"></ul>
+    </div>
+  </section>
+
   <!-- RESUMO -->
   <section class="panel" id="panel-resumo" role="tabpanel" tabindex="-1" aria-labelledby="tab-resumo">
     <div class="stats">
       <div class="stat accent"><b id="sTotVid">0</b><span>Vídeos no total</span></div>
       <div class="stat accent-alt"><b id="sTotAlt">0</b><span>Alterações no total</span></div>
       <div class="stat accent-dem"><b id="sTotDem">0</b><span id="sDemLabel">Demandas no total</span></div>
-      <div class="stat"><b id="sMedia">0</b><span>Média de vídeos por dia trabalhado</span></div>
-      <div class="stat"><b id="sDias">0</b><span>Dias com registro</span></div>
+      <div class="stat"><b id="sMedia">0</b><span>Média de vídeos por dia útil trabalhado</span></div>
+      <div class="stat"><b id="sDias">0</b><span>Dias úteis trabalhados</span></div>
     </div>
     <div class="two">
       <div class="box">
@@ -2017,7 +2057,7 @@
   var expandedArq = {};   // dias abertos nos arquivados
   var arqFiltro = { period:"tudo", de:"", ate:"", kind:"todos", nome:"", cliente:"" };
   var calMes = new Date().getMonth();
-  var calAberto = {};   // dias com todos os cards à mostra
+  var calAberto = {};   // semanas com todos os cards à mostra (chave: domingo da semana)
   var animarBarras = true;
   var dragReg = null;
   var dragUltimo = null;
@@ -2404,8 +2444,11 @@
   function ativo(iso){ return { videos: vis(day(iso).videos), alteracoes: vis(day(iso).alteracoes) }; }
   function noAno(iso){ return iso.slice(0,4) === String(anoAtivo); }
   function notaDe(iso){ var d = data[iso]; return (d && typeof d.nota === "string") ? d.nota : ""; }
-  function folgaDe(iso){ return !!(data[iso] && data[iso].folga); }
-  function diaMarcado(iso){ return !!notaDe(iso) || folgaDe(iso); }
+  // sábado e domingo são sempre folga e ficam fora das médias
+  function fimDeSemana(iso){ var w = new Date(iso + "T12:00:00").getDay(); return w === 0 || w === 6; }
+  function folgaMarcada(iso){ return !!(data[iso] && data[iso].folga); }
+  function folgaDe(iso){ return fimDeSemana(iso) || folgaMarcada(iso); }
+  function diaMarcado(iso){ return !!notaDe(iso) || folgaMarcada(iso); }
   function setNota(iso, texto){
     var t = (texto || "").trim().slice(0, 90);
     var d = day(iso);
@@ -2658,7 +2701,8 @@
     calendario: renderCalendario,
     arquivados: renderArquivados,
     excluidos: renderLixo,
-    resumo: renderResumo
+    resumo: renderResumo,
+    equipe: renderEquipe
   };
   var sujo = {};   // abas que precisam ser refeitas quando forem abertas
 
@@ -2818,7 +2862,8 @@
     document.getElementById("totemFolga").hidden = !folga;
     var btnF = document.getElementById("btnFolga");
     btnF.setAttribute("aria-pressed", folga ? "true" : "false");
-    document.getElementById("btnFolgaTexto").textContent = folga ? "Dia de folga" : "Marcar como folga";
+    btnF.disabled = fimDeSemana(activeDate);
+    document.getElementById("btnFolgaTexto").textContent = fimDeSemana(activeDate) ? "Fim de semana, folga" : (folga ? "Dia de folga" : "Marcar como folga");
     var campoNota = document.getElementById("inNota");
     if(document.activeElement !== campoNota) campoNota.value = notaDe(activeDate);
     contarNota();
@@ -2828,7 +2873,7 @@
     if(!d.videos.length && !d.alteracoes.length){
       box.innerHTML = '<div class="group"><div class="empty">' +
         (folgaDe(activeDate)
-          ? "Dia marcado como folga. Se registrar algo, aparece aqui do mesmo jeito."
+          ? (fimDeSemana(activeDate) ? "Fim de semana é folga. Se registrar algo, aparece aqui do mesmo jeito, mas não entra na média." : "Dia marcado como folga. Se registrar algo, aparece aqui do mesmo jeito.")
           : "Nada registrado neste dia ainda. Escreva o nome do vídeo acima para começar.") +
         '</div></div>';
       return;
@@ -3492,7 +3537,8 @@
 
       if(dentro){
         var lista = mapa[iso] || [];
-        var limite = calAberto[iso] ? lista.length : 3;
+        var semana = toISO(addDays(d, -d.getDay()));
+        var limite = calAberto[semana] ? lista.length : 3;
         lista.slice(0, limite).forEach(function(reg){
           var card = document.createElement("button");
           card.type = "button";
@@ -3538,16 +3584,16 @@
           mais.textContent = "+ " + (lista.length - limite) + " mais";
           (function(chave){
             mais.addEventListener("click", function(){ calAberto[chave] = true; renderCalendario(); });
-          })(iso);
+          })(semana);
           cel.appendChild(mais);
-        } else if(calAberto[iso] && lista.length > 3){
+        } else if(calAberto[semana] && lista.length > 3){
           var menos = document.createElement("button");
           menos.type = "button";
           menos.className = "calmais";
           menos.textContent = "mostrar menos";
           (function(chave){
             menos.addEventListener("click", function(){ delete calAberto[chave]; renderCalendario(); });
-          })(iso);
+          })(semana);
           cel.appendChild(menos);
         }
       }
@@ -3753,7 +3799,10 @@
     document.getElementById("sDemLabel").textContent = volume
       ? "Demandas, " + Math.round(totD / volume * 100) + "% do que você produziu"
       : "Demandas no total";
-    document.getElementById("sMedia").textContent = all.length ? (totV/all.length).toFixed(1).replace(".",",") : "0";
+    var uteis = all.filter(function(iso){ return !folgaDe(iso); }), vUteis = 0;
+    uteis.forEach(function(iso){ vUteis += ativo(iso).videos.length; });
+    document.getElementById("sMedia").textContent = uteis.length ? (vUteis/uteis.length).toFixed(1).replace(".",",") : "0";
+    document.getElementById("sDias").textContent = uteis.length;
 
     rankList("rankClientes", Object.keys(porCliente).map(function(k){ return { label:k, n:porCliente[k] }; })
       .sort(function(a,b){ return b.n-a.n; }).slice(0,6), "Marque o cliente ao adicionar para ver este ranking.");
@@ -3763,6 +3812,52 @@
 
     rankList("rankMeses", Object.keys(porMes).sort().reverse().slice(0,6)
       .map(function(m){ return { label: monthName(m), n: porMes[m] }; }), "Sem registros ainda.");
+  }
+
+  /* ---------- equipe: soma de todas as contas, sem mostrar ninguém em separado ---------- */
+  function renderEquipe(){
+    var ano = String(anoAtivo);
+    document.getElementById("eqAno").textContent = ano;
+    var aviso = document.getElementById("eqAviso"), pill = document.getElementById("eqPill");
+    var eq = (nv && nv.equipe) || null;
+    var msg = "";
+    if(!NUVEM) msg = "O resumo da equipe aparece no app instalado, com login.";
+    else if(nv.equipeErro) msg = "Não consegui ler o resumo da equipe. Confira se as regras novas do Firestore foram publicadas no Firebase.";
+    aviso.hidden = !msg; aviso.textContent = msg;
+
+    var totV = 0, totA = 0, totD = 0, edDias = 0, vUteis = 0, editores = 0;
+    var porCliente = {}, porDia = {}, porMes = {}, diasUteisEq = {};
+    Object.keys(eq || {}).forEach(function(uid){
+      var dd = (eq[uid] && eq[uid].dias) || {}, temAlgo = false;
+      Object.keys(dd).forEach(function(iso){
+        if(iso.slice(0,4) !== ano) return;
+        var r = dd[iso] || {}, v = r.v || 0, a = r.a || 0;
+        if(!v && !a) return;
+        temAlgo = true;
+        totV += v; totA += a; totD += r.d || 0;
+        porDia[iso] = (porDia[iso] || 0) + v + a;
+        porMes[iso.slice(0,7)] = (porMes[iso.slice(0,7)] || 0) + v + a;
+        if(!fimDeSemana(iso) && !r.f){ edDias++; vUteis += v; diasUteisEq[iso] = 1; }
+        Object.keys(r.c || {}).forEach(function(c){ porCliente[c] = (porCliente[c] || 0) + r.c[c]; });
+      });
+      if(temAlgo) editores++;
+    });
+    var nDiasUteis = Object.keys(diasUteisEq).length;
+    pill.textContent = eq ? editores + (editores === 1 ? " editor com registro" : " editores com registro") : (msg ? "Indisponível" : "Carregando");
+    document.getElementById("eTotVid").textContent = totV;
+    document.getElementById("eTotAlt").textContent = totA;
+    document.getElementById("eTotDem").textContent = totD;
+    document.getElementById("eDemLabel").textContent = (totV + totA)
+      ? "Demandas, " + Math.round(totD / (totV + totA) * 100) + "% do que a equipe produziu" : "Demandas da equipe";
+    document.getElementById("eMediaEd").textContent = edDias ? (vUteis / edDias).toFixed(1).replace(".", ",") : "0";
+    document.getElementById("eMediaDia").textContent = nDiasUteis ? (vUteis / nDiasUteis).toFixed(1).replace(".", ",") : "0";
+
+    rankList("eqClientes", Object.keys(porCliente).map(function(k){ return { label:k, n:porCliente[k] }; })
+      .sort(function(a,b){ return b.n - a.n; }).slice(0,8), "Sem entregas com cliente marcado ainda.");
+    rankList("eqDias", Object.keys(porDia).map(function(k){ return { label:longDate(k), n:porDia[k] }; })
+      .sort(function(a,b){ return b.n - a.n; }).slice(0,6), "Sem registros da equipe ainda.");
+    rankList("eqMeses", Object.keys(porMes).sort().reverse().map(function(m){ return { label:monthName(m), n:porMes[m] }; }),
+      "Sem registros da equipe ainda.");
   }
 
   function rankList(id, rows, emptyMsg){
@@ -4635,6 +4730,7 @@
   });
 
   document.getElementById("btnFolga").addEventListener("click", function(){
+    if(fimDeSemana(activeDate)) return;
     var agora = alternarFolga(activeDate);
     save();
     renderAll();
@@ -5509,10 +5605,49 @@
       nvAgendar("lixeira", "painel/lixeira", function(){ return { itens: JSON.parse(nv.lixJSON), atualizadoEm: nv.carimbos.lixeira }; });
     }
     nvGuardarCarimbos();
+    nvPublicarEquipe();
+  }
+  /* resumo da equipe: cada conta publica só números (sem nome, sem títulos) em equipe/{uid} */
+  function nvResumoEquipe(){
+    var dd = {};
+    Object.keys(data).forEach(function(iso){
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return;
+      var d = ativo(iso), itens = d.videos.concat(d.alteracoes);
+      if(!itens.length) return;
+      var r = { v:d.videos.length, a:d.alteracoes.length };
+      var dem = itens.filter(function(x){ return !!x.dem; }).length; if(dem) r.d = dem;
+      if(folgaMarcada(iso)) r.f = 1;
+      var c = {};
+      itens.forEach(function(x){ var n = x.ref ? (clientePadrao(x.ref) || String(x.ref).trim()) : ""; if(n) c[n] = (c[n] || 0) + 1; });
+      if(Object.keys(c).length) r.c = c;
+      dd[iso] = r;
+    });
+    return dd;
+  }
+  function nvPublicarEquipe(){
+    if(!nv.db || !nv.pronto || !window.__FB || !window.__FB.equipeSet) return;
+    clearTimeout(nv.eqTimer);
+    nv.eqTimer = setTimeout(function(){
+      if(!nv.db || !nv.pronto) return;
+      var dd = nvResumoEquipe(), j = JSON.stringify(dd);
+      if(j === nv.eqJSON) return;
+      nv.eqJSON = j;
+      Promise.resolve(window.__FB.equipeSet({ dias: dd, atualizadoEm: new Date().toISOString() })).catch(function(){ nv.eqJSON = null; });
+    }, 1500);
+  }
+  function nvOuvirEquipe(){
+    if(!window.__FB || !window.__FB.equipeOuvir) return;
+    nv.unsubs.push(window.__FB.equipeOuvir(function(mapa){
+      nv.equipe = mapa; nv.equipeErro = false;
+      if(tab === "equipe") renderEquipe(); else sujo.equipe = true;
+    }, function(){
+      nv.equipeErro = true;
+      if(tab === "equipe") renderEquipe(); else sujo.equipe = true;
+    }));
   }
   function nvGravarLocal(){ try{ store.set(KEY, JSON.stringify({ registros:data, lixeira:lixo, salvoEm:new Date().toISOString() })); }catch(e){} }
   function nvAplicouRemoto(){
-    nvGuardarCarimbos(); nvGravarLocal();
+    nvGuardarCarimbos(); nvGravarLocal(); nvPublicarEquipe();
     if(!document.querySelector(".modal:not([hidden])")) renderAll();
     nvStatus();
   }
@@ -5539,6 +5674,8 @@
     nvGuardarCarimbos(); nvGravarLocal(); renderAll();
     if(enviar) nuvemEnviar();
     nvStatus();
+    nvPublicarEquipe();
+    nvOuvirEquipe();
     nv.unsubs.push(db.collection("meses").onSnapshot(function(s){
       if(nv.db !== db || !nv.pronto || (s.metadata && s.metadata.hasPendingWrites)) return;
       var mudou = false;
@@ -5560,7 +5697,8 @@
   function nuvemDesligar(){
     nv.unsubs.splice(0).forEach(function(u){ try{ if(typeof u === "function") u(); }catch(e){} });
     Object.keys(nv.timers).forEach(function(k){ clearTimeout(nv.timers[k]); nv.timers[k] = null; });
-    nv.db = null; nv.pronto = false;
+    clearTimeout(nv.eqTimer);
+    nv.db = null; nv.pronto = false; nv.equipe = null; nv.eqJSON = null; nv.equipeErro = false;
   }
   function limparAparelho(){
     data = {}; lixo = []; nv.carimbos = {}; nv.mesJSON = {}; nv.lixJSON = null;
@@ -5758,6 +5896,8 @@ if(!window.__FB_TEST){
         try{ await F.setDoc(F.doc(db, 'users', u.uid, 'painel', 'perfil'), { nome, email: u.email || '', atualizadoEm: new Date().toISOString() }, { merge: true }); }catch(x){}
       },
       reset: e => AU.sendPasswordResetEmail(auth, e),
+      equipeSet: body => { const u = auth.currentUser; return u ? F.setDoc(F.doc(db, 'equipe', u.uid), body) : Promise.resolve(); },
+      equipeOuvir: (cb, err) => F.onSnapshot(F.collection(db, 'equipe'), q => { const m = {}; q.docs.forEach(d => { m[d.id] = d.data(); }); cb(m); }, err),
       signOut: () => AU.signOut(auth)
     };
     AU.onAuthStateChanged(auth, user => { window.__FB.user = user; avisar('auth', user); });
