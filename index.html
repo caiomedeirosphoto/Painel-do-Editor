@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Painel do Editor Mínimo</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2044%2044%22%3E%3Cdefs%3E%3CclipPath%20id%3D%22c%22%3E%3Crect%20x%3D%228.5%22%20y%3D%2210%22%20width%3D%2227%22%20height%3D%227.6%22%20rx%3D%222.2%22%2F%3E%3C%2FclipPath%3E%3C%2Fdefs%3E%3Crect%20width%3D%2244%22%20height%3D%2244%22%20rx%3D%2213.5%22%20fill%3D%22%23ff6a13%22%2F%3E%3Crect%20x%3D%228.5%22%20y%3D%2210%22%20width%3D%2227%22%20height%3D%227.6%22%20rx%3D%222.2%22%20fill%3D%22%23fff%22%2F%3E%3Cg%20clip-path%3D%22url%28%23c%29%22%20stroke%3D%22%23ff6a13%22%20stroke-width%3D%223.1%22%3E%3Cpath%20d%3D%22M12.5%2019%2018.5%208%22%2F%3E%3Cpath%20d%3D%22M21.5%2019%2027.5%208%22%2F%3E%3Cpath%20d%3D%22M30.5%2019%2036.5%208%22%2F%3E%3C%2Fg%3E%3Crect%20x%3D%228.5%22%20y%3D%2219.6%22%20width%3D%2227%22%20height%3D%2214.4%22%20rx%3D%222.8%22%20fill%3D%22%23fff%22%2F%3E%3Cpath%20d%3D%22M19.2%2023.4%2026.4%2026.8%2019.2%2030.2Z%22%20fill%3D%22%23ff6a13%22%2F%3E%3C%2Fsvg%3E">
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFDUlEQVR42sWXXYhVVRTHf2ufc7/mjk3j9bOyCBT8SIa0h9AIlF7SVKxGe/DjqchhnkxqymgUIcrIXia1ngKF0jFDJAuDHgYq+8LSNMNMQlGcvBPqOHPn3nP26mGfO+fOp8yM0oLNvZy99lr/tdd/r722EImC0IzIVqy+OHkSiXANqiuAOVhqAcPIxAL/YjiFyCFK3l7ZfaVdmzFsRQUUQMrOyx+0cXwjYprwuBcLhBrNjEIE8MRBt1zE2relpaOl0qeUI+c0PpNye0ibVfQoWA1RBEHKQEchiqIIihGPlEDB7qM9v47ZBGxFRevxpJVQG3L7qTL1dNkSih85vn3igARUmQRdtlV25ldpPZ5LwYZcA1l5n5taREhyJ0UpkpUkXdogO/O7RDdWT6CQPI2RHCEgEdnERFlSlwAF1Ea5lZg1gtPRiChi4oRVrokBWDzAap50cbZPIbWepEykqCGC1+ug2A1h0RksszBV7eaCIgQ99CLzkpBIObVCZ6yvCqmsWxMT02AJSZqJFFLrfWAlNsqQRBEUu+H+OliyyTlFwfjQ+iqc/xlmLIQVr4MNwfPhwgn4bAvYAJ7eAg8+AkEJEmk4tA3OfQfJbLwbimBRYKUPzCHUvpSzAazeDjMWxN/OHYNLZ8BLwMpmmLUonvtmL3Reh7mLYcnL8fcrZ+HCr+Cl+qZCEEIVYI4BaqIdk95tS6QgU+0iDIpu7HsFblyDecuc81LBGT35JRz7GDJVsHyzc1Ce+2QTdHZAttYBV40huL81ZtAzrsTKfhJ+/BTOfgvjamBpkwMmxul8vh0KPVD3JMyMgCXScPprOHEUqmrgicYIgB1QqgaWVxFHvlIPGM/x4ch2CANY9AI88LD77ifhh/3wRxvkJkP9W25tIu3sHH4TuguwcB3ULYEb/zgQ/cQfsoYe2AzPbIOTR+HS73D3FEe+v4+7yG0AX7wLeDB9gYv8/E/gJ+BMG5z7HmpzMK0ODrw2dLXWhtzASi8Guq9DTw/4xnECcU5tGB8x44PnublSIUqmuK3202AMFG46UNlat75fxv1BUxAUofYeWLYZpkyvII/0PdNlIOjAbKp1c+1/uXR05h0Q1VsBMFDsgmd3w6PPjb30zloE6XHw4dqoWIW3AGAtJDMwba7bbrWDR1cmlA3cGuMNUvejtfc9BImM0+snQzcZYckZrRxi3G9nHj5YA7995XjgJwfqVo6wNKSboQHIMLexCPxyBN57CnYsheOH3R2gOmJbZtS5rR4Pmbvg+BF4ZzkcfMNdUAOLzbDijxpAZ94VqfnLYfEGmPk4+Knhd25EAHSYRlAV5q2Ax9b3vZRGYcsnbiv6ipeoOAXa956ozsHzH0VkDZzOkKdABy3BZQ2Dcq18DzpWRP3AhRPOqJcYyOpKg94wp6C89uJJZ9OYOAzXy1zzEU7hyQJK6loStZCqgv1NrhxPnnHrUzHctrf/6SphKlPZkCi+gOopH5GDGBYi2N6FXsI539PozvlYxAauq6rsBwTFYBA5KLpx6gQKPYM0pRLf+WMRkfheqGxKQ82TSc02suPyVZBm0mKAoM8Wlkk4lmHD/kEEpI1BpFl2XL5qtB5PduZ30aWtZE0SKKEot1uczRJZk4weJru0Hi9+ml3GI5HbQ9qsvuNPs1J+LVMJo0fq//s4NeUeRkG0GSMtHS2UvHkEugmrbQj56Kk9Yv6j5LHaRshLFL350tLRos2YyoD/A82kVd8ZBxb2AAAAAElFTkSuQmCC">
@@ -1260,6 +1260,244 @@
   .conta-nome{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 12px;max-width:460px}
   .conta-nome input{flex:1 1 180px;min-width:0;padding:11px 13px;border:1px solid var(--line);border-radius:12px;background:var(--field);font:500 15px Montserrat,sans-serif;color:var(--ink);outline:none}
   .conta-nome input:focus{border-color:var(--orange-border);box-shadow:0 0 0 3px var(--orange-wash);background:var(--paper)}
+
+  /* ---------- calendário: cards num contêiner (igual no computador) ---------- */
+  .calitens{display:flex;flex-direction:column;gap:7px;min-width:0}
+  #themeLabel{white-space:nowrap}
+  /* o card de demanda do calendário não herda o encolhimento da etiqueta "Demanda" */
+  .calcard.dem b{display:-webkit-box;max-width:none;opacity:1;margin:0;white-space:normal}
+
+  /* ---------- botão de ações para toque ---------- */
+  .maisbtn{display:none}
+  @media (hover:none), (max-width:900px){
+    li.item .acts{
+      padding:0 52px 0 34px;
+      background:linear-gradient(90deg, transparent 0%, var(--paper) 26%);
+    }
+    li.item:hover .acts{opacity:0;pointer-events:none;transform:translateX(10px)}
+    li.item.acoes-on .acts,li.item.comfoco .acts{opacity:1;pointer-events:auto;transform:none}
+    .maisbtn{
+      display:flex;align-items:center;justify-content:center;flex:none;
+      position:absolute;right:6px;top:8px;width:40px;height:40px;border-radius:12px;
+      color:var(--soft);z-index:2;
+      transition:background var(--fast) var(--ease), color var(--fast) var(--ease);
+    }
+    .maisbtn svg{width:19px;height:19px}
+    li.item.acoes-on .maisbtn{background:var(--wash);color:var(--ink)}
+    li.item{padding-right:50px}
+    li.item:hover{border-color:var(--line)}
+    li.item:hover .abrir .title{color:inherit}
+    .calcard:hover{filter:none;transform:none}
+  }
+
+  /* ---------- celular ---------- */
+  @media (max-width:640px){
+    html{-webkit-text-size-adjust:100%}
+    body{-webkit-tap-highlight-color:transparent}
+    .shell{padding:0 16px calc(56px + env(safe-area-inset-bottom))}
+
+    /* topo */
+    header.top{
+      padding:calc(18px + env(safe-area-inset-top)) 0 0;
+      flex-direction:column;align-items:stretch;gap:16px;
+    }
+    .brand{gap:12px}
+    .mark{width:42px;height:42px}
+    h1{font-size:21px;letter-spacing:-.03em;white-space:nowrap}
+    .brand-sub{margin-top:4px;font-size:12.5px}
+    .topright{gap:8px;padding:0}
+    .saved{margin-right:auto;font-size:12.5px;white-space:nowrap;min-width:0}
+    #savedText{overflow:hidden;text-overflow:ellipsis}
+    .yearpick{width:96px;height:40px}
+    .yearpick .datepick-btn.plain{height:40px;padding:0 10px 0 14px}
+    .theme-btn{width:40px;height:40px;padding:0;flex:none}
+    #themeLabel{display:none}
+    .theme-btn svg{width:17px;height:17px}
+
+    /* abas fixas no topo, rolando de lado */
+    nav.tabs{
+      position:sticky;top:0;z-index:60;
+      margin:14px -16px 0;padding:env(safe-area-inset-top) 10px 0;
+      background:var(--wash);gap:0;
+      scroll-snap-type:x proximity;
+      -webkit-mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 28px),transparent);
+              mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 28px),transparent);
+    }
+    nav.tabs button{padding:14px 13px 13px;font-size:14.5px;scroll-snap-align:center;border-radius:0}
+    nav.tabs button:last-child{margin-right:22px}
+    nav.tabs .count{margin-left:6px}
+    .panel{padding-top:18px}
+
+    /* campos: 16px evita o zoom automático do iPhone */
+    input[type="text"],input[type="search"],input[type="email"],input[type="password"],textarea,
+    .fld input[type="text"],.fcliente input,#inTitulo,#inRef,#inNota{font-size:16px !important}
+
+    /* Hoje */
+    .today-grid{gap:14px}
+    .totem,.composer{padding:18px 16px;border-radius:16px}
+    .totem-saudacao{font-size:21px}
+    .big{font-size:58px}
+    .composer-head{gap:10px 12px}
+    .fields{gap:9px}
+    .fields input[type="text"]{min-height:50px}
+    .group{margin-top:20px}
+    .group h2{font-size:15px}
+
+    /* linha de registro: título com espaço, etiquetas embaixo */
+    ul.items{gap:9px}
+    li.item{padding:13px 14px 13px 16px;border-radius:14px;align-items:flex-start}
+    li.item .title{padding-right:34px}
+    li.item::before{top:12px;bottom:12px}
+    li.item .abrir{
+      display:flex;flex-wrap:wrap;align-items:center;gap:8px 7px;
+      padding-left:26px;position:relative;min-height:40px;
+    }
+    li.item .n{position:absolute;left:0;top:2px;min-width:0;font-size:12.5px}
+    li.item .title{
+      flex:1 1 100%;min-width:0;font-size:15px;line-height:1.4;
+      overflow-wrap:break-word;word-break:normal;
+    }
+    li.item .dem,li.item .dt,li.item .ref{font-size:12px;padding:3px 10px}
+    li.item .ref{max-width:100%;overflow:hidden;text-overflow:ellipsis}
+    li.item.compacto .dem b{max-width:140px;opacity:1;margin-left:0}
+    li.item.compacto .dem{padding:3px 10px}
+    li.item .acts{gap:2px}
+    li.item .acts .icon{width:42px;height:42px;border-radius:12px}
+
+    /* Histórico */
+    .track{padding:18px 16px 14px;border-radius:16px}
+    .track h3{font-size:18px}
+    .trackhead{gap:12px}
+    .legend{flex-wrap:wrap;gap:8px 16px}
+    .bar{height:110px}
+    .filters{padding:16px;gap:16px;border-radius:16px}
+    .filters-block.recolhido{min-height:54px}
+    .filters-title{font-size:18px;margin-bottom:14px}
+    .filters-row{gap:16px;flex-direction:column;align-items:stretch}
+    .fgroup,.fgroup.grow{min-width:0;width:100%;flex:1 1 auto}
+    .fcliente,.fcliente input{width:100% !important}
+    .fcliente input{height:46px}
+    .range{display:flex;align-items:center;gap:8px}
+    .fdate{flex:1;width:auto}
+    .fdate .datepick-btn.plain{height:46px}
+    .chips{gap:6px}
+    .chip{padding:10px 14px}
+    .daycard{border-radius:16px}
+    .daycard > .dayhead{padding:15px 16px;gap:6px 10px}
+    .dayname{font-size:15.5px}
+    .daycard .tally{font-size:13px}
+    .daycard .daybody{padding:0 12px 14px}
+    .daycard li.item{padding-left:14px}
+
+    /* Calendário vira agenda: um dia por linha */
+    .cal-topo{gap:14px}
+    .cal-head{width:100%;flex-wrap:wrap;gap:8px}
+    .mespick{flex:1 1 0;width:auto;min-width:0}
+    .calnav{flex:none;width:44px;height:44px}
+    .mespick .datepick-btn.plain{height:44px}
+    .cal-head .cap{flex-basis:100%;margin:6px 0 0 2px}
+    .calwrap{overflow:visible;margin-top:14px;padding:0}
+    .calgrid{grid-template-columns:1fr;min-width:0;gap:8px}
+    .calwd,.calday.fora{display:none}
+    .calday{
+      min-height:0;display:grid;grid-template-columns:46px minmax(0,1fr);
+      column-gap:12px;align-items:start;padding:12px 14px;border-radius:14px;
+    }
+    .calday .num{
+      grid-column:1;display:flex;flex-direction:column;align-items:center;
+      font-size:21px;font-weight:800;line-height:1.05;letter-spacing:-.03em;padding:2px 0 0;
+      color:var(--ink);
+    }
+    .calday .num::before{
+      content:attr(data-wd);font-size:11px;font-weight:700;letter-spacing:.06em;
+      text-transform:uppercase;color:var(--soft);margin-bottom:3px;
+    }
+    .calday.dom .num,.calday.dom .num::before{color:var(--sun-text)}
+    .calday.hoje{border-color:var(--orange);box-shadow:0 0 0 3px var(--orange-wash)}
+    .calday.hoje .num{background:none;border:0;padding:2px 0 0;color:var(--orange)}
+    .calday.hoje .num::before{color:var(--orange-deep)}
+    .calitens{grid-column:2;gap:8px;align-self:center}
+    .calday .calfolga{margin:0;font-size:11px}
+    .calday.vazio{padding:10px 14px}
+    .calday.vazio:not(.folga) .calitens::before{
+      content:"Nenhum vídeo com data";font-size:13px;color:var(--soft);font-weight:500;
+    }
+    .calday.vazio.hoje .calitens::before{content:"Nenhum vídeo com data hoje"}
+    .calcard{padding:11px 12px 11px 22px;border-radius:12px}
+    .calcard b{font-size:14px;-webkit-line-clamp:2}
+    .calcard .rodape > span{font-size:12.5px}
+    .calmais{padding:6px 2px;font-size:13px}
+    .calday .calnota{top:10px;right:10px}
+
+    /* Excluídos e Arquivados */
+    .lixo-aviso{font-size:13.5px;line-height:1.5}
+
+    /* Resumo e Equipe */
+    .stats{grid-template-columns:1fr 1fr;gap:10px}
+    .stats .stat:last-child:nth-child(odd){grid-column:1 / -1}
+    .stat{padding:16px 16px 15px;border-radius:16px}
+    .stat b{font-size:32px}
+    .stat span{font-size:13px;line-height:1.4;margin-top:6px}
+    .two{gap:10px;margin-top:10px}
+    .box{padding:18px 16px;border-radius:16px}
+    .box[style*="margin-top"]{margin-top:10px !important}
+    .box h3{margin-bottom:14px;font-size:15px}
+    .rank{gap:12px}
+    .rank li{font-size:14px}
+    .eq-topo{margin-bottom:14px;gap:10px}
+    .eq-topo .cap{font-size:13.5px}
+    .eq-pill{padding:7px 12px;font-size:13px}
+
+    /* janelas viram painéis que sobem de baixo */
+    .modal{align-items:flex-end;padding:0}
+    .modal-card,.modal-sm,.modal-view{
+      width:100%;max-height:calc(100dvh - 24px);overflow-y:auto;overscroll-behavior:contain;
+      border-radius:22px 22px 0 0;border-bottom:0;
+      padding:22px 18px calc(18px + env(safe-area-inset-bottom));
+      animation:sobedebaixo 300ms var(--ease);
+    }
+    .modal.saindo .modal-card{animation:descepbaixo 200ms var(--ease) forwards}
+    .modal-card::before{
+      content:"";display:block;width:40px;height:4px;border-radius:4px;
+      background:var(--line);margin:-10px auto 14px;
+    }
+    .modal-head{margin-bottom:16px}
+    .modal-view h2{font-size:20px}
+    .view-chips{margin-bottom:18px}
+    .view-list li{
+      display:grid;grid-template-columns:minmax(0,1fr);grid-auto-columns:auto;
+      column-gap:2px;row-gap:2px;align-items:center;padding:11px 6px 11px 16px;
+    }
+    .view-tipo{grid-column:1;grid-row:1;min-width:0}
+    .view-data{grid-column:1;grid-row:2;font-size:13px}
+    .view-list .icon{grid-row:1 / span 2;width:42px;height:42px;opacity:1}
+    .calday .calnota{top:14px;left:50px;right:auto}
+    .modal-foot{flex-wrap:wrap;gap:8px;margin-top:18px;padding-top:16px}
+    .modal-foot .spacer{display:none}
+    .modal-foot .tool,.modal-foot .add,.modal-foot .datepick{flex:1 1 calc(50% - 4px)}
+    .modal-foot .datepick .tool{width:100%}
+    .modal-foot .add{flex-basis:100%;order:9;padding:14px}
+    .modal-foot .tool{padding:13px 12px;text-align:center}
+    .pick-menu.paracima{left:0;right:auto}
+
+    /* menus e avisos */
+    .pick-menu{max-height:min(330px,52vh)}
+    .datepick-menu{max-width:calc(100vw - 32px)}
+    .dp-opt{padding:12px}
+    .toast{bottom:calc(20px + env(safe-area-inset-bottom));width:calc(100vw - 32px);font-size:14px;padding:13px 16px}
+    .tool{min-height:42px}
+  }
+  @keyframes sobedebaixo{from{transform:translateY(100%)}to{transform:none}}
+  @keyframes descepbaixo{to{transform:translateY(100%)}}
+
+  /* telas bem estreitas */
+  @media (max-width:370px){
+    h1{font-size:19px}
+    .mark{width:38px;height:38px}
+    .yearpick{width:88px}
+    .stat b{font-size:28px}
+    .calday{grid-template-columns:40px minmax(0,1fr);column-gap:10px}
+  }
 </style>
 </head>
 <body>
@@ -2958,10 +3196,30 @@
     }
     acts.appendChild(iconBtn(ICON_DEL,"Remover", function(){ removeItem(iso,k,item.id); }, "del"));
     Array.prototype.forEach.call(acts.querySelectorAll("button"), focoDeTeclado);
+    acts.addEventListener("click", function(){ li.classList.remove("acoes-on"); });
     li.appendChild(acts);
+
+    // no celular não existe "passar o mouse": os três pontinhos mostram as ações
+    var mais = document.createElement("button");
+    mais.type = "button";
+    mais.className = "maisbtn";
+    mais.setAttribute("aria-label", "Ações de " + item.titulo);
+    mais.innerHTML = ICON_MAIS;
+    mais.addEventListener("click", function(e){
+      e.stopPropagation();
+      var abrirAgora = !li.classList.contains("acoes-on");
+      document.querySelectorAll("li.item.acoes-on").forEach(function(x){ x.classList.remove("acoes-on"); });
+      if(abrirAgora) li.classList.add("acoes-on");
+    });
+    li.appendChild(mais);
     return li;
   }
 
+  var ICON_MAIS = '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5.5" cy="12" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="18.5" cy="12" r="1.9"/></svg>';
+  document.addEventListener("click", function(e){
+    if(e.target.closest && e.target.closest("li.item.acoes-on")) return;
+    document.querySelectorAll("li.item.acoes-on").forEach(function(x){ x.classList.remove("acoes-on"); });
+  });
   var ICON_REV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5A8 8 0 1 1 17.5 6"/><path d="M20 3.5v5h-5"/></svg>';
   var ICON_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l5 5 9-11"/></svg>';
   var ICON_CAL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>';
@@ -3520,7 +3778,11 @@
       var num = document.createElement("span");
       num.className = "num";
       num.textContent = String(d.getDate()).padStart(2,"0");
+      num.setAttribute("data-wd", DIAS_SEMANA[d.getDay()]);
       cel.appendChild(num);
+      var caixa = document.createElement("div");
+      caixa.className = "calitens";
+      cel.appendChild(caixa);
 
       if(dentro && notaDe(iso)){
         var pontoNota = document.createElement("span");
@@ -3532,11 +3794,12 @@
         var selo = document.createElement("span");
         selo.className = "calfolga";
         selo.textContent = "folga";
-        cel.appendChild(selo);
+        caixa.appendChild(selo);
       }
 
       if(dentro){
         var lista = mapa[iso] || [];
+        if(!lista.length) cel.classList.add("vazio");
         var semana = toISO(addDays(d, -d.getDay()));
         var limite = calAberto[semana] ? lista.length : 3;
         lista.slice(0, limite).forEach(function(reg){
@@ -3575,7 +3838,7 @@
           }
           card.innerHTML = "<b>" + esc(reg.item.titulo) + "</b>" + rodape;
           card.addEventListener("click", function(){ abrirDetalhe(reg); });
-          cel.appendChild(card);
+          caixa.appendChild(card);
         });
         if(lista.length > limite){
           var mais = document.createElement("button");
@@ -3585,7 +3848,7 @@
           (function(chave){
             mais.addEventListener("click", function(){ calAberto[chave] = true; renderCalendario(); });
           })(semana);
-          cel.appendChild(mais);
+          caixa.appendChild(mais);
         } else if(calAberto[semana] && lista.length > 3){
           var menos = document.createElement("button");
           menos.type = "button";
@@ -3594,7 +3857,7 @@
           (function(chave){
             menos.addEventListener("click", function(){ delete calAberto[chave]; renderCalendario(); });
           })(semana);
-          cel.appendChild(menos);
+          caixa.appendChild(menos);
         }
       }
 
@@ -4700,7 +4963,16 @@
       var atual = x.dataset.tab === nome;
       x.setAttribute("aria-selected", atual ? "true" : "false");
       x.setAttribute("tabindex", atual ? "0" : "-1");
+      if(atual && window.innerWidth <= 900){
+        var nav = x.parentNode;
+        var alvo = x.offsetLeft - (nav.clientWidth - x.offsetWidth) / 2;
+        try{ nav.scrollTo({ left: Math.max(0, alvo), behavior: "smooth" }); }catch(e){ nav.scrollLeft = alvo; }
+      }
     });
+    if(window.innerWidth <= 900){
+      var topoAbas = document.querySelector("nav.tabs").getBoundingClientRect().top + window.scrollY;
+      if(window.scrollY > topoAbas) window.scrollTo(0, topoAbas);
+    }
     document.querySelectorAll('.panel').forEach(function(p){
       p.classList.toggle("on", p.id === "panel-" + nome);
     });
