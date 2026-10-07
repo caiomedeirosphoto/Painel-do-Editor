@@ -1,12 +1,17 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // cada pessoa só lê e grava os próprios dados
+    // cada pessoa lê e grava os próprios dados
     match /users/{uid}/{document=**} {
       allow read, write: if request.auth != null && request.auth.uid == uid;
     }
-    // resumo da equipe: só números, sem nome nem títulos.
-    // qualquer pessoa logada lê a soma; cada uma só grava o próprio resumo
+    // os registros por mês podem ser vistos (nunca alterados) por quem está logado,
+    // para o histórico por editor na aba Equipe
+    match /users/{uid}/meses/{mes} {
+      allow read: if request.auth != null;
+    }
+    // resumo da equipe: números, nome e e-mail de cada editor.
+    // qualquer pessoa logada lê; cada uma só grava o próprio
     match /equipe/{uid} {
       allow read: if request.auth != null;
       allow write: if request.auth != null && request.auth.uid == uid;

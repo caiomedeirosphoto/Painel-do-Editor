@@ -893,6 +893,26 @@
   .stat.accent-dem b{color:var(--plum)}
 
   .two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+  .eq-seg{display:inline-flex;gap:3px;background:var(--field);border:1px solid var(--line);border-radius:14px;padding:4px;margin:0 0 20px}
+  .eq-seg button{padding:10px 18px;border-radius:10px;font-size:14px;font-weight:700;color:var(--soft);transition:background var(--fast) var(--ease),color var(--fast) var(--ease)}
+  .eq-seg button[aria-selected="true"]{background:var(--paper);color:var(--ink);box-shadow:0 1px 4px rgba(26,21,18,.10)}
+  .eh-topo{display:block}
+  .eh-linha{display:flex;align-items:flex-end;justify-content:space-between;gap:12px 18px;flex-wrap:wrap}
+  .eh-editor{flex:0 1 340px;min-width:220px}
+  .eh-editor .datepick{width:100%}
+  .eh-editor .datepick-btn.plain{height:48px;background:var(--field)}
+  .eh-editor .dp-value{font-size:15.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .eh-menu{width:100%;min-width:240px}
+  .eh-menu .dp-opt{display:block;width:100%;text-align:left;line-height:1.3;white-space:normal}
+  .eh-menu .dp-opt small{display:block;font-size:12px;font-weight:500;color:var(--soft);margin-top:2px}
+  .eh-leitura{display:inline-flex;align-items:center;padding:7px 13px;border-radius:999px;background:var(--field);border:1px solid var(--line);color:var(--soft);font-size:12.5px;font-weight:700;white-space:nowrap}
+  .eh-cap{margin:14px 0 0;font-size:13.5px;color:var(--soft);line-height:1.5}
+  #ehFiltrosBody{margin-top:20px}
+  #ehLista .daycard:first-child{margin-top:14px}
+  li.item.leitura{padding-right:14px;cursor:default}
+  li.item.leitura .abrir{cursor:default}
+  li.item.leitura:hover{border-color:var(--line)}
+  li.item.leitura:hover .abrir .title,.group.alt li.item.leitura:hover .abrir .title{color:inherit}
   .eq-topo{display:flex;align-items:flex-start;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;margin:0 0 18px}
   .eq-topo .filters-title{margin:0}
   .eq-topo .cap{margin:6px 0 0;line-height:1.5}
@@ -1445,6 +1465,11 @@
     .rank{gap:12px}
     .rank li{font-size:14px}
     .eq-topo{margin-bottom:14px;gap:10px}
+    .eq-seg{display:flex;width:100%;margin-bottom:14px}
+    .eq-seg button{flex:1;padding:11px 8px;font-size:13.5px}
+    .eh-editor{flex:1 1 100%;min-width:0}
+    .eh-menu{min-width:0}
+    li.item.leitura .title{padding-right:0}
     .eq-topo .cap{font-size:13.5px}
     .eq-pill{padding:7px 12px;font-size:13px}
 
@@ -1900,6 +1925,74 @@
 
   <!-- EQUIPE -->
   <section class="panel" id="panel-equipe" role="tabpanel" tabindex="-1" aria-labelledby="tab-equipe">
+    <div class="eq-seg" id="eqSeg" role="tablist" aria-label="Visões da equipe">
+      <button type="button" role="tab" data-v="resumo" aria-selected="true">Resumo geral</button>
+      <button type="button" role="tab" data-v="historico" aria-selected="false">Histórico por editor</button>
+    </div>
+
+    <div id="eqHistView" hidden>
+      <div class="filters eh-topo">
+        <div class="eh-linha">
+          <div class="fgroup eh-editor">
+            <span>Editor</span>
+            <div class="datepick" id="ehEdPick">
+              <button type="button" class="datepick-btn plain" id="ehEdBtn" aria-expanded="false" aria-haspopup="menu">
+                <span class="dp-value" id="ehEdValor">Escolha um editor</span>
+                <span class="dp-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 9L12 15.5 18.5 9"/></svg></span>
+              </button>
+              <div class="pick-menu datepick-menu eh-menu" id="ehEdMenu" role="menu" aria-label="Escolher o editor" hidden></div>
+            </div>
+          </div>
+          <span class="eh-leitura">Somente visualização</span>
+        </div>
+        <p class="cap eh-cap" id="ehCap">Escolha um editor para ver o histórico de registros dele.</p>
+
+        <h2 class="filters-title acc-head divisor">
+          <button type="button" class="filtros-head" id="ehFiltrosHead" aria-expanded="false" aria-controls="ehFiltrosBody">
+            <span class="chev">▶</span>Filtros<span class="filtros-tag" id="ehFiltrosTag" hidden></span>
+          </button>
+        </h2>
+        <div class="filters-row" id="ehFiltrosBody" hidden>
+          <div class="fgroup">
+            <span>Período</span>
+            <div class="chips" id="ehPeriodChips">
+              <button class="chip" data-period="7">7 dias</button>
+              <button class="chip" data-period="30" aria-pressed="true">30 dias</button>
+              <button class="chip" data-period="60">60 dias</button>
+              <button class="chip" data-period="tudo">Tudo</button>
+            </div>
+          </div>
+          <div class="fgroup">
+            <span>Tipo</span>
+            <div class="chips" id="ehKindChips">
+              <button class="chip" data-kind="todos" aria-pressed="true">Todos</button>
+              <button class="chip" data-kind="video">Vídeos</button>
+              <button class="chip" data-kind="alteracao">Alterações</button>
+            </div>
+          </div>
+          <div class="fgroup grow">
+            <span>Nome do vídeo</span>
+            <input type="search" id="ehNome" placeholder="Buscar por nome">
+          </div>
+          <div class="fgroup">
+            <span>Cliente</span>
+            <div class="clientefield fcliente" id="ehClientePick">
+              <input type="text" id="ehCliente" placeholder="Todos os clientes" autocomplete="off">
+              <button type="button" class="pickbtn" id="ehClienteBtn" aria-expanded="false" aria-label="Ver clientes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 9L12 15.5 18.5 9"/></svg></button>
+              <div class="pick-menu cliente-menu" id="ehClienteMenu" role="menu" hidden></div>
+            </div>
+          </div>
+          <div class="fgroup">
+            <span>&nbsp;</span>
+            <button class="chip" id="ehLimpar">Limpar filtros</button>
+          </div>
+        </div>
+      </div>
+      <div class="eq-aviso" id="ehAviso" hidden></div>
+      <div id="ehLista"></div>
+    </div>
+
+    <div id="eqResumoView">
     <div class="eq-topo">
       <div>
         <h2 class="filters-title">Resumo da equipe</h2>
@@ -1929,6 +2022,7 @@
       <h3>Mês a mês da equipe</h3>
       <ul class="rank" id="eqMeses"></ul>
     </div>
+  </div>
   </section>
 
   <!-- RESUMO -->
@@ -2940,7 +3034,7 @@
     arquivados: renderArquivados,
     excluidos: renderLixo,
     resumo: renderResumo,
-    equipe: renderEquipe
+    equipe: function(){ if(eqVisao === "historico") renderEhLista(); else renderEquipe(); }
   };
   var sujo = {};   // abas que precisam ser refeitas quando forem abertas
 
@@ -4948,6 +5042,239 @@
     toastTimer = setTimeout(function(){ t.classList.remove("on"); }, rotulo ? 6000 : 2200);
   }
 
+
+  /* ---------- equipe: histórico de cada editor, só para ver ---------- */
+  var eqVisao = "resumo";
+  var eh = { uid:"", dados:null, carregando:false, erro:false, period:"30", kind:"todos", nome:"", cliente:"", abertos:{}, pedido:0 };
+
+  function ehEditores(){
+    var eq = (nv && nv.equipe) || {};
+    return Object.keys(eq).map(function(uid){
+      var d = eq[uid] || {}, dias = d.dias || {}, n = 0, ultimo = "";
+      Object.keys(dias).forEach(function(iso){ n += (dias[iso].v || 0) + (dias[iso].a || 0); if(iso > ultimo) ultimo = iso; });
+      var nome = (d.nome || "").trim() || (d.email ? String(d.email).split("@")[0].replace(/^./, function(c){ return c.toUpperCase(); }) : "") || "Editor sem nome";
+      return { uid:uid, nome:nome, email:d.email || "", n:n, ultimo:ultimo };
+    }).filter(function(e){ return e.n > 0 || e.uid === (window.__FB && window.__FB.user && window.__FB.user.uid); })
+      .sort(function(a, b){ return a.nome.localeCompare(b.nome, "pt-BR", { sensitivity:"base" }); });
+  }
+
+  function mostrarVisaoEquipe(v){
+    eqVisao = v;
+    Array.prototype.forEach.call(document.querySelectorAll("#eqSeg button"), function(b){
+      b.setAttribute("aria-selected", b.getAttribute("data-v") === v ? "true" : "false");
+    });
+    document.getElementById("eqResumoView").hidden = v !== "resumo";
+    document.getElementById("eqHistView").hidden = v !== "historico";
+    if(v === "historico") renderEhLista(); else renderEquipe();
+  }
+
+  function ehEscolher(uid){
+    eh.uid = uid; eh.dados = null; eh.erro = false; eh.abertos = {};
+    var ed = ehEditores().filter(function(e){ return e.uid === uid; })[0];
+    document.getElementById("ehEdValor").textContent = ed ? ed.nome : "Escolha um editor";
+    ehCarregar();
+  }
+
+  function ehCarregar(){
+    if(!eh.uid || !window.__FB || !window.__FB.historicoDe){ renderEhLista(); return; }
+    var pedido = ++eh.pedido;
+    eh.carregando = true; renderEhLista();
+    window.__FB.historicoDe(eh.uid).then(function(meses){
+      if(pedido !== eh.pedido) return;
+      var dados = {};
+      Object.keys(meses || {}).forEach(function(ym){
+        var dias = (meses[ym] && meses[ym].dias) || {};
+        Object.keys(dias).forEach(function(iso){ dados[iso] = dias[iso]; });
+      });
+      eh.dados = dados; eh.carregando = false; eh.erro = false;
+      renderEhLista();
+    }, function(){
+      if(pedido !== eh.pedido) return;
+      eh.carregando = false; eh.erro = true; eh.dados = null;
+      renderEhLista();
+    });
+  }
+
+  function ehVis(arr){ return (arr || []).filter(function(x){ return x && !x.arq; }); }
+
+  function ehDias(){
+    var dados = eh.dados || {}, ano = String(anoAtivo), hoje = isoToday();
+    var de = "0000-00-00";
+    if(eh.period !== "tudo") de = toISO(addDays(new Date(hoje + "T12:00:00"), -(parseInt(eh.period, 10) - 1)));
+    var tn = eh.nome.trim(), tc = eh.cliente.trim(), out = [];
+    Object.keys(dados).forEach(function(iso){
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(iso) || iso.slice(0,4) !== ano || iso < de) return;
+      var d = dados[iso] || {};
+      var v = eh.kind === "alteracao" ? [] : ehVis(d.videos);
+      var a = eh.kind === "video" ? [] : ehVis(d.alteracoes);
+      if(tn || tc){
+        var m = function(x){ return (!tn || filtraTexto(x.titulo || "", tn)) && (!tc || filtraCliente(x.ref, tc)); };
+        v = v.filter(m); a = a.filter(m);
+      }
+      if(v.length || a.length) out.push({ iso:iso, videos:v, alteracoes:a, nota:typeof d.nota === "string" ? d.nota : "", folga:!!d.folga || fimDeSemana(iso) });
+    });
+    return out.sort(function(x, y){ return x.iso < y.iso ? 1 : -1; });
+  }
+
+  function ehItem(item, idx, term){
+    var li = document.createElement("li");
+    li.className = "item leitura";
+    var box = document.createElement("div");
+    box.className = "abrir";
+    box.appendChild(spanEl("n", idx + 1));
+    var t = document.createElement("span");
+    t.className = "title";
+    t.innerHTML = highlight(item.titulo || "", term.n);
+    box.appendChild(t);
+    if(item.dem){ var de = document.createElement("span"); de.className = "dem"; de.innerHTML = ICON_CHECK + "<b>Demanda</b>"; box.appendChild(de); }
+    if(item.dt){ var dt = document.createElement("span"); dt.className = "dt"; dt.innerHTML = ICON_CAL + "<b>" + shortDate(item.dt) + "</b>"; box.appendChild(dt); }
+    if(item.ref){ var r = document.createElement("span"); r.className = "ref"; r.innerHTML = highlight(item.ref, term.c); box.appendChild(r); }
+    li.appendChild(box);
+    return li;
+  }
+
+  function ehGrupo(titulo, arr, alt, term){
+    var g = document.createElement("div");
+    g.className = "group" + (alt ? " alt" : "");
+    g.innerHTML = '<h2><i></i>' + esc(titulo) + ' <em>' + arr.length + '</em></h2>';
+    var ul = document.createElement("ul");
+    ul.className = "items";
+    arr.forEach(function(it, i){ ul.appendChild(ehItem(it, i, term)); });
+    g.appendChild(ul);
+    return g;
+  }
+
+  function ehCard(d, term, aberto){
+    var rel = relative(d.iso);
+    var card = document.createElement("div");
+    card.className = "daycard";
+    var head = document.createElement("button");
+    head.className = "dayhead";
+    head.setAttribute("aria-expanded", aberto ? "true" : "false");
+    head.innerHTML = '<span class="chev">▶</span><span class="dayname">' + esc(longDate(d.iso)) + '</span>' +
+      '<span class="tally">' + d.videos.length + (d.videos.length === 1 ? " vídeo" : " vídeos") + ", " +
+      d.alteracoes.length + (d.alteracoes.length === 1 ? " alteração" : " alterações") + '</span>' +
+      (d.folga ? '<span class="marca">Folga</span>' : '') + (d.nota ? '<span class="marca nota">obs</span>' : '') +
+      '<span class="spacer"></span>' + (rel ? '<span class="tally">' + rel + '</span>' : '');
+    var body = document.createElement("div");
+    body.className = "daybody";
+    body.hidden = !aberto;
+    if(d.nota){ var pn = document.createElement("p"); pn.className = "daynota"; pn.innerHTML = "<b>Observação</b>" + esc(d.nota); body.appendChild(pn); }
+    if(d.videos.length) body.appendChild(ehGrupo("Vídeos", d.videos, false, term));
+    if(d.alteracoes.length) body.appendChild(ehGrupo("Alterações", d.alteracoes, true, term));
+    head.addEventListener("click", function(){
+      var abrir = body.hidden;
+      body.hidden = !abrir;
+      head.setAttribute("aria-expanded", abrir ? "true" : "false");
+      eh.abertos[d.iso] = abrir;
+      if(abrir){ revelar(body); requestAnimationFrame(compactarItens); }
+    });
+    card.appendChild(head); card.appendChild(body);
+    return card;
+  }
+
+  function renderEhLista(){
+    var lista = document.getElementById("ehLista"), cap = document.getElementById("ehCap"), aviso = document.getElementById("ehAviso");
+    lista.innerHTML = ""; aviso.hidden = true;
+    var ativos = (eh.period !== "30" ? 1 : 0) + (eh.kind !== "todos" ? 1 : 0) + (eh.nome.trim() ? 1 : 0) + (eh.cliente.trim() ? 1 : 0);
+    var tag = document.getElementById("ehFiltrosTag");
+    tag.hidden = !ativos; tag.textContent = ativos + (ativos === 1 ? " ativo" : " ativos");
+    var ed = ehEditores().filter(function(e){ return e.uid === eh.uid; })[0];
+    if(ed) document.getElementById("ehEdValor").textContent = ed.nome;
+
+    if(!NUVEM){ cap.textContent = "O histórico dos editores aparece no app instalado, com login."; return; }
+    if(!eh.uid){
+      var qtd = ehEditores().length;
+      cap.textContent = qtd ? "Escolha um editor para ver o histórico de registros dele." : "Nenhum editor com registros ainda. Cada editor aparece aqui depois de abrir o app atualizado.";
+      return;
+    }
+    if(eh.carregando){ cap.textContent = "Carregando o histórico de " + (ed ? ed.nome : "editor") + "..."; return; }
+    if(eh.erro){
+      cap.textContent = "";
+      aviso.hidden = false;
+      aviso.textContent = "Não consegui abrir o histórico desse editor. Confira se as regras novas do Firestore foram publicadas no Firebase.";
+      return;
+    }
+    var dias = ehDias(), totV = 0, totA = 0;
+    dias.forEach(function(d){ totV += d.videos.length; totA += d.alteracoes.length; });
+    var periodoTxt = eh.period === "tudo" ? "em " + anoAtivo : "nos últimos " + eh.period + " dias";
+    cap.textContent = dias.length
+      ? totV + (totV === 1 ? " vídeo" : " vídeos") + " e " + totA + (totA === 1 ? " alteração" : " alterações") + " " + periodoTxt + ", em " + dias.length + (dias.length === 1 ? " dia." : " dias.")
+      : "";
+    if(!dias.length){
+      lista.innerHTML = '<div class="daycard"><div class="empty" style="margin:16px">Nenhum registro encontrado ' + esc(periodoTxt) + '. Tente o período "Tudo" ou limpe os filtros.</div></div>';
+      return;
+    }
+    var term = { n:eh.nome.trim(), c:eh.cliente.trim() }, forcar = !!(term.n || term.c);
+    dias.forEach(function(d, i){
+      var aberto = forcar || eh.abertos[d.iso] === true || (eh.abertos[d.iso] === undefined && i < 3);
+      lista.appendChild(ehCard(d, term, aberto));
+    });
+    requestAnimationFrame(compactarItens);
+  }
+
+  function ehMenuEditores(menu){
+    var eds = ehEditores();
+    menu.innerHTML = "";
+    if(!eds.length){ menu.innerHTML = '<div class="dp-empty">Nenhum editor com registros ainda.</div>'; return; }
+    var meu = window.__FB && window.__FB.user && window.__FB.user.uid;
+    eds.forEach(function(e){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "dp-opt"; b.setAttribute("role", "menuitem");
+      if(e.uid === eh.uid) b.setAttribute("aria-current", "true");
+      b.innerHTML = esc(e.nome) + (e.uid === meu ? " (você)" : "") +
+        '<small>' + e.n + (e.n === 1 ? " registro" : " registros") + (e.ultimo ? ", último em " + shortDate(e.ultimo) : "") + '</small>';
+      b.addEventListener("click", function(){ fecharMenus(); ehEscolher(e.uid); });
+      menu.appendChild(b);
+    });
+  }
+
+  document.getElementById("eqSeg").addEventListener("click", function(e){
+    var b = e.target.closest("[data-v]"); if(b) mostrarVisaoEquipe(b.getAttribute("data-v"));
+  });
+  document.getElementById("ehEdBtn").addEventListener("click", function(e){
+    e.stopPropagation();
+    if(document.getElementById("ehEdMenu").hidden) abrirMenu(PK.ehEdMenu, ehMenuEditores); else fecharMenus();
+  });
+  document.getElementById("ehFiltrosHead").addEventListener("click", function(){
+    var body = document.getElementById("ehFiltrosBody"), abrir = body.hidden;
+    body.hidden = !abrir; this.setAttribute("aria-expanded", abrir ? "true" : "false");
+    if(abrir) revelar(body);
+  });
+  function ehChips(id, campo){
+    document.querySelectorAll("#" + id + " .chip").forEach(function(b){
+      b.addEventListener("click", function(){
+        document.querySelectorAll("#" + id + " .chip").forEach(function(x){ x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+        eh[campo] = b.getAttribute(campo === "period" ? "data-period" : "data-kind");
+        renderEhLista();
+      });
+    });
+  }
+  ehChips("ehPeriodChips", "period");
+  ehChips("ehKindChips", "kind");
+  document.getElementById("ehNome").addEventListener("input", function(e){ eh.nome = e.target.value; renderEhLista(); });
+  function abrirClientesEh(){
+    var campo = document.getElementById("ehCliente");
+    abrirMenu(PK.ehClienteMenu, function(m){
+      preencherMenuClientes(m, campo.value.trim(), function(nome){
+        campo.value = nome; eh.cliente = nome; fecharMenus(); renderEhLista();
+      });
+    });
+  }
+  document.getElementById("ehClienteBtn").addEventListener("click", function(e){
+    e.stopPropagation();
+    if(document.getElementById("ehClienteMenu").hidden) abrirClientesEh(); else fecharMenus();
+  });
+  document.getElementById("ehCliente").addEventListener("focus", abrirClientesEh);
+  document.getElementById("ehCliente").addEventListener("input", function(e){ eh.cliente = e.target.value; abrirClientesEh(); renderEhLista(); });
+  document.getElementById("ehLimpar").addEventListener("click", function(){
+    eh.period = "30"; eh.kind = "todos"; eh.nome = ""; eh.cliente = "";
+    document.getElementById("ehNome").value = ""; document.getElementById("ehCliente").value = "";
+    document.querySelectorAll("#ehPeriodChips .chip").forEach(function(x){ x.setAttribute("aria-pressed", x.getAttribute("data-period") === "30" ? "true" : "false"); });
+    document.querySelectorAll("#ehKindChips .chip").forEach(function(x){ x.setAttribute("aria-pressed", x.getAttribute("data-kind") === "todos" ? "true" : "false"); });
+    renderEhLista();
+  });
+
   /* ---------- eventos ---------- */
   var abas = Array.prototype.slice.call(document.querySelectorAll('nav.tabs button'));
 
@@ -5295,6 +5622,8 @@
     { wrap:"arqDePick",     menu:"arqDeMenu",     btn:"arqDeBtn" },
     { wrap:"arqAtePick",    menu:"arqAteMenu",    btn:"arqAteBtn" },
     { wrap:"arqClientePick",menu:"arqClienteMenu",btn:"arqClienteBtn" },
+    { wrap:"ehEdPick",      menu:"ehEdMenu",      btn:"ehEdBtn" },
+    { wrap:"ehClientePick", menu:"ehClienteMenu", btn:"ehClienteBtn" },
     { wrap:"anoPick",       menu:"anoMenu",       btn:"anoBtn" },
     { wrap:"viewDataPick",  menu:"viewDataMenu",  btn:"viewDataBtn" }
   ];
@@ -5901,17 +6230,19 @@
     clearTimeout(nv.eqTimer);
     nv.eqTimer = setTimeout(function(){
       if(!nv.db || !nv.pronto) return;
-      var dd = nvResumoEquipe(), j = JSON.stringify(dd);
+      var u = (window.__FB && window.__FB.user) || {};
+      var dd = nvResumoEquipe(), nome = (u.displayName || "").trim(), email = u.email || "";
+      var j = JSON.stringify([dd, nome, email]);
       if(j === nv.eqJSON) return;
       nv.eqJSON = j;
-      Promise.resolve(window.__FB.equipeSet({ dias: dd, atualizadoEm: new Date().toISOString() })).catch(function(){ nv.eqJSON = null; });
+      Promise.resolve(window.__FB.equipeSet({ dias: dd, nome: nome, email: email, atualizadoEm: new Date().toISOString() })).catch(function(){ nv.eqJSON = null; });
     }, 1500);
   }
   function nvOuvirEquipe(){
     if(!window.__FB || !window.__FB.equipeOuvir) return;
     nv.unsubs.push(window.__FB.equipeOuvir(function(mapa){
       nv.equipe = mapa; nv.equipeErro = false;
-      if(tab === "equipe") renderEquipe(); else sujo.equipe = true;
+      if(tab === "equipe") RENDER.equipe(); else sujo.equipe = true;
     }, function(){
       nv.equipeErro = true;
       if(tab === "equipe") renderEquipe(); else sujo.equipe = true;
@@ -5971,6 +6302,8 @@
     Object.keys(nv.timers).forEach(function(k){ clearTimeout(nv.timers[k]); nv.timers[k] = null; });
     clearTimeout(nv.eqTimer);
     nv.db = null; nv.pronto = false; nv.equipe = null; nv.eqJSON = null; nv.equipeErro = false;
+    eh.uid = ""; eh.dados = null; eh.abertos = {};
+    var ehv = document.getElementById("ehEdValor"); if(ehv) ehv.textContent = "Escolha um editor";
   }
   function limparAparelho(){
     data = {}; lixo = []; nv.carimbos = {}; nv.mesJSON = {}; nv.lixJSON = null;
@@ -6015,6 +6348,7 @@
       var cn = document.getElementById("contaNome"); if(document.activeElement !== cn) cn.value = u.displayName || "";
     }
     var sd = document.getElementById("totemSaudacao"); if(sd) sd.textContent = saudacao();
+    if(typeof nvPublicarEquipe === "function") nvPublicarEquipe();
   }
   function nuvemAuth(user){
     if(user){
@@ -6169,6 +6503,7 @@ if(!window.__FB_TEST){
       },
       reset: e => AU.sendPasswordResetEmail(auth, e),
       equipeSet: body => { const u = auth.currentUser; return u ? F.setDoc(F.doc(db, 'equipe', u.uid), body) : Promise.resolve(); },
+      historicoDe: async uid => { const q = await F.getDocs(F.collection(db, 'users', uid, 'meses')); const m = {}; q.docs.forEach(d => { m[d.id] = d.data(); }); return m; },
       equipeOuvir: (cb, err) => F.onSnapshot(F.collection(db, 'equipe'), q => { const m = {}; q.docs.forEach(d => { m[d.id] = d.data(); }); cb(m); }, err),
       signOut: () => AU.signOut(auth)
     };
