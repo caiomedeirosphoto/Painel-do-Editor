@@ -893,6 +893,43 @@
   .stat.accent-dem b{color:var(--plum)}
 
   .two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+  .avatar{
+    display:inline-flex;align-items:center;justify-content:center;flex:none;overflow:hidden;
+    width:32px;height:32px;border-radius:50%;background:var(--orange-wash);color:var(--orange-deep);
+    border:1px solid var(--orange-border);font-weight:800;font-size:13px;letter-spacing:-.02em;padding:0;
+  }
+  .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+  .avatar-xl{width:112px;height:112px;font-size:40px;border-width:2px;cursor:pointer;
+    transition:box-shadow var(--fast) var(--ease), transform var(--fast) var(--ease)}
+  .avatar-xl:hover{box-shadow:0 0 0 4px var(--orange-wash)}
+  .avatar-xl:active{transform:scale(.97)}
+  .avatar-topo{width:42px;height:42px;border-radius:50%;padding:0;flex:none;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;border:1px solid var(--line);background:var(--field)}
+  .avatar-topo .avatar{width:100%;height:100%;border:0;font-size:15px}
+  .avatar-topo:hover{border-color:var(--orange-border);box-shadow:0 0 0 3px var(--orange-wash)}
+  .avatar-topo[hidden]{display:none}
+  .pf-card{max-width:820px}
+  .pf-card .filters-title{margin-bottom:6px}
+  .pf-cap{margin:0 0 24px;font-size:14px;color:var(--soft);line-height:1.55}
+  .pf-grid{display:grid;grid-template-columns:200px minmax(0,1fr);gap:28px;align-items:start}
+  .pf-foto{display:flex;flex-direction:column;align-items:center;gap:14px}
+  .pf-foto-acoes{display:flex;flex-direction:column;gap:8px;width:100%}
+  .pf-foto-acoes .tool{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;white-space:nowrap;padding-left:10px;padding-right:10px}
+  .pf-foto-acoes svg,.ob-foto svg{width:17px;height:17px;flex:none}
+  .pf-obrig{font-style:normal;font-weight:600;color:var(--orange-deep);margin-left:6px;font-size:11.5px}
+  .fld input[disabled]{opacity:.7;cursor:not-allowed}
+  .pf-erro{min-height:20px;margin:0 0 6px;font-size:14px;color:var(--sun-text)}
+  .pf-botoes{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .pf-botoes .add{padding:13px 24px}
+  .pf-botoes .tool{padding:13px 18px}
+  .pf-semnuvem{margin:0}
+  .ob .lg-card{padding-top:28px}
+  .ob-avatar{display:flex;margin:6px auto 10px}
+  .ob-foto{display:flex;align-items:center;gap:8px;margin:0 auto 18px;padding:8px 12px;border-radius:10px;
+    font:600 14px Montserrat,sans-serif;color:var(--orange-deep)}
+  .ob-foto:hover{background:var(--orange-wash)}
+  .eh-menu .dp-opt.com-foto{display:grid;grid-template-columns:36px minmax(0,1fr);column-gap:10px;align-items:center}
+  .eh-menu .dp-opt.com-foto .avatar{width:36px;height:36px;grid-row:1 / span 2}
   .eq-seg{display:inline-flex;gap:3px;background:var(--field);border:1px solid var(--line);border-radius:14px;padding:4px;margin:0 0 20px}
   .eq-seg button{padding:10px 18px;border-radius:10px;font-size:14px;font-weight:700;color:var(--soft);transition:background var(--fast) var(--ease),color var(--fast) var(--ease)}
   .eq-seg button[aria-selected="true"]{background:var(--paper);color:var(--ink);box-shadow:0 1px 4px rgba(26,21,18,.10)}
@@ -1468,6 +1505,12 @@
     .eq-seg{display:flex;width:100%;margin-bottom:14px}
     .eq-seg button{flex:1;padding:11px 8px;font-size:13.5px}
     .eh-editor{flex:1 1 100%;min-width:0}
+    .avatar-topo{width:40px;height:40px}
+    .pf-grid{grid-template-columns:1fr;gap:22px}
+    .pf-foto-acoes{flex-direction:row}
+    .pf-foto-acoes .tool{flex:1}
+    .pf-botoes .add,.pf-botoes .tool{flex:1 1 100%}
+    .avatar-xl{width:104px;height:104px}
     .eh-menu{min-width:0}
     li.item.leitura .title{padding-right:0}
     .eq-topo .cap{font-size:13.5px}
@@ -1545,6 +1588,21 @@
     <p class="lg-foot">Cada editor tem a própria conta. Os registros ficam salvos na nuvem, separados por login, e aparecem iguais no celular e no computador.</p>
   </div>
 </div>
+<div class="lg ob" id="ob" hidden>
+  <div class="lg-card">
+    <h2>Bem-vindo ao Painel do Editor <span>Mínimo</span></h2>
+    <p class="lg-sub">Antes de começar, diga como você quer aparecer no app.</p>
+    <button type="button" class="avatar avatar-xl ob-avatar" id="obAvatar" aria-label="Escolher foto"></button>
+    <button type="button" class="ob-foto" id="obTrocar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.2l1.4-2h5.8l1.4 2h1.2A2.5 2.5 0 0 1 20 8.5v8A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5z"/><circle cx="12" cy="12.5" r="3.4"/></svg><span id="obTrocarTxt">Adicionar foto (opcional)</span></button>
+    <input type="file" id="obArquivo" accept="image/*" hidden>
+    <form id="obForm" novalidate>
+      <input id="obNome" type="text" maxlength="40" autocomplete="name" autocapitalize="words" placeholder="Seu nome (obrigatório)" aria-label="Seu nome">
+      <button type="submit" class="lg-go" id="obGo">Começar a usar</button>
+    </form>
+    <p class="lg-err" id="obErr" role="alert"></p>
+    <p class="lg-foot">Dá para mudar nome e foto depois, na aba Perfil.</p>
+  </div>
+</div>
 <div class="shell">
 
   <header class="top">
@@ -1580,6 +1638,7 @@
         <div class="pick-menu datepick-menu anomenu" id="anoMenu" role="menu" aria-label="Escolher o ano" hidden></div>
       </div>
       <button class="theme-btn" id="themeBtn" aria-label="Alternar tema"><span id="themeIcon"></span><span id="themeLabel">Modo escuro</span></button>
+      <button type="button" class="avatar-topo" id="avatarTopo" aria-label="Abrir seu perfil" hidden></button>
     </div>
   </header>
 
@@ -1596,6 +1655,7 @@
     <button role="tab" id="tab-excluidos" aria-controls="panel-excluidos" aria-selected="false" tabindex="-1" data-tab="excluidos">Excluídos</button>
     <button role="tab" id="tab-resumo" aria-controls="panel-resumo" aria-selected="false" tabindex="-1" data-tab="resumo">Resumo</button>
     <button role="tab" id="tab-equipe" aria-controls="panel-equipe" aria-selected="false" tabindex="-1" data-tab="equipe">Equipe</button>
+    <button role="tab" id="tab-perfil" aria-controls="panel-perfil" aria-selected="false" tabindex="-1" data-tab="perfil">Perfil</button>
   </nav>
 
   <!-- HOJE -->
@@ -2025,6 +2085,36 @@
   </div>
   </section>
 
+  <!-- PERFIL -->
+  <section class="panel" id="panel-perfil" role="tabpanel" tabindex="-1" aria-labelledby="tab-perfil">
+    <div class="box pf-card">
+      <h2 class="filters-title">Seu perfil</h2>
+      <p class="pf-cap">O nome e a foto aparecem no app e na aba Equipe, para quem for ver o seu histórico.</p>
+      <div class="pf-grid">
+        <div class="pf-foto">
+          <button type="button" class="avatar avatar-xl" id="pfAvatar" aria-label="Escolher foto"></button>
+          <div class="pf-foto-acoes">
+            <button type="button" class="tool" id="pfTrocar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.2l1.4-2h5.8l1.4 2h1.2A2.5 2.5 0 0 1 20 8.5v8A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5z"/><circle cx="12" cy="12.5" r="3.4"/></svg>Escolher foto</button>
+            <button type="button" class="tool" id="pfRemover" hidden>Remover foto</button>
+          </div>
+          <input type="file" id="pfArquivo" accept="image/*" hidden>
+        </div>
+        <div class="pf-campos">
+          <label class="fld"><span>Nome que aparece no app <em class="pf-obrig">obrigatório</em></span>
+            <input type="text" id="pfNome" maxlength="40" autocomplete="name" autocapitalize="words" placeholder="Ex.: Caio Daniel"></label>
+          <label class="fld"><span>E-mail da conta</span>
+            <input type="text" id="pfEmail" disabled></label>
+          <p class="pf-erro" id="pfErro" role="alert"></p>
+          <div class="pf-botoes">
+            <button type="button" class="add" id="pfSalvar">Salvar perfil</button>
+            <button type="button" class="tool" id="pfSair">Sair da conta</button>
+          </div>
+        </div>
+      </div>
+      <p class="pf-cap pf-semnuvem" id="pfSemNuvem" hidden>O perfil fica disponível no app instalado, com login.</p>
+    </div>
+  </section>
+
   <!-- RESUMO -->
   <section class="panel" id="panel-resumo" role="tabpanel" tabindex="-1" aria-labelledby="tab-resumo">
     <div class="stats">
@@ -2062,7 +2152,7 @@
         </button>
               <div class="sub-body" id="contaBody" hidden>
         <p class="arq-status" id="contaStatus"></p>
-        <form class="conta-nome" id="contaNomeForm"><input id="contaNome" type="text" maxlength="40" autocomplete="name" placeholder="Seu nome" aria-label="Seu nome"><button type="submit" class="tool" id="contaNomeOk">Salvar nome</button></form>
+        <p class="arq-status">Para mudar o nome ou a foto, use a aba Perfil.</p>
         <div class="tools"><button class="tool" id="btnSair">Sair da conta</button></div>
         </div>
         </div>
@@ -3034,6 +3124,7 @@
     arquivados: renderArquivados,
     excluidos: renderLixo,
     resumo: renderResumo,
+    perfil: function(){ renderPerfil(); },
     equipe: function(){ if(eqVisao === "historico") renderEhLista(); else renderEquipe(); }
   };
   var sujo = {};   // abas que precisam ser refeitas quando forem abertas
@@ -5053,7 +5144,9 @@
       var d = eq[uid] || {}, dias = d.dias || {}, n = 0, ultimo = "";
       Object.keys(dias).forEach(function(iso){ n += (dias[iso].v || 0) + (dias[iso].a || 0); if(iso > ultimo) ultimo = iso; });
       var nome = (d.nome || "").trim() || (d.email ? String(d.email).split("@")[0].replace(/^./, function(c){ return c.toUpperCase(); }) : "") || "Editor sem nome";
-      return { uid:uid, nome:nome, email:d.email || "", n:n, ultimo:ultimo };
+      var eu = window.__FB && window.__FB.user;
+      if(eu && uid === eu.uid){ nome = String(eu.displayName || "").trim() || nome; if(pf.carregada) d = Object.assign({}, d, { foto: pf.foto }); }
+      return { uid:uid, nome:nome, email:d.email || "", foto:d.foto || "", n:n, ultimo:ultimo };
     }).filter(function(e){ return e.n > 0 || e.uid === (window.__FB && window.__FB.user && window.__FB.user.uid); })
       .sort(function(a, b){ return a.nome.localeCompare(b.nome, "pt-BR", { sensitivity:"base" }); });
   }
@@ -5207,7 +5300,7 @@
     }
     var term = { n:eh.nome.trim(), c:eh.cliente.trim() }, forcar = !!(term.n || term.c);
     dias.forEach(function(d, i){
-      var aberto = forcar || eh.abertos[d.iso] === true || (eh.abertos[d.iso] === undefined && i < 3);
+      var aberto = forcar || eh.abertos[d.iso] === true || (eh.abertos[d.iso] === undefined && i === 0);
       lista.appendChild(ehCard(d, term, aberto));
     });
     requestAnimationFrame(compactarItens);
@@ -5220,9 +5313,9 @@
     var meu = window.__FB && window.__FB.user && window.__FB.user.uid;
     eds.forEach(function(e){
       var b = document.createElement("button");
-      b.type = "button"; b.className = "dp-opt"; b.setAttribute("role", "menuitem");
+      b.type = "button"; b.className = "dp-opt com-foto"; b.setAttribute("role", "menuitem");
       if(e.uid === eh.uid) b.setAttribute("aria-current", "true");
-      b.innerHTML = esc(e.nome) + (e.uid === meu ? " (você)" : "") +
+      b.innerHTML = avatarHTML(e.nome, e.foto) + '<span>' + esc(e.nome) + (e.uid === meu ? " (você)" : "") + '</span>' +
         '<small>' + e.n + (e.n === 1 ? " registro" : " registros") + (e.ultimo ? ", último em " + shortDate(e.ultimo) : "") + '</small>';
       b.addEventListener("click", function(){ fecharMenus(); ehEscolher(e.uid); });
       menu.appendChild(b);
@@ -5274,6 +5367,157 @@
     document.querySelectorAll("#ehKindChips .chip").forEach(function(x){ x.setAttribute("aria-pressed", x.getAttribute("data-kind") === "todos" ? "true" : "false"); });
     renderEhLista();
   });
+
+
+  /* ---------- perfil: nome e foto ---------- */
+  var pf = { foto:"", carregada:false, novaFoto:null, obFoto:"" };
+
+  function iniciais(nome){
+    var p = String(nome || "").trim().split(/\s+/).filter(Boolean);
+    if(!p.length) return "?";
+    return ((p[0][0] || "") + (p.length > 1 ? p[p.length - 1][0] : "")).toUpperCase();
+  }
+  function avatarHTML(nome, foto){
+    return '<span class="avatar">' + (foto ? '<img src="' + esc(foto) + '" alt="">' : esc(iniciais(nome))) + '</span>';
+  }
+  function pintarAvatar(el, nome, foto){
+    if(!el) return;
+    el.innerHTML = foto ? '<img src="' + esc(foto) + '" alt="">' : esc(iniciais(nome));
+  }
+
+  // reduz a foto no próprio aparelho: quadrado de 256px em JPEG leve
+  function lerFoto(arquivo){
+    return new Promise(function(ok, falha){
+      if(!arquivo || !/^image\//.test(arquivo.type || "image/")){ falha(new Error("tipo")); return; }
+      var url = URL.createObjectURL(arquivo), img = new Image();
+      img.onload = function(){
+        var lado = Math.min(img.naturalWidth, img.naturalHeight), alvo = 256;
+        var c = document.createElement("canvas"); c.width = alvo; c.height = alvo;
+        var ctx = c.getContext("2d");
+        ctx.imageSmoothingQuality = "high";
+        ctx.drawImage(img, (img.naturalWidth - lado) / 2, (img.naturalHeight - lado) / 2, lado, lado, 0, 0, alvo, alvo);
+        URL.revokeObjectURL(url);
+        var q = 0.85, dados = c.toDataURL("image/jpeg", q);
+        while(dados.length > 60000 && q > 0.4){ q -= 0.1; dados = c.toDataURL("image/jpeg", q); }
+        ok(dados);
+      };
+      img.onerror = function(){ URL.revokeObjectURL(url); falha(new Error("leitura")); };
+      img.src = url;
+    });
+  }
+
+  function carregarPerfil(db){
+    pf.carregada = false;
+    db.doc("painel/perfil").get().then(function(snap){
+      var d = (snap && snap.exists && snap.data()) || {};
+      pf.foto = typeof d.foto === "string" ? d.foto : "";
+      pf.carregada = true;
+      renderPerfil();
+    }, function(){ pf.carregada = true; renderPerfil(); });
+  }
+
+  function renderPerfil(){
+    var u = window.__FB && window.__FB.user, logado = !!(NUVEM && u);
+    var nome = logado ? String(u.displayName || "").trim() : "";
+    var foto = pf.novaFoto !== null ? pf.novaFoto : pf.foto;
+    var topo = document.getElementById("avatarTopo");
+    topo.hidden = !logado;
+    if(logado) topo.innerHTML = avatarHTML(nome || u.email || "", pf.foto);
+    document.querySelector("#panel-perfil .pf-grid").hidden = !logado;
+    document.getElementById("pfSemNuvem").hidden = logado;
+    if(!logado) return;
+    pintarAvatar(document.getElementById("pfAvatar"), nome || u.email || "", foto);
+    document.getElementById("pfRemover").hidden = !foto;
+    var campo = document.getElementById("pfNome");
+    if(document.activeElement !== campo && !campo.dataset.mexeu) campo.value = nome;
+    document.getElementById("pfEmail").value = u.email || "";
+    var tabPf = document.getElementById("tab-perfil");
+    if(tabPf) tabPf.hidden = false;
+  }
+
+  async function salvarPerfil(nome, foto){
+    nome = String(nome || "").trim().replace(/\s+/g, " ");
+    if(!nome) throw { semNome:true };
+    await window.__FB.setPerfil(nome, foto);
+    pf.foto = foto || ""; pf.carregada = true; pf.novaFoto = null;
+    renderConta(); renderToday();
+    if(tab === "equipe") RENDER.equipe(); else sujo.equipe = true;
+  }
+
+  // tela de boas-vindas
+  function mostrarBoasVindas(){
+    var el = document.getElementById("ob");
+    pf.obFoto = pf.foto || "";
+    var u = window.__FB && window.__FB.user;
+    pintarAvatar(document.getElementById("obAvatar"), "", pf.obFoto);
+    document.getElementById("obTrocarTxt").textContent = pf.obFoto ? "Trocar foto" : "Adicionar foto (opcional)";
+    document.getElementById("obErr").textContent = "";
+    el.hidden = false; document.body.classList.add("lg-aberto");
+    requestAnimationFrame(function(){ el.classList.add("on"); });
+    setTimeout(function(){ try{ document.getElementById("obNome").focus(); }catch(e){} }, 350);
+  }
+  function esconderBoasVindas(){
+    var el = document.getElementById("ob");
+    if(el.hidden) return;
+    el.classList.remove("on"); document.body.classList.remove("lg-aberto");
+    setTimeout(function(){ if(!el.classList.contains("on")) el.hidden = true; }, 320);
+  }
+
+  function escolherArquivo(input, cb){
+    input.value = "";
+    input.onchange = function(){
+      var f = input.files && input.files[0];
+      if(!f) return;
+      lerFoto(f).then(cb, function(){ toast("Não consegui abrir essa imagem. Tente outra foto."); });
+    };
+    input.click();
+  }
+  document.getElementById("obAvatar").addEventListener("click", function(){ document.getElementById("obTrocar").click(); });
+  document.getElementById("obTrocar").addEventListener("click", function(){
+    escolherArquivo(document.getElementById("obArquivo"), function(dados){
+      pf.obFoto = dados;
+      pintarAvatar(document.getElementById("obAvatar"), document.getElementById("obNome").value, dados);
+      document.getElementById("obTrocarTxt").textContent = "Trocar foto";
+    });
+  });
+  document.getElementById("obNome").addEventListener("input", function(e){
+    document.getElementById("obErr").textContent = "";
+    if(!pf.obFoto) pintarAvatar(document.getElementById("obAvatar"), e.target.value, "");
+  });
+  document.getElementById("obForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+    var nome = document.getElementById("obNome").value, err = document.getElementById("obErr"), btn = document.getElementById("obGo");
+    if(!nome.trim()){ err.textContent = "Digite o seu nome para continuar."; document.getElementById("obNome").focus(); return; }
+    btn.disabled = true; btn.textContent = "Salvando"; err.textContent = "";
+    try{ await salvarPerfil(nome, pf.obFoto); esconderBoasVindas(); toast("Tudo pronto, " + nome.trim().split(/\s+/)[0] + "!"); }
+    catch(ex){ err.textContent = (ex && ex.code === "auth/network-request-failed") ? "Sem internet. Tente de novo quando estiver conectado." : "Não consegui salvar agora. Tente de novo."; }
+    finally{ btn.disabled = false; btn.textContent = "Começar a usar"; }
+  });
+
+  // aba Perfil
+  document.getElementById("avatarTopo").addEventListener("click", function(){ mostrarAba("perfil"); });
+  function trocarFotoPerfil(){
+    escolherArquivo(document.getElementById("pfArquivo"), function(dados){ pf.novaFoto = dados; renderPerfil(); });
+  }
+  document.getElementById("pfAvatar").addEventListener("click", trocarFotoPerfil);
+  document.getElementById("pfTrocar").addEventListener("click", trocarFotoPerfil);
+  document.getElementById("pfRemover").addEventListener("click", function(){ pf.novaFoto = ""; renderPerfil(); });
+  document.getElementById("pfNome").addEventListener("input", function(e){
+    e.target.dataset.mexeu = "1";
+    document.getElementById("pfErro").textContent = "";
+    if(!(pf.novaFoto !== null ? pf.novaFoto : pf.foto)) pintarAvatar(document.getElementById("pfAvatar"), e.target.value, "");
+  });
+  document.getElementById("pfSalvar").addEventListener("click", async function(){
+    var campo = document.getElementById("pfNome"), btn = this, err = document.getElementById("pfErro");
+    if(!campo.value.trim()){ err.textContent = "O nome é obrigatório."; campo.focus(); return; }
+    btn.disabled = true; btn.textContent = "Salvando";
+    try{
+      await salvarPerfil(campo.value, pf.novaFoto !== null ? pf.novaFoto : pf.foto);
+      delete campo.dataset.mexeu; err.textContent = ""; renderPerfil(); toast("Perfil salvo");
+    }catch(ex){ err.textContent = "Não consegui salvar agora. Confira a internet e tente de novo."; }
+    finally{ btn.disabled = false; btn.textContent = "Salvar perfil"; }
+  });
+  document.getElementById("pfSair").addEventListener("click", function(){ document.getElementById("btnSair").click(); });
 
   /* ---------- eventos ---------- */
   var abas = Array.prototype.slice.call(document.querySelectorAll('nav.tabs button'));
@@ -6231,11 +6475,12 @@
     nv.eqTimer = setTimeout(function(){
       if(!nv.db || !nv.pronto) return;
       var u = (window.__FB && window.__FB.user) || {};
-      var dd = nvResumoEquipe(), nome = (u.displayName || "").trim(), email = u.email || "";
-      var j = JSON.stringify([dd, nome, email]);
+      var dd = nvResumoEquipe(), nome = (u.displayName || "").trim(), email = u.email || "", foto = pf.carregada ? (pf.foto || "") : null;
+      if(foto === null){ nv.eqTimer = setTimeout(nvPublicarEquipe, 1500); return; }   // espera a foto carregar para não apagar
+      var j = JSON.stringify([dd, nome, email, foto.length, foto.slice(-40)]);
       if(j === nv.eqJSON) return;
       nv.eqJSON = j;
-      Promise.resolve(window.__FB.equipeSet({ dias: dd, nome: nome, email: email, atualizadoEm: new Date().toISOString() })).catch(function(){ nv.eqJSON = null; });
+      Promise.resolve(window.__FB.equipeSet({ dias: dd, nome: nome, email: email, foto: foto, atualizadoEm: new Date().toISOString() })).catch(function(){ nv.eqJSON = null; });
     }, 1500);
   }
   function nvOuvirEquipe(){
@@ -6256,6 +6501,7 @@
   }
   async function nuvemConectar(db){
     nv.db = db; nv.pronto = false; status("Sincronizando", true);
+    carregarPerfil(db);
     var q, lx;
     try{ q = await db.collection("meses").get(); lx = await db.doc("painel/lixeira").get(); }catch(e){ q = { docs:[] }; lx = { exists:false }; }
     if(nv.db !== db) return;
@@ -6324,7 +6570,7 @@
     document.getElementById("lgGo").textContent = m === "in" ? "Entrar" : "Criar conta";
     document.getElementById("lgPass").setAttribute("autocomplete", m === "in" ? "current-password" : "new-password");
     document.getElementById("lgForgot").hidden = m !== "in";
-    document.getElementById("lgNomeCampo").hidden = m === "in";
+    document.getElementById("lgNomeCampo").hidden = true;
     document.getElementById("lgPass2Campo").hidden = m === "in";
     document.getElementById("lgDica").hidden = m === "in";
     document.getElementById("lgSub").textContent = m === "in" ? "Entre para ver os seus registros" : "Crie a sua conta para começar a registrar";
@@ -6345,9 +6591,9 @@
     sub.hidden = !(NUVEM && u);
     if(u){
       document.getElementById("contaStatus").textContent = "Conectado como " + (u.displayName ? u.displayName + " (" + (u.email || "") + ")" : (u.email || "")) + ". Os registros desta conta ficam salvos na nuvem e aparecem iguais no celular e no computador.";
-      var cn = document.getElementById("contaNome"); if(document.activeElement !== cn) cn.value = u.displayName || "";
     }
     var sd = document.getElementById("totemSaudacao"); if(sd) sd.textContent = saudacao();
+    renderPerfil();
     if(typeof nvPublicarEquipe === "function") nvPublicarEquipe();
   }
   function nuvemAuth(user){
@@ -6356,9 +6602,10 @@
       if(ultimo && ultimo !== user.uid) limparAparelho();
       try{ localStorage.setItem(KEY_UID, user.uid); }catch(e){}
       esconderLogin(); renderConta();
+      if(!String(user.displayName || "").trim()) mostrarBoasVindas();
       var db = window.__FB && window.__FB.db(); if(db) nuvemConectar(db);
     } else {
-      nuvemDesligar(); renderConta(); mostrarLogin();
+      nuvemDesligar(); pf.foto = ""; pf.carregada = false; esconderBoasVindas(); renderConta(); mostrarLogin();
     }
   }
   function nuvemIniciar(){
@@ -6377,7 +6624,6 @@
       if(!window.__FB){ err.textContent = "O login ainda está carregando. Espere um instante."; return; }
       var email = document.getElementById("lgEmail").value.trim(), senha = document.getElementById("lgPass").value;
       var nome = document.getElementById("lgNome").value.trim().replace(/\s+/g, " "), senha2 = document.getElementById("lgPass2").value;
-      if(lgModo === "up" && !nome){ err.textContent = "Digite o seu nome."; document.getElementById("lgNome").focus(); return; }
       if(!email){ err.textContent = "Digite o seu e-mail."; document.getElementById("lgEmail").focus(); return; }
       if(!senha){ err.textContent = "Digite a senha."; document.getElementById("lgPass").focus(); return; }
       if(lgModo === "up" && senha.length < 6){ err.textContent = "A senha precisa ter pelo menos 6 caracteres."; document.getElementById("lgPass").focus(); return; }
@@ -6404,15 +6650,6 @@
         b.setAttribute("aria-pressed", mostrar ? "true" : "false");
         b.setAttribute("aria-label", mostrar ? "Esconder senha" : "Mostrar senha");
       });
-    });
-    document.getElementById("contaNomeForm").addEventListener("submit", async function(e){
-      e.preventDefault();
-      var nome = document.getElementById("contaNome").value.trim().replace(/\s+/g, " "), btn = document.getElementById("contaNomeOk");
-      if(!nome){ toast("Digite o seu nome"); return; }
-      btn.disabled = true;
-      try{ await window.__FB.setNome(nome); renderConta(); toast("Nome salvo"); }
-      catch(ex){ toast(AUTH_MSG[ex && ex.code] || "Não consegui salvar o nome agora"); }
-      finally{ btn.disabled = false; }
     });
     document.getElementById("contaHead").addEventListener("click", function(){
       var body = document.getElementById("contaBody"), abrir = body.hidden;
@@ -6494,6 +6731,12 @@ if(!window.__FB_TEST){
         const cred = await AU.createUserWithEmailAndPassword(auth, e, p);
         if(nome){ try{ await window.__FB.setNome(nome); }catch(x){} }
         return cred;
+      },
+      setPerfil: async (nome, foto) => {
+        const u = auth.currentUser; if(!u) return;
+        await AU.updateProfile(u, { displayName: nome });
+        window.__FB.user = auth.currentUser;
+        await F.setDoc(F.doc(db, 'users', u.uid, 'painel', 'perfil'), { nome, foto: foto || '', email: u.email || '', atualizadoEm: new Date().toISOString() }, { merge: true });
       },
       setNome: async nome => {
         const u = auth.currentUser; if(!u) return;
