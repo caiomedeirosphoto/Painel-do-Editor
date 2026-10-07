@@ -923,6 +923,26 @@
   .pf-botoes .add{padding:13px 24px}
   .pf-botoes .tool{padding:13px 18px}
   .pf-semnuvem{margin:0}
+  .pf-seg{margin-top:30px;padding-top:24px;border-top:1px solid var(--line)}
+  .pf-seg-tit{margin:0 0 14px;font-size:16px;font-weight:700}
+  .pf-bloco{border:1px solid var(--line);border-radius:14px;background:var(--field);margin-top:10px;overflow:hidden}
+  .pf-bloco-head{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;padding:15px 18px;text-align:left}
+  .pf-bloco-head b{display:block;font-size:15px;font-weight:700;color:var(--ink)}
+  .pf-bloco-head small{display:block;margin-top:3px;font-size:13px;color:var(--soft);font-weight:500}
+  .pf-bloco-head .chev{font-size:12px;color:var(--soft);transition:transform var(--fast) var(--ease)}
+  .pf-bloco-head[aria-expanded="true"] .chev{transform:rotate(90deg)}
+  .pf-bloco-body{padding:4px 18px 18px;border-top:1px solid var(--line);background:var(--paper)}
+  .pf-bloco-body form{padding-top:14px;max-width:460px}
+  .fld input[type="email"],.fld input[type="password"]{
+    padding:13px 15px;border:1px solid var(--line);border-radius:11px;background:var(--field);font-weight:600;width:100%;
+  }
+  .fld input[type="email"]:focus-visible,.fld input[type="password"]:focus-visible{
+    outline:none;border-color:var(--orange-border);box-shadow:0 0 0 3px var(--orange-wash);background:var(--paper);
+  }
+  .pf-aviso{margin-top:14px;padding:16px 18px;border-radius:12px;background:var(--teal-wash);border:1px solid var(--teal-border);color:var(--ink);font-size:14px;line-height:1.55}
+  .pf-aviso > b:first-child{display:block;color:var(--teal-deep);font-size:15px;margin-bottom:4px}
+  .pf-aviso p{margin:6px 0 0}
+  .pf-aviso .tool{margin-top:12px}
   .ob .lg-card{padding-top:28px}
   .ob-avatar{display:flex;margin:6px auto 10px}
   .ob-foto{display:flex;align-items:center;gap:8px;margin:0 auto 18px;padding:8px 12px;border-radius:10px;
@@ -1510,6 +1530,9 @@
     .pf-foto-acoes{flex-direction:row}
     .pf-foto-acoes .tool{flex:1}
     .pf-botoes .add,.pf-botoes .tool{flex:1 1 100%}
+    .pf-bloco-head{padding:14px 15px}
+    .pf-bloco-body{padding:2px 15px 16px}
+    .pf-bloco-body .add{width:100%}
     .avatar-xl{width:104px;height:104px}
     .eh-menu{min-width:0}
     li.item.leitura .title{padding-right:0}
@@ -2108,6 +2131,58 @@
           <div class="pf-botoes">
             <button type="button" class="add" id="pfSalvar">Salvar perfil</button>
             <button type="button" class="tool" id="pfSair">Sair da conta</button>
+          </div>
+        </div>
+      </div>
+      <div class="pf-seg" id="pfSeg">
+        <h3 class="pf-seg-tit">Segurança da conta</h3>
+
+        <div class="pf-bloco">
+          <button type="button" class="pf-bloco-head" id="pfEmailHead" aria-expanded="false" aria-controls="pfEmailBody">
+            <span><b>Mudar e-mail</b><small>Seus registros continuam todos na conta.</small></span><span class="chev">▶</span>
+          </button>
+          <div class="pf-bloco-body" id="pfEmailBody" hidden>
+            <form id="pfEmailForm" novalidate>
+              <label class="fld"><span>Novo e-mail</span>
+                <input type="email" id="pfEmailNovo" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" placeholder="nome@exemplo.com"></label>
+              <label class="fld"><span>Sua senha atual</span>
+                <input type="password" id="pfEmailSenha" autocomplete="current-password" placeholder="Para confirmar que é você"></label>
+              <p class="pf-erro" id="pfEmailErro" role="alert"></p>
+              <button type="submit" class="add" id="pfEmailGo">Enviar link de confirmação</button>
+            </form>
+            <div class="pf-aviso" id="pfEmailOk" hidden>
+              <b>Falta só confirmar.</b>
+              <p>Enviamos um link para <strong id="pfEmailDestino"></strong>. Abra esse e-mail e clique no link para concluir a troca. Até lá, continue entrando com o e-mail atual.</p>
+              <p>Não chegou? Olhe também a caixa de <b>Spam</b> e a <b>Lixeira</b> (no Gmail, veja ainda a aba <b>Promoções</b>). O e-mail vem do Firebase, em nome do Painel do Editor.</p>
+              <p>Depois de confirmar, o app pode pedir para entrar de novo: use o e-mail novo e a mesma senha.</p>
+              <button type="button" class="tool" id="pfEmailDeNovo">Usar outro e-mail</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pf-bloco">
+          <button type="button" class="pf-bloco-head" id="pfSenhaHead" aria-expanded="false" aria-controls="pfSenhaBody">
+            <span><b>Mudar senha</b><small>Vale para o celular e o computador.</small></span><span class="chev">▶</span>
+          </button>
+          <div class="pf-bloco-body" id="pfSenhaBody" hidden>
+            <form id="pfSenhaForm" novalidate>
+              <label class="fld"><span>Senha atual</span>
+                <input type="password" id="pfSenhaAtual" autocomplete="current-password"></label>
+              <label class="fld"><span>Nova senha</span>
+                <input type="password" id="pfSenhaNova" autocomplete="new-password" placeholder="Pelo menos 6 caracteres"></label>
+              <label class="fld"><span>Repita a nova senha</span>
+                <input type="password" id="pfSenhaNova2" autocomplete="new-password"></label>
+              <p class="pf-erro" id="pfSenhaErro" role="alert"></p>
+              <div class="pf-botoes">
+                <button type="submit" class="add" id="pfSenhaGo">Salvar nova senha</button>
+                <button type="button" class="tool" id="pfSenhaEsqueci">Esqueci a senha atual</button>
+              </div>
+            </form>
+            <div class="pf-aviso" id="pfSenhaReset" hidden>
+              <b>Link enviado.</b>
+              <p>Mandamos um link para <strong id="pfSenhaDestino"></strong> criar uma senha nova.</p>
+              <p>Não chegou? Olhe também a caixa de <b>Spam</b> e a <b>Lixeira</b> (no Gmail, veja ainda a aba <b>Promoções</b>). O e-mail vem do Firebase, em nome do Painel do Editor.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -5425,6 +5500,7 @@
     if(logado) topo.innerHTML = avatarHTML(nome || u.email || "", pf.foto);
     document.querySelector("#panel-perfil .pf-grid").hidden = !logado;
     document.getElementById("pfSemNuvem").hidden = logado;
+    document.getElementById("pfSeg").hidden = !logado;
     if(!logado) return;
     pintarAvatar(document.getElementById("pfAvatar"), nome || u.email || "", foto);
     document.getElementById("pfRemover").hidden = !foto;
@@ -5518,6 +5594,77 @@
     finally{ btn.disabled = false; btn.textContent = "Salvar perfil"; }
   });
   document.getElementById("pfSair").addEventListener("click", function(){ document.getElementById("btnSair").click(); });
+
+
+  /* ---------- perfil: mudar e-mail e senha ---------- */
+  function pfBloco(headId, bodyId){
+    document.getElementById(headId).addEventListener("click", function(){
+      var body = document.getElementById(bodyId), abrir = body.hidden;
+      body.hidden = !abrir; this.setAttribute("aria-expanded", abrir ? "true" : "false");
+      if(abrir){ revelar(body); var f = body.querySelector("input:not([disabled])"); if(f && !toqueGrosso()) f.focus(); }
+    });
+  }
+  pfBloco("pfEmailHead", "pfEmailBody");
+  pfBloco("pfSenhaHead", "pfSenhaBody");
+  function erroSeguranca(ex){
+    var c = ex && ex.code;
+    if(c === "auth/invalid-credential" || c === "auth/wrong-password") return "Senha atual incorreta.";
+    return AUTH_MSG[c] || "Não deu certo agora. Confira a internet e tente de novo.";
+  }
+  document.getElementById("pfEmailForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+    var novo = document.getElementById("pfEmailNovo").value.trim(), senha = document.getElementById("pfEmailSenha").value;
+    var err = document.getElementById("pfEmailErro"), btn = document.getElementById("pfEmailGo"), u = window.__FB && window.__FB.user;
+    err.textContent = "";
+    if(!novo || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(novo)){ err.textContent = "Digite um e-mail válido."; document.getElementById("pfEmailNovo").focus(); return; }
+    if(u && novo.toLowerCase() === String(u.email || "").toLowerCase()){ err.textContent = "Esse já é o e-mail da sua conta."; return; }
+    if(!senha){ err.textContent = "Digite a sua senha atual."; document.getElementById("pfEmailSenha").focus(); return; }
+    btn.disabled = true; btn.textContent = "Enviando";
+    try{
+      await window.__FB.mudarEmail(senha, novo);
+      document.getElementById("pfEmailSenha").value = "";
+      document.getElementById("pfEmailDestino").textContent = novo;
+      document.getElementById("pfEmailForm").hidden = true;
+      document.getElementById("pfEmailOk").hidden = false;
+    }catch(ex){ err.textContent = erroSeguranca(ex); }
+    finally{ btn.disabled = false; btn.textContent = "Enviar link de confirmação"; }
+  });
+  document.getElementById("pfEmailDeNovo").addEventListener("click", function(){
+    document.getElementById("pfEmailOk").hidden = true;
+    document.getElementById("pfEmailForm").hidden = false;
+    document.getElementById("pfEmailNovo").value = "";
+  });
+  document.getElementById("pfSenhaForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+    var atual = document.getElementById("pfSenhaAtual").value, nova = document.getElementById("pfSenhaNova").value, nova2 = document.getElementById("pfSenhaNova2").value;
+    var err = document.getElementById("pfSenhaErro"), btn = document.getElementById("pfSenhaGo");
+    err.textContent = "";
+    if(!atual){ err.textContent = "Digite a sua senha atual."; document.getElementById("pfSenhaAtual").focus(); return; }
+    if(nova.length < 6){ err.textContent = "A nova senha precisa ter pelo menos 6 caracteres."; document.getElementById("pfSenhaNova").focus(); return; }
+    if(nova !== nova2){ err.textContent = "As duas senhas novas não estão iguais."; document.getElementById("pfSenhaNova2").focus(); return; }
+    if(nova === atual){ err.textContent = "A nova senha é igual à atual."; return; }
+    btn.disabled = true; btn.textContent = "Salvando";
+    try{
+      await window.__FB.mudarSenha(atual, nova);
+      ["pfSenhaAtual","pfSenhaNova","pfSenhaNova2"].forEach(function(id){ document.getElementById(id).value = ""; });
+      document.getElementById("pfSenhaBody").hidden = true;
+      document.getElementById("pfSenhaHead").setAttribute("aria-expanded", "false");
+      toast("Senha alterada. Use a nova senha no próximo acesso.");
+    }catch(ex){ err.textContent = erroSeguranca(ex); }
+    finally{ btn.disabled = false; btn.textContent = "Salvar nova senha"; }
+  });
+  document.getElementById("pfSenhaEsqueci").addEventListener("click", async function(){
+    var u = window.__FB && window.__FB.user, err = document.getElementById("pfSenhaErro");
+    if(!u || !u.email) return;
+    this.disabled = true;
+    try{
+      await window.__FB.reset(u.email);
+      err.textContent = "";
+      document.getElementById("pfSenhaDestino").textContent = u.email;
+      document.getElementById("pfSenhaReset").hidden = false;
+    }catch(ex){ err.textContent = erroSeguranca(ex); }
+    finally{ this.disabled = false; }
+  });
 
   /* ---------- eventos ---------- */
   var abas = Array.prototype.slice.call(document.querySelectorAll('nav.tabs button'));
@@ -6562,7 +6709,9 @@
     "auth/invalid-credential":"E-mail ou senha incorretos.", "auth/wrong-password":"E-mail ou senha incorretos.", "auth/user-not-found":"Não achei uma conta com esse e-mail. Toque em Criar conta.",
     "auth/email-already-in-use":"Já existe uma conta com esse e-mail. Toque em Entrar.", "auth/weak-password":"A senha precisa ter pelo menos 6 caracteres.",
     "auth/invalid-email":"Confira o e-mail, parece que tem algo errado.", "auth/missing-password":"Digite a senha.", "auth/network-request-failed":"Sem internet. Tente de novo quando estiver conectado.",
-    "auth/too-many-requests":"Muitas tentativas seguidas. Espere um pouco e tente de novo.", "auth/operation-not-allowed":"O login por e-mail ainda não está ligado no Firebase."
+    "auth/too-many-requests":"Muitas tentativas seguidas. Espere um pouco e tente de novo.", "auth/operation-not-allowed":"O login por e-mail ainda não está ligado no Firebase.",
+    "auth/requires-recent-login":"Por segurança, saia e entre de novo na conta antes de fazer essa mudança.", "auth/user-mismatch":"Senha atual incorreta.",
+    "auth/missing-email":"Digite o e-mail."
   };
   function lgDefinirModo(m){
     lgModo = m;
@@ -6640,7 +6789,7 @@
     document.getElementById("lgForgot").addEventListener("click", async function(){
       var email = document.getElementById("lgEmail").value.trim(), err = document.getElementById("lgErr");
       if(!email){ err.textContent = "Digite o seu e-mail acima e toque de novo em Esqueci a senha."; document.getElementById("lgEmail").focus(); return; }
-      try{ await window.__FB.reset(email); err.textContent = ""; toast("Enviei um link para " + email + " criar uma senha nova"); }
+      try{ await window.__FB.reset(email); err.textContent = ""; err.innerHTML = '<span style="color:var(--teal-deep)">Enviei um link para ' + esc(email) + ' criar uma senha nova. Não chegou? Olhe também o Spam e a Lixeira.</span>'; }
       catch(ex){ err.textContent = AUTH_MSG[ex && ex.code] || "Não deu para enviar o e-mail agora."; }
     });
     Array.prototype.forEach.call(document.querySelectorAll(".lg-olho"), function(b){
@@ -6731,6 +6880,16 @@ if(!window.__FB_TEST){
         const cred = await AU.createUserWithEmailAndPassword(auth, e, p);
         if(nome){ try{ await window.__FB.setNome(nome); }catch(x){} }
         return cred;
+      },
+      mudarEmail: async (senha, novo) => {
+        const u = auth.currentUser; if(!u) throw { code:'auth/requires-recent-login' };
+        await AU.reauthenticateWithCredential(u, AU.EmailAuthProvider.credential(u.email, senha));
+        await AU.verifyBeforeUpdateEmail(u, novo);
+      },
+      mudarSenha: async (atual, nova) => {
+        const u = auth.currentUser; if(!u) throw { code:'auth/requires-recent-login' };
+        await AU.reauthenticateWithCredential(u, AU.EmailAuthProvider.credential(u.email, atual));
+        await AU.updatePassword(u, nova);
       },
       setPerfil: async (nome, foto) => {
         const u = auth.currentUser; if(!u) return;
