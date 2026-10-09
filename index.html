@@ -47,6 +47,10 @@
     --plum-wash:#f3eefc;
     --plum-border:#d7c6f0;
     --plum-deep:#553184;
+    --sky:#2f6fb5;
+    --sky-wash:#e8f1fb;
+    --sky-border:#bcd4ef;
+    --sky-deep:#1f5592;
     --hl-bg:#ffe9a8;
     --hl-fg:#1a1512;
     --danger:#c0392b;
@@ -82,6 +86,10 @@
     --plum-wash:#342b45;
     --plum-border:#5b4a7a;
     --plum-deep:#c9b2f0;
+    --sky:#6aa8ea;
+    --sky-wash:#1f2c3a;
+    --sky-border:#34506f;
+    --sky-deep:#9cc8f5;
     --hl-bg:#6b5520;
     --hl-fg:#fff6dd;
     --danger:#ff8f7e;
@@ -425,6 +433,26 @@
     transition:background var(--fast) var(--ease), border-color var(--fast) var(--ease), color var(--fast) var(--ease);
   }
   .cbox svg{width:12px;height:12px;display:block}
+  .marcas{display:flex;gap:6px 18px;flex-wrap:wrap;align-items:center}
+  .check.iachk[aria-pressed="true"]{color:var(--sky-deep)}
+  .check.iachk[aria-pressed="true"] .cbox{background:var(--sky);border-color:var(--sky);color:var(--wash)}
+  .ia{
+    display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+    font-size:12.5px;font-weight:600;color:var(--sky-deep);
+    background:var(--sky-wash);border:1px solid var(--sky-border);
+    padding:3px 11px;border-radius:20px;transition:padding 280ms var(--ease);
+  }
+  .ia svg{width:12px;height:12px;flex:none}
+  .ia b{font-weight:inherit;display:inline-block;overflow:hidden;white-space:nowrap;max-width:140px;opacity:1;
+    transition:max-width 280ms var(--ease), opacity 160ms var(--ease), margin-left 280ms var(--ease)}
+  body.medindo li.item .ia,body.medindo li.item .ia b{transition:none !important}
+  li.item.compacto .ia b{max-width:0;opacity:0;margin-left:-6px}
+  li.item.compacto .ia{padding:4px 9px}
+  .view-chip.iav{color:var(--sky-deep);background:var(--sky-wash);border-color:var(--sky-border)}
+  .calia{flex:none;display:inline-flex;align-items:center;gap:3px;font-style:normal;font-size:10.5px;font-weight:700;line-height:1;
+    color:var(--sky-deep);background:var(--sky-wash);border:1px solid var(--sky-border);border-radius:20px;padding:2px 6px 2px 5px}
+  .calia svg{width:9px;height:9px}
+  .stat.accent-ia b{color:var(--sky)}
   .check[aria-pressed="true"]{color:var(--plum-deep)}
   .check[aria-pressed="true"] .cbox{
     background:var(--plum);border-color:var(--plum);color:var(--wash);
@@ -881,7 +909,7 @@
   mark{background:var(--hl-bg);color:var(--hl-fg);border-radius:3px;padding:0 2px}
 
   /* Resumo */
-  .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+  .stats{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
   .stat{
     background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
     padding:22px 22px 20px;box-shadow:var(--shadow);
@@ -1434,7 +1462,9 @@
       flex:1 1 100%;min-width:0;font-size:15px;line-height:1.4;
       overflow-wrap:break-word;word-break:normal;
     }
-    li.item .dem,li.item .dt,li.item .ref{font-size:12px;padding:3px 10px}
+    li.item .dem,li.item .ia,li.item .dt,li.item .ref{font-size:12px;padding:3px 10px}
+    li.item.compacto .ia b{max-width:140px;opacity:1;margin-left:0}
+    li.item.compacto .ia{padding:3px 10px}
     li.item .ref{max-width:100%;overflow:hidden;text-overflow:ellipsis}
     li.item.compacto .dem b{max-width:140px;opacity:1;margin-left:0}
     li.item.compacto .dem{padding:3px 10px}
@@ -1753,7 +1783,10 @@
               <button data-kind="video" aria-pressed="true">Vídeo</button>
               <button data-kind="alteracao" aria-pressed="false">Alteração</button>
             </div>
+            <div class="marcas">
             <button type="button" class="check" id="chkDemanda" aria-pressed="false"><span class="cbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l5 5 9-11"/></svg></span>Demanda</button>
+            <button type="button" class="check iachk" id="chkClaude" aria-pressed="false" title="Marque quando o vídeo foi feito com o Claude"><span class="cbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l5 5 9-11"/></svg></span>Claude</button>
+            </div>
           </div>
           <div class="fields">
             <input type="text" id="inTitulo" placeholder="Nome do vídeo" autocomplete="off">
@@ -1843,6 +1876,7 @@
             <button class="chip" data-kind="todos" aria-pressed="true">Todos</button>
             <button class="chip" data-kind="video">Vídeos</button>
             <button class="chip" data-kind="alteracao">Alterações</button>
+            <button class="chip" data-kind="claude">Claude</button>
           </div>
         </div>
 
@@ -1908,6 +1942,7 @@
             <button class="chip" data-kind="todos" aria-pressed="true">Todos</button>
             <button class="chip" data-kind="video">Vídeos</button>
             <button class="chip" data-kind="demanda">Demandas</button>
+            <button class="chip" data-kind="claude">Claude</button>
           </div>
         </div>
       </div>
@@ -2051,6 +2086,7 @@
               <button class="chip" data-kind="todos" aria-pressed="true">Todos</button>
               <button class="chip" data-kind="video">Vídeos</button>
               <button class="chip" data-kind="alteracao">Alterações</button>
+              <button class="chip" data-kind="claude">Claude</button>
             </div>
           </div>
           <div class="fgroup grow">
@@ -2088,6 +2124,7 @@
       <div class="stat accent"><b id="eTotVid">0</b><span>Vídeos da equipe</span></div>
       <div class="stat accent-alt"><b id="eTotAlt">0</b><span>Alterações da equipe</span></div>
       <div class="stat accent-dem"><b id="eTotDem">0</b><span id="eDemLabel">Demandas da equipe</span></div>
+      <div class="stat accent-ia"><b id="eTotIa">0</b><span id="eIaLabel">Feitos com Claude</span></div>
       <div class="stat"><b id="eMediaEd">0</b><span>Média de vídeos por editor em cada dia útil</span></div>
       <div class="stat"><b id="eMediaDia">0</b><span>Média de vídeos da equipe por dia útil</span></div>
     </div>
@@ -2196,6 +2233,7 @@
       <div class="stat accent"><b id="sTotVid">0</b><span>Vídeos no total</span></div>
       <div class="stat accent-alt"><b id="sTotAlt">0</b><span>Alterações no total</span></div>
       <div class="stat accent-dem"><b id="sTotDem">0</b><span id="sDemLabel">Demandas no total</span></div>
+      <div class="stat accent-ia"><b id="sTotIa">0</b><span id="sIaLabel">Feitos com Claude</span></div>
       <div class="stat"><b id="sMedia">0</b><span>Média de vídeos por dia útil trabalhado</span></div>
       <div class="stat"><b id="sDias">0</b><span>Dias úteis trabalhados</span></div>
     </div>
@@ -2300,7 +2338,8 @@
       </div>
       <div class="fld">
         <span>Marcação</span>
-        <button type="button" class="check" id="edDemanda" aria-pressed="false"><span class="cbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l5 5 9-11"/></svg></span>Demanda</button>
+        <div class="marcas"><button type="button" class="check" id="edDemanda" aria-pressed="false"><span class="cbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l5 5 9-11"/></svg></span>Demanda</button>
+        <button type="button" class="check iachk" id="edClaude" aria-pressed="false"><span class="cbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l5 5 9-11"/></svg></span>Claude</button></div>
       </div>
     </div>
 
@@ -2416,7 +2455,8 @@
       </div>
       <div class="fld">
         <span>Marcação</span>
-        <button type="button" class="check" id="grDemanda" aria-pressed="false"><span class="cbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l5 5 9-11"/></svg></span>Demanda</button>
+        <div class="marcas"><button type="button" class="check" id="grDemanda" aria-pressed="false"><span class="cbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l5 5 9-11"/></svg></span>Demanda</button>
+        <button type="button" class="check iachk" id="grClaude" aria-pressed="false"><span class="cbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l5 5 9-11"/></svg></span>Claude</button></div>
       </div>
     </div>
 
@@ -2569,6 +2609,7 @@
   var justAdded = null;
   var dataVideo = isoToday();
   var demanda = false;
+  var claudeMarca = false;
   var anoAtivo = new Date().getFullYear();
   var saveTimer = null;
   var somenteLeitura = false;   // trava o salvamento quando a leitura falhou
@@ -3001,6 +3042,7 @@
       ref: nomeCliente(r.value),
       dt: dataVideo || "",
       dem: demanda,
+      cl: claudeMarca,
       ts: new Date().toISOString()
     });
     justAdded = listOf(activeDate, kind).slice(-1)[0].id;
@@ -3008,6 +3050,8 @@
     // o formulário volta ao estado inicial para o próximo registro
     demanda = false;
     document.getElementById("chkDemanda").setAttribute("aria-pressed","false");
+    claudeMarca = false;
+    document.getElementById("chkClaude").setAttribute("aria-pressed","false");
     r.value = "";
     dataVideo = activeDate;
     renderDatePick();
@@ -3174,7 +3218,7 @@
 
     var depois = itens.map(function(li){
       var t = li.querySelector(".title");
-      if(!t || !li.querySelector(".dem")) return false;
+      if(!t || !li.querySelector(".dem, .ia")) return false;
       var lh = parseFloat(getComputedStyle(t).lineHeight) || 20;
       return t.offsetHeight > lh * 2.2;
     });
@@ -3427,6 +3471,13 @@
       demEl.innerHTML = ICON_CHECK + "<b>Demanda</b>";
       abrir.appendChild(demEl);
     }
+    if(item.cl){
+      var iaEl = document.createElement("span");
+      iaEl.className = "ia";
+      iaEl.title = "Feito com o Claude";
+      iaEl.innerHTML = ICON_IA + "<b>Claude</b>";
+      abrir.appendChild(iaEl);
+    }
 
     if(item.dt){
       var dtEl = document.createElement("span");
@@ -3475,6 +3526,7 @@
     return li;
   }
 
+  var ICON_IA = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l1.75 5.6a2.4 2.4 0 0 0 1.6 1.6L21 11.8l-5.65 1.75a2.4 2.4 0 0 0-1.6 1.6L12 20.8l-1.75-5.65a2.4 2.4 0 0 0-1.6-1.6L3 11.8l5.65-1.8a2.4 2.4 0 0 0 1.6-1.6z"/></svg>';
   var ICON_MAIS = '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5.5" cy="12" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="18.5" cy="12" r="1.9"/></svg>';
   document.addEventListener("click", function(e){
     if(e.target.closest && e.target.closest("li.item.acoes-on")) return;
@@ -3557,6 +3609,7 @@
       var d = ativo(iso);
       var v = filters.kind === "alteracao" ? [] : d.videos;
       var a = filters.kind === "video" ? [] : d.alteracoes;
+      if(filters.kind === "claude"){ v = v.filter(function(x){ return !!x.cl; }); a = a.filter(function(x){ return !!x.cl; }); }
       if(tn || tc){
         var m = function(x){
           var okN = !tn || filtraTexto(x.titulo, tn);
@@ -3875,13 +3928,14 @@
         if(!g){
           grupos.push({
             iso: reg.iso, k: reg.k, item: reg.item,
-            dem: !!reg.item.dem, alteracoes: 0,
+            dem: !!reg.item.dem, cl: !!reg.item.cl, alteracoes: 0,
             regs: [{ iso:reg.iso, k:reg.k, id:reg.item.id }]
           });
           return;
         }
         g.regs.push({ iso:reg.iso, k:reg.k, id:reg.item.id });
         g.dem = g.dem || !!reg.item.dem;
+        g.cl = g.cl || !!reg.item.cl;
         // o nome exibido é o do registro do vídeo, quando ele existe
         if(g.k === "alteracao" && reg.k === "video"){
           g.iso = reg.iso; g.k = reg.k; g.item = reg.item;
@@ -3895,6 +3949,7 @@
       }).filter(function(g){
         if(calFiltro.kind === "video" && g.dem) return false;
         if(calFiltro.kind === "demanda" && !g.dem) return false;
+        if(calFiltro.kind === "claude" && !g.cl) return false;
         if(fn && !filtraTexto(g.item.titulo, fn)) return false;
         if(fc && !filtraCliente(g.item.ref, fc)) return false;
         return true;
@@ -3912,7 +3967,7 @@
     if(!base) return null;
     var alvoDt = base.dt || "";
     var arquivado = !!base.arq;
-    var regs = [], principal = null, dem = false;
+    var regs = [], principal = null, dem = false, cl = false;
 
     Object.keys(data).sort().forEach(function(dia){
       ["video","alteracao"].forEach(function(tipo){
@@ -3923,6 +3978,7 @@
           if(!pareceIgual(it.titulo, base.titulo)) return;
           regs.push({ iso:dia, k:tipo, id:it.id });
           dem = dem || !!it.dem;
+          cl = cl || !!it.cl;
           if(!principal || (principal.k === "alteracao" && tipo === "video")){
             principal = { iso:dia, k:tipo, item:it };
           }
@@ -3932,7 +3988,7 @@
 
     if(!regs.length) return null;
     return {
-      iso: principal.iso, k: principal.k, item: principal.item, dem: dem,
+      iso: principal.iso, k: principal.k, item: principal.item, dem: dem, cl: cl,
       alteracoes: regs.filter(function(r){ return r.k === "alteracao"; }).length,
       regs: regs
     };
@@ -3947,6 +4003,8 @@
     });
     demanda = !!item.dem;
     document.getElementById("chkDemanda").setAttribute("aria-pressed", demanda ? "true" : "false");
+    claudeMarca = !!item.cl;
+    document.getElementById("chkClaude").setAttribute("aria-pressed", claudeMarca ? "true" : "false");
     document.getElementById("inTitulo").value = item.titulo;
     document.getElementById("inRef").value = item.ref || "";
     fecharDetalhe();
@@ -4087,13 +4145,14 @@
             document.querySelectorAll(".calday.alvo").forEach(function(x){ x.classList.remove("alvo"); });
           });
           var rodape = "";
-          if(reg.item.ref || reg.alteracoes){
+          if(reg.item.ref || reg.alteracoes || reg.cl){
             rodape = '<span class="rodape"><span>' + esc(reg.item.ref || "") + '</span>' +
                      (reg.alteracoes
                        ? '<em class="calalt" title="' + reg.alteracoes +
                          (reg.alteracoes === 1 ? " alteração registrada" : " alterações registradas") + '">' +
                          ICON_REV + reg.alteracoes + '</em>'
                        : "") +
+                     (reg.cl ? '<em class="calia" title="Feito com o Claude">' + ICON_IA + 'Claude</em>' : "") +
                      '</span>';
           }
           card.innerHTML = "<b>" + esc(reg.item.titulo) + "</b>" + rodape;
@@ -4257,6 +4316,7 @@
 
       var chips = "";
       if(l.item.dem) chips += '<span class="dem">' + ICON_CHECK + '<b>Demanda</b></span>';
+      if(l.item.cl) chips += '<span class="ia">' + ICON_IA + '<b>Claude</b></span>';
       if(l.item.dt) chips += '<span class="dt">' + ICON_CAL + '<b>' + shortDate(l.item.dt) + '</b></span>';
       if(l.item.ref) chips += '<span class="ref">' + esc(l.item.ref) + '</span>';
 
@@ -4300,12 +4360,13 @@
 
   /* ---------- resumo ---------- */
   function renderResumo(){
-    var all = dias(), totV = 0, totA = 0, totD = 0;
+    var all = dias(), totV = 0, totA = 0, totD = 0, totIa = 0;
     var porCliente = {}, porDia = [], porMes = {};
     all.forEach(function(iso){
       var d = ativo(iso);
       totV += d.videos.length; totA += d.alteracoes.length;
       totD += d.videos.concat(d.alteracoes).filter(function(x){ return !!x.dem; }).length;
+      totIa += d.videos.concat(d.alteracoes).filter(function(x){ return !!x.cl; }).length;
       porDia.push({ iso:iso, n:d.videos.length + d.alteracoes.length, v:d.videos.length });
       var ym = iso.slice(0,7);
       porMes[ym] = (porMes[ym]||0) + d.videos.length + d.alteracoes.length;
@@ -4322,6 +4383,10 @@
     document.getElementById("sDemLabel").textContent = volume
       ? "Demandas, " + Math.round(totD / volume * 100) + "% do que você produziu"
       : "Demandas no total";
+    document.getElementById("sTotIa").textContent = totIa;
+    document.getElementById("sIaLabel").textContent = volume
+      ? "Feitos com Claude, " + Math.round(totIa / volume * 100) + "% do que você produziu"
+      : "Feitos com Claude";
     var uteis = all.filter(function(iso){ return !folgaDe(iso); }), vUteis = 0;
     uteis.forEach(function(iso){ vUteis += ativo(iso).videos.length; });
     document.getElementById("sMedia").textContent = uteis.length ? (vUteis/uteis.length).toFixed(1).replace(".",",") : "0";
@@ -4348,7 +4413,7 @@
     else if(nv.equipeErro) msg = "Não consegui ler o resumo da equipe. Confira se as regras novas do Firestore foram publicadas no Firebase.";
     aviso.hidden = !msg; aviso.textContent = msg;
 
-    var totV = 0, totA = 0, totD = 0, edDias = 0, vUteis = 0, editores = 0;
+    var totV = 0, totA = 0, totD = 0, totIa = 0, edDias = 0, vUteis = 0, editores = 0;
     var porCliente = {}, porDia = {}, porMes = {}, diasUteisEq = {};
     Object.keys(eq || {}).forEach(function(uid){
       var dd = (eq[uid] && eq[uid].dias) || {}, temAlgo = false;
@@ -4357,7 +4422,7 @@
         var r = dd[iso] || {}, v = r.v || 0, a = r.a || 0;
         if(!v && !a) return;
         temAlgo = true;
-        totV += v; totA += a; totD += r.d || 0;
+        totV += v; totA += a; totD += r.d || 0; totIa += r.ia || 0;
         porDia[iso] = (porDia[iso] || 0) + v + a;
         porMes[iso.slice(0,7)] = (porMes[iso.slice(0,7)] || 0) + v + a;
         if(!fimDeSemana(iso) && !r.f){ edDias++; vUteis += v; diasUteisEq[iso] = 1; }
@@ -4370,6 +4435,9 @@
     document.getElementById("eTotVid").textContent = totV;
     document.getElementById("eTotAlt").textContent = totA;
     document.getElementById("eTotDem").textContent = totD;
+    document.getElementById("eTotIa").textContent = totIa;
+    document.getElementById("eIaLabel").textContent = (totV + totA)
+      ? "Feitos com Claude, " + Math.round(totIa / (totV + totA) * 100) + "% do que a equipe produziu" : "Feitos com Claude";
     document.getElementById("eDemLabel").textContent = (totV + totA)
       ? "Demandas, " + Math.round(totD / (totV + totA) * 100) + "% do que a equipe produziu" : "Demandas da equipe";
     document.getElementById("eMediaEd").textContent = edDias ? (vUteis / edDias).toFixed(1).replace(".", ",") : "0";
@@ -4616,6 +4684,7 @@
     if(it.dt) chips += '<span class="view-chip data">' + ICON_CAL + esc(longDate(it.dt)) + '</span>';
     if(it.ref) chips += '<span class="view-chip cli">' + esc(it.ref) + '</span>';
     if(grupo.dem) chips += '<span class="view-chip dem">' + ICON_CHECK + 'Demanda</span>';
+    if(grupo.cl) chips += '<span class="view-chip iav">' + ICON_IA + 'Claude</span>';
     if(it.arq) chips += '<span class="view-chip arq">' + ICON_ARQ + 'Arquivado</span>';
     document.getElementById("viewChips").innerHTML = chips;
 
@@ -4674,12 +4743,13 @@
 
   // remonta o grupo depois de uma edição e reabre a visualização
   function reabrirDetalhe(g){
-    var novos = [], dem = false;
+    var novos = [], dem = false, cl = false;
     g.regs.forEach(function(r){
       var f = localizarReg(r.id);
       if(!f) return;
       novos.push({ iso:f.iso, k:f.k, id:r.id });
       dem = dem || !!f.item.dem;
+      cl = cl || !!f.item.cl;
     });
     if(!novos.length){ fecharDetalhe(); return false; }
     var principal = localizarReg(g.item.id) || localizarReg(novos[0].id);
@@ -4688,6 +4758,7 @@
     g.k = principal.k;
     g.item = principal.item;
     g.dem = dem;
+    g.cl = cl;
     g.alteracoes = novos.filter(function(r){ return r.k === "alteracao"; }).length;
     abrirDetalhe(g);
     return true;
@@ -4703,12 +4774,13 @@
   var grupoEdit = null;   // { grupo, dt, dem }
 
   function abrirGrupo(grupo){
-    grupoEdit = { grupo: grupo, dt: grupo.item.dt || "", dem: !!grupo.dem };
+    grupoEdit = { grupo: grupo, dt: grupo.item.dt || "", dem: !!grupo.dem, cl: !!grupo.cl };
 
     document.getElementById("grNome").value = grupo.item.titulo;
     document.getElementById("grCliente").value = grupo.item.ref || "";
     document.getElementById("grDataValor").textContent = grupoEdit.dt ? shortDate(grupoEdit.dt) : "--/--";
     document.getElementById("grDemanda").setAttribute("aria-pressed", grupoEdit.dem ? "true" : "false");
+    document.getElementById("grClaude").setAttribute("aria-pressed", grupoEdit.cl ? "true" : "false");
 
     var n = grupo.regs.length;
     document.getElementById("grAviso").innerHTML =
@@ -4745,6 +4817,7 @@
       f.item.ref = cliente;
       f.item.dt = grupoEdit.dt || "";
       f.item.dem = !!grupoEdit.dem;
+      f.item.cl = !!grupoEdit.cl;
     });
 
     save();
@@ -4761,7 +4834,7 @@
   function abrirEdicao(iso, k, id, origem){
     var it = findItem(iso, k, id);
     if(!it) return;
-    edit = { iso:iso, k:k, id:id, dt: it.dt || "", dia: iso, tipo: k, dem: !!it.dem };
+    edit = { iso:iso, k:k, id:id, dt: it.dt || "", dia: iso, tipo: k, dem: !!it.dem, cl: !!it.cl };
     voltarPara = origem || null;
     document.getElementById("edVoltar").hidden = !voltarPara;
 
@@ -4773,6 +4846,7 @@
       b.setAttribute("aria-pressed", b.dataset.kind === edit.tipo ? "true" : "false");
     });
     document.getElementById("edDemanda").setAttribute("aria-pressed", edit.dem ? "true" : "false");
+    document.getElementById("edClaude").setAttribute("aria-pressed", edit.cl ? "true" : "false");
 
     abrirModal(document.getElementById("editModal"));
     setTimeout(function(){ document.getElementById("edNome").focus(); }, 60);
@@ -4797,6 +4871,7 @@
     it.ref = nomeCliente(document.getElementById("edCliente").value);
     it.dt = edit.dt || "";
     it.dem = !!edit.dem;
+    it.cl = !!edit.cl;
 
     if(edit.tipo !== edit.k || edit.dia !== edit.iso){
       var listaAtual = listOf(edit.iso, edit.k);
@@ -4815,7 +4890,7 @@
   /* ---------- exportar ---------- */
   function linhaTexto(i){
     return i.titulo.toUpperCase() + (i.ref ? " - " + i.ref : "") +
-           (i.dt ? " - " + shortDate(i.dt) : "") + (i.dem ? " - DEMANDA" : "");
+           (i.dt ? " - " + shortDate(i.dt) : "") + (i.dem ? " - DEMANDA" : "") + (i.cl ? " - CLAUDE" : "");
   }
 
   function textoDoDia(iso){
@@ -5275,6 +5350,7 @@
       var d = dados[iso] || {};
       var v = eh.kind === "alteracao" ? [] : ehVis(d.videos);
       var a = eh.kind === "video" ? [] : ehVis(d.alteracoes);
+      if(eh.kind === "claude"){ v = v.filter(function(x){ return !!x.cl; }); a = a.filter(function(x){ return !!x.cl; }); }
       if(tn || tc){
         var m = function(x){ return (!tn || filtraTexto(x.titulo || "", tn)) && (!tc || filtraCliente(x.ref, tc)); };
         v = v.filter(m); a = a.filter(m);
@@ -5295,6 +5371,7 @@
     t.innerHTML = highlight(item.titulo || "", term.n);
     box.appendChild(t);
     if(item.dem){ var de = document.createElement("span"); de.className = "dem"; de.innerHTML = ICON_CHECK + "<b>Demanda</b>"; box.appendChild(de); }
+    if(item.cl){ var ie = document.createElement("span"); ie.className = "ia"; ie.innerHTML = ICON_IA + "<b>Claude</b>"; box.appendChild(ie); }
     if(item.dt){ var dt = document.createElement("span"); dt.className = "dt"; dt.innerHTML = ICON_CAL + "<b>" + shortDate(item.dt) + "</b>"; box.appendChild(dt); }
     if(item.ref){ var r = document.createElement("span"); r.className = "ref"; r.innerHTML = highlight(item.ref, term.c); box.appendChild(r); }
     li.appendChild(box);
@@ -5754,6 +5831,10 @@
     if(e.key === "Enter"){ e.preventDefault(); guardarNota(); this.blur(); }
   });
 
+  document.getElementById("chkClaude").addEventListener("click", function(){
+    claudeMarca = !claudeMarca;
+    this.setAttribute("aria-pressed", claudeMarca ? "true" : "false");
+  });
   document.getElementById("chkDemanda").addEventListener("click", function(){
     demanda = !demanda;
     this.setAttribute("aria-pressed", demanda ? "true" : "false");
@@ -6112,6 +6193,11 @@
   document.getElementById("grNome").addEventListener("keydown", function(e){
     if(e.key === "Enter") salvarGrupo();
   });
+  document.getElementById("grClaude").addEventListener("click", function(){
+    if(!grupoEdit) return;
+    grupoEdit.cl = !grupoEdit.cl;
+    this.setAttribute("aria-pressed", grupoEdit.cl ? "true" : "false");
+  });
   document.getElementById("grDemanda").addEventListener("click", function(){
     if(!grupoEdit) return;
     grupoEdit.dem = !grupoEdit.dem;
@@ -6170,6 +6256,11 @@
     removeItem(alvo.iso, alvo.k, alvo.id);
   });
 
+  document.getElementById("edClaude").addEventListener("click", function(){
+    if(!edit) return;
+    edit.cl = !edit.cl;
+    this.setAttribute("aria-pressed", edit.cl ? "true" : "false");
+  });
   document.getElementById("edDemanda").addEventListener("click", function(){
     if(!edit) return;
     edit.dem = !edit.dem;
@@ -6608,6 +6699,7 @@
       if(!itens.length) return;
       var r = { v:d.videos.length, a:d.alteracoes.length };
       var dem = itens.filter(function(x){ return !!x.dem; }).length; if(dem) r.d = dem;
+      var ia = itens.filter(function(x){ return !!x.cl; }).length; if(ia) r.ia = ia;
       if(folgaMarcada(iso)) r.f = 1;
       var c = {};
       itens.forEach(function(x){ var n = x.ref ? (clientePadrao(x.ref) || String(x.ref).trim()) : ""; if(n) c[n] = (c[n] || 0) + 1; });
