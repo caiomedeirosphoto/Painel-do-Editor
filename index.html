@@ -1085,7 +1085,8 @@
     .modal-foot .spacer{display:none}
   }
   .modal-sm{width:min(470px,100%)}
-  .modal-view{width:min(540px,100%)}
+  .modal-view{width:min(720px,100%)}
+  .modal-view .modal-foot .tool{white-space:nowrap;padding-left:14px;padding-right:14px}
   .bk-area{
     width:100%;height:170px;resize:vertical;
     padding:13px 15px;border:1px solid var(--line);border-radius:11px;
@@ -1599,6 +1600,7 @@
     .modal-foot .datepick .tool{width:100%}
     .modal-foot .add{flex-basis:100%;order:9;padding:14px}
     .modal-foot .tool{padding:13px 12px;text-align:center}
+    .modal-view .modal-foot #viewRepAlt{flex-basis:100%}
     .pick-menu.paracima{left:0;right:auto}
 
     /* menus e avisos */
@@ -2408,6 +2410,7 @@
         <div class="pick-menu datepick-menu paracima" id="viewDataMenu" role="menu" aria-label="Escolher a data do vídeo" hidden></div>
       </div>
       <button class="tool" id="viewRepetir">Repetir</button>
+      <button class="tool" id="viewRepAlt" title="Registra hoje uma alteração deste vídeo, com o mesmo nome, cliente, data e marcações">Repetir como alteração</button>
       <span class="spacer"></span>
       <button class="tool" id="viewEditar">Editar</button>
       <button class="add" id="viewOk">Concluído</button>
@@ -4009,11 +4012,13 @@
     document.getElementById("inRef").value = item.ref || "";
     fecharDetalhe();
     if(tab !== "hoje") mostrarAba("hoje");
+    dataVideo = item.dt || activeDate;   // repete com a mesma data do vídeo
+    renderDatePick();
     ajustarClientes();
     var t = document.getElementById("inTitulo");
     t.focus();
     t.select();
-    toast("Pronto para repetir em " + shortDate(activeDate) + ". Confira e adicione.");
+    toast("Pronto para repetir em " + shortDate(activeDate) + (item.dt ? ", com data do vídeo " + shortDate(item.dt) : "") + ". Confira e adicione.");
   }
 
   function abrirRegistro(iso, k, id){
@@ -6181,6 +6186,33 @@
     centralizarSelecionado(menu);
   });
 
+  // copia o vídeo como alteração no dia de hoje, com nome, cliente, data do vídeo e marcações
+  function repetirComoAlteracao(g){
+    if(!g) return;
+    var it = g.item, hoje = isoToday();
+    var novo = {
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2,6),
+      titulo: it.titulo, ref: it.ref || "", dt: it.dt || "",
+      dem: !!g.dem, cl: !!g.cl, ts: new Date().toISOString()
+    };
+    listOf(hoje, "alteracao").push(novo);
+    justAdded = novo.id;
+    g.regs.push({ iso:hoje, k:"alteracao", id:novo.id });
+    save(); renderAll();
+    reabrirDetalhe(g);
+    toast("Alteração registrada em " + shortDate(hoje), "Desfazer", function(){
+      var lista = listOf(hoje, "alteracao");
+      var i = lista.findIndex(function(x){ return x.id === novo.id; });
+      if(i < 0) return;
+      lista.splice(i, 1);
+      g.regs = g.regs.filter(function(r){ return r.id !== novo.id; });
+      save(); renderAll();
+      if(detalhe === g) reabrirDetalhe(g);
+    });
+  }
+  document.getElementById("viewRepAlt").addEventListener("click", function(){
+    if(detalhe) repetirComoAlteracao(detalhe);
+  });
   document.getElementById("viewRepetir").addEventListener("click", function(){
     if(detalhe) repetirRegistro(detalhe.item, detalhe.k);
   });
