@@ -403,6 +403,16 @@
     display:flex;align-items:center;justify-content:flex-start;
     gap:20px;flex-wrap:wrap;margin-bottom:18px;
   }
+  .limpar-form{
+    margin-left:auto;display:inline-flex;align-items:center;gap:7px;
+    padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--field);
+    font-size:13.5px;font-weight:700;color:var(--soft);
+    transition:opacity var(--fast) var(--ease), color var(--fast) var(--ease), border-color var(--fast) var(--ease), background var(--fast) var(--ease);
+  }
+  .limpar-form svg{width:15px;height:15px;flex:none;transition:transform 420ms var(--ease)}
+  .limpar-form:not(:disabled):hover{color:var(--danger);border-color:var(--danger-line);background:var(--danger-wash)}
+  .limpar-form:not(:disabled):hover svg{transform:rotate(-200deg)}
+  .limpar-form:disabled{opacity:.38;cursor:default}
   .composer-title{
     margin:0;font-size:20px;font-weight:700;letter-spacing:-.02em;
   }
@@ -1556,6 +1566,8 @@
     .eq-seg{display:flex;width:100%;margin-bottom:14px}
     .eq-seg button{flex:1;padding:11px 8px;font-size:13.5px}
     .eh-editor{flex:1 1 100%;min-width:0}
+    .composer{position:relative}
+    .limpar-form{position:absolute;top:16px;right:16px;padding:7px 12px;font-size:13px}
     .avatar-topo{width:40px;height:40px}
     .pf-grid{grid-template-columns:1fr;gap:22px}
     .pf-foto-acoes{flex-direction:row}
@@ -1789,6 +1801,7 @@
             <button type="button" class="check" id="chkDemanda" aria-pressed="false"><span class="cbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l5 5 9-11"/></svg></span>Demanda</button>
             <button type="button" class="check iachk" id="chkClaude" aria-pressed="false" title="Marque quando o vídeo foi feito com o Claude"><span class="cbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l5 5 9-11"/></svg></span>Claude</button>
             </div>
+            <button type="button" class="limpar-form" id="btnLimparForm" title="Desmarca tudo, apaga nome e cliente e volta a data para o dia do registro" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4.6h4.6"/></svg><span>Limpar</span></button>
           </div>
           <div class="fields">
             <input type="text" id="inTitulo" placeholder="Nome do vídeo" autocomplete="off">
@@ -3273,7 +3286,31 @@
     renderDatePick();
   }
 
+  function formSujo(){
+    var t = document.getElementById("inTitulo"), r = document.getElementById("inRef");
+    return !!((t && t.value.trim()) || (r && r.value.trim()) || demanda || claudeMarca || kind !== "video" || (dataVideo && dataVideo !== activeDate));
+  }
+  function estadoLimpar(){
+    var b = document.getElementById("btnLimparForm");
+    if(b) b.disabled = !formSujo();
+  }
+  function limparFormulario(){
+    fecharMenus();
+    kind = "video";
+    document.querySelectorAll('.composer .kind button').forEach(function(x){ x.setAttribute("aria-pressed", x.dataset.kind === "video" ? "true" : "false"); });
+    demanda = false; claudeMarca = false;
+    document.getElementById("chkDemanda").setAttribute("aria-pressed", "false");
+    document.getElementById("chkClaude").setAttribute("aria-pressed", "false");
+    document.getElementById("inTitulo").value = "";
+    document.getElementById("inRef").value = "";
+    dataVideo = activeDate;
+    renderDatePick();
+    ajustarClientes();
+    estadoLimpar();
+    document.getElementById("inTitulo").focus();
+  }
   function renderDatePick(){
+    setTimeout(estadoLimpar, 0);
     document.getElementById("dateValue").textContent = dataVideo ? shortDate(dataVideo) : "--/--";
   }
 
@@ -5836,6 +5873,9 @@
     if(e.key === "Enter"){ e.preventDefault(); guardarNota(); this.blur(); }
   });
 
+  document.getElementById("btnLimparForm").addEventListener("click", limparFormulario);
+  ["inTitulo","inRef"].forEach(function(id){ document.getElementById(id).addEventListener("input", estadoLimpar); });
+  document.querySelector(".composer").addEventListener("click", function(){ setTimeout(estadoLimpar, 0); });
   document.getElementById("chkClaude").addEventListener("click", function(){
     claudeMarca = !claudeMarca;
     this.setAttribute("aria-pressed", claudeMarca ? "true" : "false");
