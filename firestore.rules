@@ -1,20 +1,19 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // cada pessoa lê e grava os próprios dados
-    match /users/{uid}/{document=**} {
-      allow read, write: if request.auth != null && request.auth.uid == uid;
+    // conta do Claude que manda os registros do ClickUp para o painel
+    function ehRobo() { return request.auth != null && request.auth.token.email == 'robo@painel-do-editor.app'; }
+
+    match /users/{uid}/{document=**} { allow read, write: if request.auth != null && request.auth.uid == uid; }
+    match /users/{uid}/meses/{mes} { allow read: if request.auth != null; }
+    match /equipe/{uid} { allow read: if request.auth != null; allow write: if request.auth != null && request.auth.uid == uid; }
+
+    // caixa de entrada: o Claude deixa o registro, só o editor dono pega e apaga
+    match /entrada/{id} {
+      allow create, update: if ehRobo() && request.resource.data.para is string;
+      allow read, delete: if request.auth != null && (resource.data.para == request.auth.uid || ehRobo());
     }
-    // os registros por mês podem ser vistos (nunca alterados) por quem está logado,
-    // para o histórico por editor na aba Equipe
-    match /users/{uid}/meses/{mes} {
-      allow read: if request.auth != null;
-    }
-    // resumo da equipe: números, nome e e-mail de cada editor.
-    // qualquer pessoa logada lê; cada uma só grava o próprio
-    match /equipe/{uid} {
-      allow read: if request.auth != null;
-      allow write: if request.auth != null && request.auth.uid == uid;
-    }
+    // índice dos cards do ClickUp já registrados (só o Claude usa)
+    match /clickup/{id} { allow read, write: if ehRobo(); }
   }
 }

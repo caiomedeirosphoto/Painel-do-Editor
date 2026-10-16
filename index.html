@@ -1185,6 +1185,8 @@
     margin:0;font-size:23px;font-weight:800;letter-spacing:-.03em;line-height:1.25;flex:1;
   }
   .view-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .view-chip.ck{text-decoration:none;color:var(--ink);background:var(--field);border-color:var(--line);cursor:pointer}
+  .view-chip.ck svg{width:13px;height:13px;margin-left:2px}
   .view-chip{
     display:inline-flex;align-items:center;gap:7px;
     font-size:12.5px;font-weight:600;padding:5px 13px;border-radius:20px;border:1px solid;
@@ -1728,6 +1730,60 @@
     .stat b{font-size:28px}
     .calday{grid-template-columns:40px minmax(0,1fr);column-gap:10px}
   }
+  /* notificações do ClickUp */
+  .notif{position:relative;flex:none}
+  .notif[hidden]{display:none}
+  .notif-btn{position:relative;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--field);color:var(--soft);display:flex;align-items:center;justify-content:center;padding:0;cursor:pointer;transition:color var(--fast) var(--ease),border-color var(--fast) var(--ease),box-shadow var(--fast) var(--ease)}
+  .notif-btn svg{width:19px;height:19px}
+  .notif-btn:hover,.notif-btn[aria-expanded="true"]{color:var(--ink);border-color:var(--orange-border);box-shadow:0 0 0 3px var(--orange-wash)}
+  .notif-btn.tem{color:var(--orange-deep)}
+  .notif-btn.toca svg{animation:sino 900ms var(--ease)}
+  @keyframes sino{0%,100%{transform:rotate(0)}15%{transform:rotate(16deg)}30%{transform:rotate(-14deg)}45%{transform:rotate(10deg)}60%{transform:rotate(-6deg)}75%{transform:rotate(3deg)}}
+  .notif-badge{position:absolute;top:-4px;right:-5px;min-width:20px;height:20px;padding:0 6px;border-radius:99px;background:var(--orange);color:#fff;font-size:11.5px;font-weight:800;line-height:20px;text-align:center;border:2px solid var(--paper);box-sizing:border-box}
+  .notif-badge[hidden]{display:none}
+  .notif-painel{position:absolute;right:0;top:calc(100% + 10px);width:400px;max-height:min(560px,calc(100vh - 120px));display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow),0 18px 50px rgba(0,0,0,.14);z-index:300;overflow:hidden}
+  .notif-painel[hidden]{display:none}
+  .notif-topo{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px 18px 12px}
+  .notif-topo b{display:block;font-size:17px;font-weight:800;color:var(--ink)}
+  .notif-topo small{display:block;font-size:13px;color:var(--soft);margin-top:3px}
+  .notif-x{width:34px;height:34px;border-radius:50%;border:0;background:transparent;color:var(--soft);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none}
+  .notif-x:hover{background:var(--field);color:var(--ink)}
+  .notif-x svg{width:16px;height:16px}
+  .notif-acoes{display:flex;gap:8px;padding:0 18px 12px;border-bottom:1px solid var(--line)}
+  .notif-acoes[hidden]{display:none}
+  .notif-acoes button{flex:1;height:36px;border-radius:12px;border:1px solid var(--line);background:var(--field);font:700 13px Montserrat,sans-serif;color:var(--ink);cursor:pointer}
+  .notif-acoes button:hover{border-color:var(--orange-border)}
+  .notif-acoes button.perigo{color:var(--danger)}
+  .notif-acoes button.perigo:hover{border-color:var(--danger-line);background:var(--danger-wash)}
+  .notif-acoes button:disabled{opacity:.45;cursor:default;border-color:var(--line);background:var(--field)}
+  .notif-lista{list-style:none;margin:0;padding:8px;overflow-y:auto;flex:1;min-height:0}
+  .notif-item{position:relative;display:flex;align-items:flex-start;gap:12px;padding:12px 44px 12px 12px;border-radius:14px;cursor:pointer;transition:background var(--fast) var(--ease)}
+  .notif-item + .notif-item{margin-top:2px}
+  .notif-item:hover{background:var(--field)}
+  .notif-item.nova{background:var(--orange-wash)}
+  .notif-item.nova:hover{background:var(--orange-wash);box-shadow:inset 0 0 0 1px var(--orange-border)}
+  .notif-ic{width:36px;height:36px;border-radius:11px;flex:none;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
+  .notif-ic.v{background:var(--orange);color:#fff}
+  .notif-ic.a{background:var(--teal-wash);color:var(--teal-deep);border:1px solid var(--teal-border)}
+  .notif-ic svg{width:17px;height:17px}
+  .notif-txt{flex:1;min-width:0}
+  .notif-txt b{display:block;font-size:14px;font-weight:700;color:var(--ink);line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .notif-txt span{display:block;font-size:12.5px;color:var(--soft);margin-top:3px;line-height:1.4}
+  .notif-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+  .notif-tags i{font-style:normal;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;border:1px solid}
+  .notif-tags i.dem{color:var(--plum-deep);background:var(--plum-wash);border-color:var(--plum-border)}
+  .notif-tags i.ia{color:var(--sky-deep);background:var(--sky-wash);border-color:var(--sky-border)}
+  .notif-quando{font-size:11.5px;color:var(--soft);font-weight:600;white-space:nowrap}
+  .notif-ponto{position:absolute;top:18px;right:40px;width:8px;height:8px;border-radius:50%;background:var(--orange)}
+  .notif-del{position:absolute;top:10px;right:8px;width:30px;height:30px;border-radius:50%;border:0;background:transparent;color:var(--soft);display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.75}
+  .notif-del:hover{opacity:1;background:var(--paper);color:var(--danger)}
+  .notif-del svg{width:14px;height:14px}
+  .notif-vazio{padding:34px 20px 38px;text-align:center;color:var(--soft);font-size:13.5px;line-height:1.5}
+  .notif-vazio b{display:block;color:var(--ink);font-size:15px;margin-bottom:4px}
+  @media (max-width:640px){
+    .notif-btn{width:40px;height:40px}
+    .notif-painel{position:fixed;left:12px;right:12px;top:calc(env(safe-area-inset-top) + 140px);width:auto;max-height:calc(100dvh - 160px)}
+  }
   /* relatório em PDF (montado fora da tela, sempre claro) */
   #rpRoot{position:fixed;left:-10000px;top:0;width:794px;pointer-events:none;z-index:-1}
   #rpRoot .rp-page{width:794px;height:1123px;background:#fff;color:#1f1a17;font-family:Montserrat,'Segoe UI',sans-serif;display:flex;flex-direction:column;overflow:hidden;position:relative;margin-bottom:20px;-webkit-font-smoothing:antialiased}
@@ -1893,6 +1949,20 @@
         <div class="pick-menu datepick-menu anomenu" id="anoMenu" role="menu" aria-label="Escolher o ano" hidden></div>
       </div>
       <button class="theme-btn" id="themeBtn" aria-label="Alternar tema"><span id="themeIcon"></span><span id="themeLabel">Modo escuro</span></button>
+      <div class="notif" id="notif" hidden>
+        <button type="button" class="notif-btn" id="notifBtn" aria-label="Notificações" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8.5a6 6 0 0 1 12 0c0 6 2.5 7.5 2.5 7.5h-17S6 14.5 6 8.5z"/><path d="M10 20a2.2 2.2 0 0 0 4 0"/></svg><span class="notif-badge" id="notifBadge" hidden>0</span></button>
+        <div class="notif-painel" id="notifPainel" role="dialog" aria-label="Notificações" hidden>
+          <div class="notif-topo">
+            <div><b>Notificações</b><small id="notifSub">Registros que chegaram do ClickUp</small></div>
+            <button type="button" class="notif-x" id="notifFechar" aria-label="Fechar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+          </div>
+          <div class="notif-acoes" id="notifAcoes">
+            <button type="button" id="notifLer">Marcar tudo como lida</button>
+            <button type="button" id="notifLimpar" class="perigo">Limpar tudo</button>
+          </div>
+          <ul class="notif-lista" id="notifLista"></ul>
+        </div>
+      </div>
       <button type="button" class="avatar-topo" id="avatarTopo" aria-label="Abrir seu perfil" hidden></button>
     </div>
   </header>
@@ -5190,6 +5260,7 @@
     if(grupo.dem) chips += '<span class="view-chip dem">' + ICON_CHECK + 'Demanda</span>';
     if(grupo.cl) chips += '<span class="view-chip iav">' + ICON_IA + 'Claude</span>';
     if(it.arq) chips += '<span class="view-chip arq">' + ICON_ARQ + 'Arquivado</span>';
+    if(it.ck) chips += '<a class="view-chip ck" href="https://app.clickup.com/t/' + encodeURIComponent(String(it.ck).split(":")[0]) + '" target="_blank" rel="noopener">Abrir card no ClickUp<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M8 7h9v9"/></svg></a>';
     document.getElementById("viewChips").innerHTML = chips;
 
     var regs = grupo.regs.slice().sort(function(a,b){
@@ -7016,6 +7087,7 @@
       titulo: it.titulo, ref: it.ref || "", dt: it.dt || "",
       dem: !!g.dem, cl: !!g.cl, ts: new Date().toISOString()
     };
+    if(it.ck) novo.ck = it.ck;
     listOf(hoje, "alteracao").push(novo);
     justAdded = novo.id;
     g.regs.push({ iso:hoje, k:"alteracao", id:novo.id });
@@ -7594,6 +7666,167 @@
       if(tab === "equipe") renderEquipe(); else sujo.equipe = true;
     }));
   }
+  /* ---------- notificações (o que chegou do ClickUp) ---------- */
+  var notif = { itens:[], db:null, json:"" };
+  var ICON_NOTIF_V = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2.5"/><path d="M16 10.5l5-3v9l-5-3"/></svg>';
+  var ICON_NOTIF_A = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>';
+  var ICON_NOTIF_X = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  function notifConectar(db){
+    notif.db = db; notif.itens = []; notif.json = "";
+    document.getElementById("notif").hidden = false;
+    notifPintar();
+    var ref = db.doc("painel/notificacoes");
+    ref.get().then(function(d){ if(notif.db !== db) return; notifReceber(d); });
+    nv.unsubs.push(ref.onSnapshot(function(d){ if(notif.db === db && !(d.metadata && d.metadata.hasPendingWrites)) notifReceber(d); }, function(){}));
+  }
+  function notifReceber(d){
+    var b = d && d.exists ? d.data() : null;
+    var itens = b && Array.isArray(b.itens) ? b.itens : [];
+    var j = JSON.stringify(itens);
+    if(j === notif.json) return;
+    notif.json = j; notif.itens = itens;
+    notifPintar();
+  }
+  function notifDesligar(){
+    notif.db = null; notif.itens = []; notif.json = "";
+    var el = document.getElementById("notif"); if(el) el.hidden = true;
+    notifFechar();
+  }
+  function notifSalvar(){
+    notif.itens = notif.itens.slice(0, 60);
+    notif.json = JSON.stringify(notif.itens);
+    notifPintar();
+    if(notif.db) Promise.resolve(notif.db.doc("painel/notificacoes").set({ itens: notif.itens, atualizadoEm: new Date().toISOString() })).catch(function(){});
+  }
+  function notifAdicionar(novos){
+    var agora = new Date().toISOString();
+    novos.slice().reverse().forEach(function(n){
+      notif.itens.unshift({ id: n.item.eid || n.item.id, k: n.k, iso: n.iso, itemId: n.item.id, titulo: n.item.titulo, cliente: n.item.ref || "", dem: !!n.item.dem, cl: !!n.item.cl, em: agora, lida: false });
+    });
+    notifSalvar();
+    var btn = document.getElementById("notifBtn");
+    btn.classList.remove("toca"); void btn.offsetWidth; btn.classList.add("toca");
+  }
+  function notifQuando(isoTs){
+    var d = new Date(isoTs); if(isNaN(d)) return "";
+    var hora = d.toLocaleTimeString("pt-BR", { hour:"2-digit", minute:"2-digit" });
+    var dia = toISO(d), hj = isoToday(), ontem = toISO(addDays(fromISO(hj), -1));
+    if(dia === hj) return "hoje, " + hora;
+    if(dia === ontem) return "ontem, " + hora;
+    return shortDate(dia) + ", " + hora;
+  }
+  function notifPintar(){
+    var naoLidas = notif.itens.filter(function(x){ return !x.lida; }).length;
+    var badge = document.getElementById("notifBadge"), btn = document.getElementById("notifBtn");
+    badge.hidden = !naoLidas; badge.textContent = naoLidas > 99 ? "99+" : String(naoLidas);
+    btn.classList.toggle("tem", !!naoLidas);
+    btn.setAttribute("aria-label", naoLidas ? "Notificações, " + naoLidas + (naoLidas === 1 ? " nova" : " novas") : "Notificações");
+    document.getElementById("notifSub").textContent = !notif.itens.length ? "Registros que chegaram do ClickUp" :
+      (naoLidas ? naoLidas + (naoLidas === 1 ? " nova" : " novas") + " de " + notif.itens.length : "Tudo lido");
+    document.getElementById("notifLer").disabled = !naoLidas;
+    document.getElementById("notifLimpar").disabled = !notif.itens.length;
+    document.getElementById("notifAcoes").hidden = !notif.itens.length;
+    var ul = document.getElementById("notifLista");
+    if(!notif.itens.length){
+      ul.innerHTML = '<li class="notif-vazio"><b>Nada por aqui</b>Quando um vídeo for aprovado e subir pelo Claude, o registro aparece aqui.</li>';
+      return;
+    }
+    ul.innerHTML = notif.itens.map(function(n){
+      var tipo = n.k === "alteracao" ? "Alteração" : "Vídeo";
+      return '<li class="notif-item' + (n.lida ? "" : " nova") + '" data-id="' + esc(n.id) + '" tabindex="0">' +
+        '<span class="notif-ic ' + (n.k === "alteracao" ? "a" : "v") + '">' + (n.k === "alteracao" ? ICON_NOTIF_A : ICON_NOTIF_V) + '</span>' +
+        '<span class="notif-txt"><b>' + esc(n.titulo) + '</b><span>' + tipo + (n.cliente ? " · " + esc(n.cliente) : "") + ' · registrado em ' + shortDate(n.iso) + '</span>' +
+        ((n.dem || n.cl) ? '<span class="notif-tags">' + (n.dem ? '<i class="dem">Demanda</i>' : "") + (n.cl ? '<i class="ia">Claude</i>' : "") + '</span>' : "") +
+        '<span class="notif-quando">' + esc(notifQuando(n.em)) + '</span></span>' +
+        (n.lida ? "" : '<i class="notif-ponto" aria-label="Não lida"></i>') +
+        '<button type="button" class="notif-del" aria-label="Apagar notificação" title="Apagar">' + ICON_NOTIF_X + '</button></li>';
+    }).join("");
+  }
+  function notifAbrir(){
+    var p = document.getElementById("notifPainel");
+    p.hidden = false;
+    document.getElementById("notifBtn").setAttribute("aria-expanded", "true");
+  }
+  function notifFechar(){
+    var p = document.getElementById("notifPainel"); if(!p || p.hidden) return;
+    p.hidden = true;
+    document.getElementById("notifBtn").setAttribute("aria-expanded", "false");
+  }
+  document.getElementById("notifBtn").addEventListener("click", function(e){
+    e.stopPropagation();
+    if(document.getElementById("notifPainel").hidden) notifAbrir(); else notifFechar();
+  });
+  document.getElementById("notifFechar").addEventListener("click", notifFechar);
+  document.getElementById("notifPainel").addEventListener("click", function(e){ e.stopPropagation(); });
+  document.addEventListener("click", function(e){ if(!e.target.closest || !e.target.closest("#notif")) notifFechar(); });
+  document.addEventListener("keydown", function(e){ if(e.key === "Escape") notifFechar(); });
+  document.getElementById("notifLer").addEventListener("click", function(){
+    notif.itens.forEach(function(x){ x.lida = true; }); notifSalvar();
+  });
+  document.getElementById("notifLimpar").addEventListener("click", function(){
+    var antes = notif.itens.slice();
+    notif.itens = []; notifSalvar();
+    toast("Notificações apagadas", "Desfazer", function(){ notif.itens = antes; notifSalvar(); });
+  });
+  document.getElementById("notifLista").addEventListener("click", function(e){
+    var li = e.target.closest(".notif-item"); if(!li) return;
+    var id = li.getAttribute("data-id");
+    var i = notif.itens.findIndex(function(x){ return x.id === id; }); if(i < 0) return;
+    if(e.target.closest(".notif-del")){ notif.itens.splice(i, 1); notifSalvar(); return; }
+    var n = notif.itens[i];
+    if(!n.lida){ n.lida = true; notifSalvar(); }
+    var f = localizarReg(n.itemId);
+    if(!f){ toast("Esse registro não está mais no painel"); return; }
+    notifFechar();
+    abrirRegistro(f.iso, f.k, n.itemId);
+  });
+  document.getElementById("notifLista").addEventListener("keydown", function(e){
+    if(e.key === "Enter" && e.target.classList.contains("notif-item")) e.target.click();
+  });
+
+  // registros que chegam do ClickUp (enviados pelo Claude) e entram sozinhos no painel
+  var entradaVista = {};
+  function nvOuvirEntrada(){
+    if(!window.__FB || !window.__FB.entradaOuvir) return;
+    nv.unsubs.push(window.__FB.entradaOuvir(receberEntrada, function(){}));
+  }
+  function jaTemEntrada(eid){
+    return Object.keys(data).some(function(iso){
+      var d = data[iso]; if(!d) return false;
+      return (d.videos || []).concat(d.alteracoes || []).some(function(x){ return x.eid === eid; });
+    }) || lixo.some(function(x){ return x && x.item && x.item.eid === eid; });
+  }
+  function receberEntrada(docs){
+    if(!nv.pronto || somenteLeitura || !docs || !docs.length) return;
+    var novos = [], prontos = [];
+    docs.forEach(function(d){
+      if(entradaVista[d.id]) return;
+      entradaVista[d.id] = 1; prontos.push(d.id);
+      if(jaTemEntrada(d.id)) return;
+      var iso = /^\d{4}-\d{2}-\d{2}$/.test(d.dia || "") ? d.dia : isoToday();
+      var k = d.tipo === "alteracao" ? "alteracao" : "video";
+      var item = {
+        id: Date.now().toString(36) + Math.random().toString(36).slice(2,6),
+        titulo: String(d.titulo || "Vídeo sem nome").trim(),
+        ref: nomeCliente(d.cliente || ""),
+        dt: /^\d{4}-\d{2}-\d{2}$/.test(d.dt || "") ? d.dt : "",
+        dem: !!d.dem, cl: !!d.cl,
+        ck: String(d.ck || ""), eid: d.id,
+        ts: d.criadoEm || new Date().toISOString()
+      };
+      listOf(iso, k).push(item);
+      novos.push({ k:k, item:item, iso:iso });
+    });
+    if(novos.length){
+      justAdded = novos[novos.length - 1].item.id;
+      save(); renderAll();
+      notifAdicionar(novos);
+    }
+    // tira da caixa de entrada depois que o registro já está salvo aqui
+    setTimeout(function(){
+      prontos.forEach(function(id){ Promise.resolve(window.__FB.entradaApagar(id)).catch(function(){ delete entradaVista[id]; }); });
+    }, novos.length ? 2500 : 0);
+  }
   function nvGravarLocal(){ try{ store.set(KEY, JSON.stringify({ registros:data, lixeira:lixo, salvoEm:new Date().toISOString() })); }catch(e){} }
   function nvAplicouRemoto(){
     nvGuardarCarimbos(); nvGravarLocal(); nvPublicarEquipe();
@@ -7626,6 +7859,8 @@
     nvStatus();
     nvPublicarEquipe();
     nvOuvirEquipe();
+    notifConectar(db);
+    nvOuvirEntrada();
     nv.unsubs.push(db.collection("meses").onSnapshot(function(s){
       if(nv.db !== db || !nv.pronto || (s.metadata && s.metadata.hasPendingWrites)) return;
       var mudou = false;
@@ -7649,6 +7884,7 @@
     Object.keys(nv.timers).forEach(function(k){ clearTimeout(nv.timers[k]); nv.timers[k] = null; });
     clearTimeout(nv.eqTimer);
     nv.db = null; nv.pronto = false; nv.equipe = null; nv.eqJSON = null; nv.equipeErro = false;
+    notifDesligar();
     eh.uid = ""; eh.dados = null; eh.abertos = {};
     var ehv = document.getElementById("ehEdValor"); if(ehv) ehv.textContent = "Escolha um editor";
   }
@@ -7861,6 +8097,8 @@ if(!window.__FB_TEST){
       equipeSet: body => { const u = auth.currentUser; return u ? F.setDoc(F.doc(db, 'equipe', u.uid), body) : Promise.resolve(); },
       historicoDe: async uid => { const q = await F.getDocs(F.collection(db, 'users', uid, 'meses')); const m = {}; q.docs.forEach(d => { m[d.id] = d.data(); }); return m; },
       equipeOuvir: (cb, err) => F.onSnapshot(F.collection(db, 'equipe'), q => { const m = {}; q.docs.forEach(d => { m[d.id] = d.data(); }); cb(m); }, err),
+      entradaOuvir: (cb, err) => { const u = auth.currentUser; if(!u) return () => {}; return F.onSnapshot(F.query(F.collection(db, 'entrada'), F.where('para', '==', u.uid)), q => cb(q.docs.map(d => Object.assign({ id: d.id }, d.data()))), err); },
+      entradaApagar: id => F.deleteDoc(F.doc(db, 'entrada', id)),
       signOut: () => AU.signOut(auth)
     };
     AU.onAuthStateChanged(auth, user => { window.__FB.user = user; avisar('auth', user); });
