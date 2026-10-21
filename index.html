@@ -1877,6 +1877,621 @@
 
   #rpRoot .rp-vazio{padding:50px 30px;text-align:center;border:1.5px dashed #ffc9a6;border-radius:16px;color:#6f635b}
   #rpRoot .rp-vazio b{display:block;font-size:17px;color:#1f1a17;margin-bottom:6px}
+  /* =====================================================================
+     v17: nova interface (menu lateral, cards, barra de baixo no celular)
+     ===================================================================== */
+  :root{--peach:#fff5ee;--peach-line:#ffd8bd;--nav-ink:#4d433c;--ponto:#d4c9bf}
+  html[data-theme="dark"]{--peach:#33261e;--peach-line:#56392a;--nav-ink:#d9cfc6;--ponto:#5c524a}
+
+  .app{display:flex;align-items:flex-start;min-height:100vh;min-height:100dvh}
+  .shell{flex:1 1 auto;min-width:0;max-width:1480px;margin:0 auto;padding:0 40px 64px}
+
+  /* ---------- menu lateral ---------- */
+  .sidenav{
+    position:sticky;top:0;flex:none;width:264px;height:100vh;height:100dvh;overflow-y:auto;overflow-x:hidden;
+    background:var(--paper);border-right:1px solid var(--line);
+    padding:24px 16px 20px;display:flex;flex-direction:column;gap:28px;
+    scrollbar-width:none;transition:width 220ms var(--ease), padding 220ms var(--ease);
+  }
+  .sidenav::-webkit-scrollbar{display:none}
+  .sn-topo{display:flex;align-items:center;gap:10px;padding:0 4px}
+  .sn-topo .mark{width:40px;height:40px;filter:drop-shadow(0 6px 14px rgba(255,106,19,.22))}
+  .sn-marca{flex:1;min-width:0;display:flex;flex-direction:column}
+  .sn-marca b{font-size:16px;font-weight:800;line-height:1.15;letter-spacing:-.02em;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .sn-marca b span{color:var(--orange)}
+  .sn-ano{display:none}
+  .sn-recolher{
+    flex:none;align-self:center;margin-left:auto;width:32px;height:32px;border-radius:10px;
+    border:1px solid var(--line);background:var(--field);color:var(--soft);
+    display:flex;align-items:center;justify-content:center;
+    transition:color var(--fast) var(--ease), border-color var(--fast) var(--ease);
+  }
+  .sn-recolher:hover{color:var(--ink);border-color:var(--soft)}
+  .sn-recolher svg{width:16px;height:16px;transition:transform 220ms var(--ease)}
+
+  .sidenav nav.tabs{
+    display:flex;flex-direction:column;gap:4px;margin:0;padding:0;border:0;
+    position:static;overflow:visible;background:none;-webkit-mask-image:none;mask-image:none;
+  }
+  .sidenav .sn-grupo{display:block;font-size:12px;font-weight:600;color:var(--soft);padding:18px 12px 6px}
+  .sidenav .sn-grupo:first-child{padding-top:0}
+  .sidenav nav.tabs button{
+    display:flex;align-items:center;gap:12px;width:100%;height:44px;padding:0 12px;margin:0;
+    border:0;border-radius:12px;font-size:14.5px;font-weight:600;color:var(--nav-ink);text-align:left;
+    white-space:nowrap;transition:background var(--fast) var(--ease), color var(--fast) var(--ease);
+  }
+  .sidenav nav.tabs button:hover{background:var(--wash);color:var(--ink)}
+  .sidenav nav.tabs button[aria-selected="true"],
+  .sidenav nav.tabs button.grupo-on{background:var(--orange-wash);color:var(--orange-deep);font-weight:700}
+  .sidenav nav.tabs button.sn-oculto{display:none}
+  .tab-ic{width:20px;height:20px;flex:none;display:flex}
+  .tab-ic svg{width:20px;height:20px}
+  .tab-txt{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+  .sidenav nav.tabs .count{
+    margin-left:auto;min-width:24px;height:22px;padding:0 7px;border-radius:99px;
+    display:inline-flex;align-items:center;justify-content:center;
+    font-size:12px;font-weight:700;background:var(--wash);border:1px solid var(--line);color:var(--soft);
+  }
+  .sidenav nav.tabs button[aria-selected="true"] .count{background:var(--paper);border-color:var(--orange-border);color:var(--orange-deep)}
+
+  .sn-pe{margin-top:auto;display:flex;flex-direction:column;gap:12px}
+  .sn-status{display:flex;align-items:center;gap:8px;padding:0 4px 0 12px}
+  .sn-status .saved{flex:1;min-width:0;font-size:13px}
+  #savedText{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .sn-status .theme-btn{width:36px;height:36px;padding:0;border-radius:10px;flex:none}
+  .sn-status #themeLabel{display:none}
+  .sn-status .theme-btn svg{width:17px;height:17px}
+  .sn-perfil{
+    display:flex;align-items:center;gap:12px;width:100%;padding:10px 12px;text-align:left;
+    border:1px solid var(--line);border-radius:14px;background:var(--field);color:var(--ink);
+    transition:border-color var(--fast) var(--ease), background var(--fast) var(--ease);
+  }
+  .sn-perfil:hover,.sn-perfil.on{border-color:var(--orange-border)}
+  .sn-perfil.on{background:var(--orange-wash)}
+  .sn-perfil .avatar{width:38px;height:38px;font-size:14px;background:var(--orange);color:#fff;border:0}
+  .sn-pnome{display:flex;flex-direction:column;gap:1px;min-width:0}
+  .sn-pnome b{font-size:14px;font-weight:700;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .sn-pnome small{font-size:12.5px;color:var(--soft);font-weight:500;line-height:1.25}
+
+
+  body.sn-mini .sidenav{width:78px}
+  body.sn-mini .sn-topo{height:84px}
+  body.sn-mini .sn-recolher{left:7px;top:52px}
+  body.sn-mini .sn-recolher svg{transform:rotate(180deg)}
+  body.sn-mini .sn-marca,body.sn-mini .sidenav .tab-txt,body.sn-mini .sidenav .sn-grupo,body.sn-mini #savedText,body.sn-mini .sn-pnome{opacity:0;pointer-events:none}
+  body.sn-mini .sidenav nav.tabs .count{position:absolute;top:2px;right:2px;margin:0;min-width:18px;height:18px;font-size:10.5px;padding:0 5px}
+  body.sn-mini .sn-status{flex-direction:column;align-items:flex-start;padding:0 0 0 5px;gap:10px}
+  body.sn-mini .sn-status .saved{padding-left:14px}
+  body.sn-mini .sn-perfil{padding:4px;border-color:transparent;background:transparent}
+
+
+
+  /* ---------- topo de cada página ---------- */
+  header.top{padding:28px 0 0;display:flex;align-items:center;justify-content:flex-start;gap:16px;flex-wrap:wrap}
+  .pg-tit{flex:1 1 260px;min-width:0}
+  .pg-tit h1{font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1.2;margin:0}
+  .pg-tit p{margin:4px 0 0;font-size:14.5px;color:var(--soft);font-weight:500;line-height:1.35}
+  .pg-tit p:empty{display:none}
+  header.top .topright{display:flex;align-items:center;gap:12px;padding:0;flex:0 1 auto;min-width:0}
+  .busca{
+    flex:0 1 340px;width:340px;min-width:0;display:flex;align-items:center;gap:10px;height:46px;padding:0 14px;
+    background:var(--paper);border:1px solid var(--line);border-radius:14px;color:var(--soft);cursor:text;
+    transition:border-color var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+  }
+  .busca:focus-within{border-color:var(--orange-border);box-shadow:0 0 0 3px var(--orange-wash)}
+  .busca svg{width:18px;height:18px;flex:none}
+  .busca input{flex:1;min-width:0;border:0;outline:none;background:transparent;font:500 14.5px Montserrat,sans-serif;color:var(--ink);padding:0}
+  .busca input::placeholder{color:#9a8f86}
+  .busca input::-webkit-search-cancel-button{cursor:pointer}
+  .busca kbd{font:600 12px Montserrat,sans-serif;padding:3px 7px;border-radius:7px;border:1px solid var(--line);color:var(--soft);white-space:nowrap}
+  header.top .yearpick{width:auto;height:46px}
+  header.top .yearpick .datepick-btn.plain{height:46px;padding:0 12px 0 16px;border-radius:14px;background:var(--paper)}
+  header.top .notif-btn{width:46px;height:46px;border-radius:14px;background:var(--paper)}
+  header.top .avatar-topo{display:none}
+
+  .panel{padding-top:24px}
+
+  /* cards no estilo novo */
+  .filters,.track,.daycard,.box,.stat,.pf-card,.composer,.lixo-card{border-radius:20px}
+  .filters,.track,.composer{box-shadow:none}
+
+  /* ---------- Hoje: faixa da semana ---------- */
+  .semana{display:flex;align-items:center;gap:12px;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:12px;margin-bottom:24px}
+  .sem-nav{width:40px;height:40px;flex:none;border-radius:12px;border:1px solid var(--line);background:var(--field);color:var(--soft);display:flex;align-items:center;justify-content:center}
+  .sem-nav:hover:not(:disabled){color:var(--ink);border-color:var(--soft)}
+  .sem-nav:disabled{opacity:.35;cursor:default}
+  .sem-nav svg{width:18px;height:18px}
+  .sem-dias{flex:1;min-width:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+  .sem-dia{
+    display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 6px;border-radius:14px;min-width:0;
+    border:1px solid transparent;background:var(--field);color:var(--ink);
+    transition:background var(--fast) var(--ease), border-color var(--fast) var(--ease), color var(--fast) var(--ease);
+  }
+  .sem-dia:hover:not(:disabled){border-color:var(--line)}
+  .sd-wd{font-size:12.5px;font-weight:600;opacity:.85;white-space:nowrap}
+  .sd-wd i{font-style:normal}
+  .sd-wd i::before{content:"· "}
+  .sd-n{font-size:20px;font-weight:700;line-height:1.25}
+  .sd-q{font-size:12px;font-weight:600;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  .sem-dia.on{background:var(--orange-wash);border-color:var(--orange-border);color:var(--orange-deep)}
+  .sem-dia.hoje:not(.on) .sd-wd{color:var(--orange-deep);opacity:1}
+  .sem-dia.folga:not(.on) .sd-q{color:var(--plum-deep);opacity:1}
+  .sem-dia:disabled{background:var(--paper);border:1px dashed var(--line);color:#9a8f86;cursor:default}
+  .sem-extra{display:flex;align-items:center;gap:8px;flex:none;padding-left:4px;border-left:1px solid var(--line);margin-left:2px}
+  .sem-extra .datepick{width:104px;height:40px;margin-left:8px}
+  .sem-extra .datepick-btn.plain{height:40px;padding:0 10px 0 14px;border-radius:12px;background:var(--field)}
+  .sem-extra .dp-value{font-size:14.5px}
+  .sem-extra .datepick-menu{left:auto;right:0}
+  .sem-extra .quickdays{margin:0;gap:6px}
+  .sem-extra .quickdays button{height:40px;padding:0 14px;border-radius:12px}
+  #btnOntem{display:none}
+
+  /* ---------- Hoje: grade de cards ---------- */
+  .hoje-grid{
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,360px);gap:24px;
+    grid-template-areas:"comp stats" "lista sobre";align-items:stretch;
+  }
+  .hoje-grid > .composer{grid-area:comp}
+  .hj-stats{grid-area:stats}
+  .hj-lista{grid-area:lista;align-self:start}
+  .hj-sobre{grid-area:sobre;align-self:start}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:22px 24px 24px;min-width:0}
+  .card-tit{margin:0;font-size:18px;font-weight:700;letter-spacing:-.01em;line-height:1.3}
+
+  .hoje-grid .composer{padding:22px 24px 24px;display:flex;flex-direction:column;gap:16px;min-width:0}
+  .composer-head{margin:0;gap:12px;flex-wrap:nowrap}
+  .composer-title{font-size:18px;flex:1;min-width:0}
+  .composer .kind{padding:4px;gap:4px;background:var(--wash);border-radius:12px;flex:none}
+  .composer .kind button{height:36px;padding:0 16px;border-radius:9px;border:0;background:transparent;color:var(--soft);font-weight:600}
+  .composer .kind button[aria-pressed="true"]{background:var(--paper);color:var(--orange-deep);font-weight:700;box-shadow:0 1px 3px rgba(26,21,18,.12)}
+  .composer .kind button[data-kind="alteracao"][aria-pressed="true"]{background:var(--paper);color:var(--teal-deep)}
+  .sheet-x{display:none}
+  .composer .fields,.composer .fields.quebrado{grid-template-columns:minmax(0,3fr) minmax(0,2fr) 150px;gap:10px}
+  .composer .fields.quebrado #inTitulo{grid-column:auto}
+  .composer .fields input[type="text"]{height:48px;padding:0 14px;border-radius:12px}
+  .composer .clientefield input{padding-right:42px}
+  .composer #datePick .datepick-btn{height:48px;border-radius:12px;padding:6px 12px 7px 14px}
+  .dv-atalhos{display:none}
+  .composer-pe{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:auto}
+  .composer-pe .marcas{gap:10px}
+  .composer-pe .check{height:40px;padding:0 14px;border-radius:99px;border:1px solid var(--line);background:var(--paper);color:var(--nav-ink)}
+  .composer-pe .check[aria-pressed="true"]{background:var(--plum-wash);border-color:var(--plum-border);color:var(--plum-deep);font-weight:700}
+  .composer-pe .check.iachk[aria-pressed="true"]{background:var(--sky-wash);border-color:var(--sky-border);color:var(--sky-deep)}
+  .pe-espaco{flex:1}
+  .composer-pe .limpar-form{margin:0;height:44px;padding:0 14px;border:0;background:transparent;border-radius:12px}
+  .composer-pe .add{height:48px;padding:0 26px;border-radius:14px;display:inline-flex;align-items:center;gap:8px;color:#fff;box-shadow:0 8px 18px -10px rgba(255,106,19,.9)}
+  .composer-pe .add svg{width:18px;height:18px}
+  html[data-theme="dark"] .composer-pe .add{color:#1f1c1a}
+
+  .hj-stats{background:var(--peach);border-color:var(--peach-line);display:flex;flex-direction:column;gap:16px}
+  .hj-nums{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .hj-num{display:flex;flex-direction:column;gap:4px;padding:14px;border-radius:14px;background:var(--paper);border:1px solid var(--orange-border);min-width:0}
+  .hj-num.a{border-color:var(--teal-border)}
+  .hj-num b,.hj-num b.big{font-size:34px;font-weight:700;line-height:1;color:var(--orange-deep);letter-spacing:-.02em}
+  .hj-num.a b{color:var(--teal-deep)}
+  .hj-num span{font-size:13.5px;font-weight:600;color:var(--nav-ink)}
+  .hj-media{margin-top:auto;display:flex;justify-content:space-between;gap:12px;font-size:13.5px;font-weight:500;color:var(--soft)}
+  .hj-media b{color:var(--ink);font-weight:700;white-space:nowrap}
+  .hj-link{align-self:flex-start;padding:0;margin-top:-6px;font-size:13.5px;font-weight:700;color:var(--orange-deep)}
+  .hj-link:hover{text-decoration:underline}
+
+  .hj-lista{padding:0;overflow:hidden}
+  .hj-lista-topo{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:18px 24px;border-bottom:1px solid var(--line)}
+  .hj-lista-topo .card-tit{flex:1}
+  .hj-filtro{display:flex;gap:6px;flex-wrap:wrap}
+  .hj-filtro button{height:36px;padding:0 14px;border-radius:99px;border:1px solid var(--line);background:var(--paper);color:var(--nav-ink);font-size:13.5px;font-weight:600}
+  .hj-filtro button em{font-style:normal;margin-left:3px;opacity:.8}
+  .hj-filtro button:hover{border-color:var(--soft)}
+  .hj-filtro button[aria-pressed="true"]{background:var(--orange-wash);border-color:var(--orange-border);color:var(--orange-deep);font-weight:700}
+  #todayLists{padding:8px 12px 12px}
+  #todayLists .group{margin:0}
+  #todayLists .group h2{display:none}
+  #todayLists .empty{margin:8px 4px 4px}
+
+  .hj-sobre{background:var(--peach);border-color:var(--peach-line);display:flex;flex-direction:column;gap:16px}
+  .hj-sobre .diaextra{margin:0;padding:0;border:0;display:flex;flex-direction:column;gap:12px}
+  .hj-sobre .folga-btn{
+    flex-direction:row-reverse;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:14px;
+    background:var(--paper);border-color:var(--peach-line);color:var(--ink);font-size:14.5px;font-weight:600;
+  }
+  .hj-sobre .folga-marca{width:46px;height:28px;border-radius:99px;border:0;background:var(--line);position:relative;display:block}
+  .hj-sobre .folga-marca::after,
+  .hj-sobre .folga-btn[aria-pressed="true"] .folga-marca::after{
+    content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;margin:0;border:0;border-radius:50%;
+    background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transform:none;transition:left 200ms var(--ease);
+  }
+  .hj-sobre .folga-btn[aria-pressed="true"]{background:var(--plum-wash);border-color:var(--plum-border);color:var(--plum-deep)}
+  .hj-sobre .folga-btn[aria-pressed="true"] .folga-marca{background:var(--plum)}
+  .hj-sobre .folga-btn[aria-pressed="true"] .folga-marca::after{left:21px}
+  .hj-sobre .notabox{margin:0}
+  .hj-sobre .notabox input{height:48px;border-radius:12px;background:var(--paper);border-color:var(--peach-line)}
+  .hj-sobre .bkAviso{margin:0}
+
+  /* ---------- linhas de registro ---------- */
+  li.item{background:transparent;border:1px solid transparent;border-radius:14px;padding:12px 12px;gap:14px}
+  li.item::before{display:none}
+  li.item:hover{border-color:transparent;background:var(--wash)}
+  li.item .n{display:none}
+  li.item .abrir{gap:14px;align-items:center}
+  .tile{width:42px;height:42px;flex:none;border-radius:12px;border:1px solid;display:flex;align-items:center;justify-content:center}
+  .tile svg{width:19px;height:19px}
+  .tile.t-vid{background:var(--orange-wash);border-color:var(--orange-border);color:var(--orange-deep)}
+  .tile.t-alt{background:var(--teal-wash);border-color:var(--teal-border);color:var(--teal-deep)}
+  li.item .corpo{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:4px}
+  li.item .title{flex:none;font-size:15.5px;font-weight:700;line-height:1.35;overflow-wrap:anywhere}
+  li.item .meta{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;font-size:13.5px;line-height:1.3}
+  li.item .ref{background:none;border:0;padding:0;border-radius:0;font-size:13.5px;font-weight:700;color:var(--orange-deep);white-space:normal}
+  li.item .ponto{width:4px;height:4px;border-radius:50%;background:var(--ponto);flex:none}
+  li.item .dt{background:none;border:0;padding:0;border-radius:0;font-size:13.5px;font-weight:600;color:var(--teal-deep);gap:5px}
+  li.item .dt svg{width:14px;height:14px}
+  li.item .dt b{max-width:none}
+  li.item .sem-info{font-size:13px;color:var(--soft);font-weight:500}
+  li.item .tags{display:flex;flex-wrap:wrap;align-items:center;gap:6px;flex:none}
+  li.item .dem,li.item .ia{height:28px;padding:0 11px;font-size:12.5px;font-weight:700}
+  li.item .acts{background:linear-gradient(90deg, transparent 0%, var(--wash) 30%);border-radius:0 14px 14px 0}
+  .group.alt li.item:hover .abrir .title,li.item:hover .abrir .title{color:inherit}
+
+  /* ---------- Histórico / Arquivados / Lixeira ---------- */
+  .reg-seg{display:inline-flex;gap:4px;padding:4px;background:var(--paper);border:1px solid var(--line);border-radius:14px;margin-bottom:18px;max-width:100%;overflow-x:auto}
+  .reg-seg button{height:38px;padding:0 18px;border-radius:10px;font-size:14px;font-weight:600;color:var(--soft);white-space:nowrap}
+  .reg-seg button:hover{color:var(--ink)}
+  .reg-seg button[aria-pressed="true"]{background:var(--orange-wash);color:var(--orange-deep);font-weight:700}
+  .busca-aviso{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px;padding:12px 16px;border-radius:14px;
+    background:var(--orange-wash);border:1px solid var(--orange-border);font-size:14px;color:var(--ink)}
+  .busca-aviso[hidden]{display:none}
+  .busca-aviso b{color:var(--orange-deep)}
+  .busca-aviso button{margin-left:auto;font-size:13.5px;font-weight:700;color:var(--orange-deep)}
+  .daycard li.item{padding:10px 10px}
+
+  /* ---------- Calendário ---------- */
+  .cal-modo{display:inline-flex;gap:4px;padding:4px;background:var(--wash);border-radius:12px;margin-left:auto;flex:none}
+  .cal-modo button{height:36px;padding:0 14px;border-radius:9px;font-size:13.5px;font-weight:600;color:var(--soft);white-space:nowrap}
+  .cal-modo button[aria-pressed="true"]{background:var(--paper);color:var(--orange-deep);font-weight:700;box-shadow:0 1px 3px rgba(26,21,18,.12)}
+  .cal-modo em{font-style:normal;display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 5px;margin-left:4px;border-radius:99px;font-size:11px;background:var(--orange-wash);color:var(--orange-deep)}
+  .cal-legenda{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;margin-top:16px;font-size:13px;font-weight:600;color:var(--soft)}
+  .cal-legenda span{display:inline-flex;align-items:center;gap:7px}
+  .cal-legenda i{width:12px;height:12px;border-radius:4px;border:1px solid}
+  .cal-legenda .lv{background:var(--orange-wash);border-color:var(--orange-border)}
+  .cal-legenda .ld{background:var(--plum-wash);border-color:var(--plum-border)}
+  .cal-legenda .lc{background:var(--sky-wash);border-color:var(--sky-border);border-radius:50%}
+  .cal-legenda .la{background:var(--teal-wash);border-color:var(--teal-border)}
+  .cal-legenda .cal-dica{margin-left:auto;font-weight:500}
+  .calgrid.uteis{grid-template-columns:repeat(5,minmax(0,1fr));min-width:680px}
+  .calgrid.uteis .dom,.calgrid.uteis .sab{display:none}
+  .calday{border-radius:16px}
+  .calcard{padding:8px 9px;border-radius:11px}
+  .calcard::before{display:none}
+  .cc-topo{display:flex;align-items:flex-start;gap:7px;min-width:0}
+  .cc-ic{width:20px;height:20px;flex:none;border-radius:6px;display:flex;align-items:center;justify-content:center;background:var(--paper);color:var(--orange-deep);border:1px solid var(--orange-border);margin-top:-1px}
+  .cc-ic svg{width:12px;height:12px}
+  .calcard.dem .cc-ic{color:var(--plum-deep);border-color:var(--plum-border)}
+  .cc-topo b{flex:1;min-width:0}
+  .cc-cl{width:18px;height:18px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--sky-wash);border:1px solid var(--sky-border);color:var(--sky)}
+  .cc-cl svg{width:10px;height:10px}
+  .cc-grip{width:14px;height:18px;flex:none;color:currentColor;opacity:.4;display:flex;align-items:center;margin-right:-3px}
+  .cc-grip svg{width:14px;height:14px}
+  .calcard .rodape{padding-left:27px}
+  .caldem{flex:none;font-style:normal;font-size:10.5px;font-weight:700;line-height:1;color:var(--plum-deep);background:var(--paper);border:1px solid var(--plum-border);border-radius:20px;padding:2px 6px}
+  .calcard.dem .caldem{display:none}
+  @media (hover:none){ .cc-grip{display:none} }
+
+  /* ---------- Perfil ---------- */
+  .pf-topo{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:space-between}
+  .pf-guia{display:inline-flex;align-items:center;gap:8px}
+  .pf-guia svg{width:17px;height:17px}
+
+  /* ---------- barra de baixo e folhas (só no celular) ---------- */
+  .bottombar,.mais-sheet,.sheet-bg{display:none}
+
+  /* ---------- guia ---------- */
+  .guia{position:fixed;inset:0;z-index:400;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(31,24,20,.55);opacity:0;transition:opacity 240ms var(--ease)}
+  .guia[hidden]{display:none}
+  .guia.on{opacity:1}
+  body.guia-on{overflow:hidden}
+  .guia-card{width:min(640px,100%);max-height:calc(100dvh - 36px);overflow-y:auto;background:var(--paper);border-radius:26px;box-shadow:0 30px 80px -20px rgba(0,0,0,.45);display:flex;flex-direction:column;transform:translateY(14px) scale(.98);transition:transform 320ms cubic-bezier(.22,1,.36,1)}
+  .guia.on .guia-card{transform:none}
+  .guia-ilus{position:relative;height:230px;flex:none;background:var(--peach);border-bottom:1px solid var(--peach-line);display:flex;align-items:center;justify-content:center}
+  .guia-selo{position:absolute;top:18px;left:20px;height:30px;padding:0 12px;border-radius:99px;background:var(--paper);border:1px solid var(--peach-line);color:var(--orange-deep);font-size:12.5px;font-weight:700;display:flex;align-items:center}
+  .guia-pular{position:absolute;top:14px;right:14px;height:38px;padding:0 14px;border-radius:99px;color:var(--soft);font-size:13.5px;font-weight:600}
+  .guia-pular:hover{color:var(--ink)}
+  .guia-ic{width:112px;height:112px;border-radius:32px;background:var(--paper);border:1px solid var(--orange-border);color:var(--orange);display:flex;align-items:center;justify-content:center;box-shadow:0 18px 40px -22px rgba(255,106,19,.8)}
+  .guia-ic.pula{animation:pop 380ms var(--ease)}
+  .guia-corpo{padding:28px 36px 30px;display:flex;flex-direction:column;gap:14px}
+  .guia-passo{font-size:13px;font-weight:700;color:var(--orange-deep)}
+  .guia-corpo h2{margin:0;font-size:26px;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+  .guia-corpo p{margin:0;font-size:16px;line-height:1.6;color:var(--nav-ink);font-weight:500;min-height:78px}
+  .guia-pe{display:flex;align-items:center;gap:12px;margin-top:10px}
+  .guia-pontos{display:flex;gap:6px;flex:1}
+  .guia-pontos i{height:8px;width:8px;border-radius:99px;background:var(--line);transition:width 240ms var(--ease), background 240ms var(--ease)}
+  .guia-pontos i.foi{background:var(--orange-border)}
+  .guia-pontos i.on{width:26px;background:var(--orange)}
+  .guia-voltar{height:48px;padding:0 20px;border-radius:14px;border:1px solid var(--line);background:var(--paper);font-size:15px;font-weight:700}
+  .guia-voltar[hidden]{display:none}
+  .guia-prox{height:48px;padding:0 26px;border-radius:14px;background:var(--orange);color:#fff;font-size:15px;font-weight:700}
+  html[data-theme="dark"] .guia-prox{color:#1f1c1a}
+  .guia-prox:hover{filter:brightness(1.05)}
+  .guia-nota{font-size:12.5px;color:var(--soft);font-weight:500}
+
+  /* ---------- telas médias: menu compacto ---------- */
+  @media (max-width:1280px){
+    .hoje-grid{grid-template-columns:minmax(0,1fr) 300px}
+    .busca{width:260px}
+  }
+  @media (min-width:761px) and (max-width:1099px){
+
+
+
+
+    .shell{padding:0 24px 56px}
+    .busca kbd{display:none}
+    .busca{width:220px}
+    .sem-extra{display:none}
+  }
+  @media (min-width:761px) and (max-width:980px){
+    .hoje-grid{grid-template-columns:1fr;grid-template-areas:"comp" "stats" "lista" "sobre"}
+    .hj-sobre,.hj-lista{align-self:stretch}
+    .composer .fields,.composer .fields.quebrado{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 140px}
+  }
+
+  /* ---------- celular ---------- */
+  @media (max-width:760px){
+    .sidenav{display:none}
+    .shell{padding:0 16px calc(104px + env(safe-area-inset-bottom))}
+    header.top{padding:calc(16px + env(safe-area-inset-top)) 0 0;flex-direction:row;flex-wrap:wrap;align-items:center;gap:10px 10px}
+    .pg-tit{flex:1 1 0;min-width:0}
+    .pg-tit h1{font-size:22px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .pg-tit p{font-size:13px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    header.top .topright{gap:8px;flex:none}
+    .busca{display:none}
+    body[data-tab="historico"] .busca{display:flex;order:3;flex:1 1 100%;width:auto;height:48px}
+    body[data-tab="historico"] .busca kbd{display:none}
+    header.top .yearpick{height:42px}
+    header.top .yearpick .datepick-btn.plain{height:42px;padding:0 8px 0 12px;border-radius:13px}
+    header.top .notif-btn{width:42px;height:42px;border-radius:13px}
+    header.top .avatar-topo{display:flex;width:42px;height:42px}
+    header.top .avatar-topo[hidden]{display:none}
+    .notif-painel{top:calc(env(safe-area-inset-top) + 72px)}
+    .panel{padding-top:16px}
+
+    /* semana */
+    .semana{flex-wrap:wrap;padding:8px;gap:6px;border-radius:16px;margin-bottom:14px}
+    .sem-nav{width:30px;height:auto;align-self:stretch;border-radius:10px}
+    .sem-dias{gap:4px}
+    .sem-dia{padding:8px 2px;border-radius:12px}
+    .sd-wd{font-size:11.5px}
+    .sd-wd i{display:none}
+    .sd-n{font-size:18px}
+    .sd-q{font-size:10.5px}
+    .sem-extra{display:none}
+
+    /* grade vira uma coluna; o registro vira uma folha que sobe */
+    .hoje-grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"stats" "lista" "sobre";gap:14px}
+    .hj-lista,.hj-sobre{align-self:stretch}
+    .card{padding:18px 16px;border-radius:18px}
+    .hj-stats{
+      display:grid;grid-template-columns:auto auto minmax(0,1fr);align-items:center;gap:0;
+      padding:12px 4px;border-radius:16px;background:var(--orange-wash);border-color:var(--orange-border);
+    }
+    .hj-stats .card-tit,.hj-stats .hj-link{display:none}
+    .hj-nums{display:contents}
+    .hj-num{flex-direction:row;align-items:baseline;gap:6px;padding:0 14px;background:none;border:0;border-right:1px solid var(--orange-border);border-radius:0}
+    .hj-num b,.hj-num b.big{font-size:24px}
+    .hj-num span{font-size:12.5px}
+    .hj-media{margin:0;padding:0 12px;flex-direction:column;gap:0;font-size:11.5px;line-height:1.3;min-width:0}
+    .hj-media span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .hj-media b{font-size:14px}
+    .hj-lista{padding:0}
+    .hj-lista-topo{padding:14px 14px 12px;gap:10px}
+    .hj-filtro{width:100%}
+    .hj-filtro button{flex:1;height:38px;padding:0 8px;font-size:13px}
+    #todayLists{padding:6px 6px 8px}
+
+    .hoje-grid > .composer{
+      position:fixed;left:0;right:0;bottom:0;z-index:130;max-height:90dvh;overflow-y:auto;overscroll-behavior:contain;
+      border-radius:24px 24px 0 0;border:0;padding:18px 16px calc(20px + env(safe-area-inset-bottom));
+      box-shadow:0 -20px 60px -20px rgba(0,0,0,.4);
+      transform:translateY(105%);visibility:hidden;transition:transform 300ms cubic-bezier(.22,1,.36,1), visibility 0s linear 300ms;
+    }
+    body.sheet-on .hoje-grid > .composer{transform:none;visibility:visible;transition:transform 300ms cubic-bezier(.22,1,.36,1)}
+    .hoje-grid > .composer::before{content:"";display:block;width:42px;height:5px;border-radius:99px;background:var(--line);margin:-6px auto 4px}
+    .composer-head{flex-wrap:wrap}
+    .composer-title{font-size:20px}
+    .sheet-x{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;background:var(--wash);color:var(--soft);flex:none;order:2}
+    .sheet-x svg{width:18px;height:18px}
+    .composer .kind{order:3;flex:1 1 100%}
+    .composer .kind button{flex:1;height:44px;font-size:15px}
+    .composer .fields,.composer .fields.quebrado{grid-template-columns:1fr;gap:10px}
+    .composer .fields input[type="text"]{height:54px;font-size:16px}
+    .composer #datePick .datepick-btn{height:54px}
+    .dv-atalhos{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:-4px}
+    .dv-atalhos span{font-size:12.5px;font-weight:600;color:var(--soft);margin-right:2px}
+    .dv-atalhos button{height:34px;padding:0 12px;border-radius:99px;border:1px solid var(--line);background:var(--paper);font-size:13px;font-weight:600;color:var(--nav-ink)}
+    .dv-atalhos button[aria-pressed="true"]{background:var(--teal-wash);border-color:var(--teal-border);color:var(--teal-deep);font-weight:700}
+    .composer-pe{gap:10px}
+    .composer-pe .marcas{flex:1 1 100%}
+    .composer-pe .check{flex:1;justify-content:center;height:46px}
+    .composer-pe .pe-espaco{display:none}
+    .composer-pe .limpar-form{flex:none;height:52px}
+    .composer-pe .add{flex:1;justify-content:center;height:54px;font-size:16px}
+    body.sheet-on,body.mais-on{overflow:hidden}
+
+    .sheet-bg{display:block;position:fixed;inset:0;z-index:120;background:rgba(31,24,20,.5);animation:fadein 200ms ease}
+    .sheet-bg[hidden]{display:none}
+    .mais-sheet{
+      display:flex;flex-direction:column;gap:6px;position:fixed;left:0;right:0;bottom:0;z-index:130;
+      max-height:88dvh;overflow-y:auto;background:var(--paper);border-radius:24px 24px 0 0;
+      padding:10px 16px calc(96px + env(safe-area-inset-bottom));box-shadow:0 -20px 60px -20px rgba(0,0,0,.4);
+      animation:folhaSobe 300ms cubic-bezier(.22,1,.36,1);
+    }
+    .mais-sheet[hidden]{display:none}
+    .sheet-alca{display:block;width:42px;height:5px;border-radius:99px;background:var(--line);margin:0 auto 8px}
+    .ms-grupo{display:flex;flex-direction:column;padding:6px 0;border-bottom:1px solid var(--line)}
+    .ms-grupo:last-child{border-bottom:0}
+    .ms-tit{font-size:12px;font-weight:600;color:var(--soft);padding:4px 4px 6px}
+    .ms-grupo button{display:flex;align-items:center;gap:12px;min-height:52px;padding:0 4px;font-size:15px;font-weight:600;text-align:left;border-radius:12px}
+    .ms-grupo button:active{background:var(--wash)}
+    .ms-ic{width:38px;height:38px;flex:none;border-radius:11px;background:var(--orange-wash);color:var(--orange-deep);display:flex;align-items:center;justify-content:center}
+    .ms-ic svg{width:19px;height:19px}
+
+    .bottombar{
+      display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:center;
+      position:fixed;left:0;right:0;bottom:0;z-index:140;height:calc(76px + env(safe-area-inset-bottom));
+      padding:0 6px env(safe-area-inset-bottom);background:var(--paper);border-top:1px solid var(--line);
+      box-shadow:0 -8px 24px -18px rgba(26,21,18,.35);
+    }
+    .bottombar button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:100%;color:var(--soft);font-size:11.5px;font-weight:600}
+    .bottombar button svg{width:21px;height:21px}
+    .bottombar button.on{color:var(--orange-deep)}
+    .bottombar button.on span{font-weight:700}
+    .bottombar .bb-add{
+      justify-self:center;width:54px;height:54px;border-radius:18px;margin-top:-32px;
+      background:var(--orange);color:#fff;box-shadow:0 10px 22px -10px rgba(255,106,19,.95);
+      transition:transform var(--fast) var(--ease);
+    }
+    .bottombar .bb-add svg{width:24px;height:24px}
+    .bottombar .bb-add:active{transform:scale(.94)}
+    html[data-theme="dark"] .bottombar .bb-add{background:#ff8a45;color:#1f1c1a}
+    body.sheet-on .bottombar .bb-add{transform:rotate(45deg)}
+
+    li.item{padding:12px 50px 12px 10px;align-items:flex-start}
+    li.item .abrir{flex-wrap:wrap;align-items:flex-start;padding-left:0;gap:6px 12px;min-height:0}
+    li.item .title{padding-right:0;font-size:15px}
+    .tile{width:38px;height:38px;border-radius:11px}
+    .tile svg{width:17px;height:17px}
+    li.item .corpo{flex:1 1 0}
+    li.item .tags{flex:1 1 100%;padding-left:50px}
+    li.item .ref,li.item .dt{font-size:13px;padding:0}
+    li.item .dem,li.item .ia{height:26px;font-size:12px;padding:0 10px}
+    li.item .maisbtn{top:10px}
+
+    .reg-seg{display:flex;width:100%}
+    .reg-seg button{flex:1;padding:0 10px}
+    .cal-modo{margin-left:0}
+    .cal-legenda .cal-dica{display:none}
+
+    .guia{padding:12px;align-items:flex-end}
+    .guia-card{border-radius:24px}
+    .guia-ilus{height:170px}
+    .guia-ic{width:92px;height:92px;border-radius:26px}
+    .guia-corpo{padding:22px 20px 20px;gap:10px}
+    .guia-corpo h2{font-size:22px}
+    .guia-corpo p{font-size:15px;min-height:72px}
+    .guia-pe{flex-wrap:wrap}
+    .guia-pontos{flex:1 1 100%;margin-bottom:4px}
+    .guia-voltar,.guia-prox{flex:1}
+  }
+  @keyframes folhaSobe{from{transform:translateY(100%)}to{transform:none}}
+
+  .m-cl{display:none}
+  .composer .clientefield input,.composer #inRef{width:100% !important}
+  #panel-calendario .cal-topo > .filters-title{display:none}
+  @media (max-width:760px){
+    body[data-tab="hoje"] header.top .yearpick{display:none}
+    li.item .ponto{display:none}
+    li.item .meta{gap:2px 10px}
+    .hj-filtro button{white-space:nowrap;font-size:12.5px;padding:0 6px}
+    .sd-ql{display:none}
+    .m-lg{display:none}
+    .m-cl{display:inline}
+  }
+  @media (max-width:640px){
+    .calgrid.uteis{grid-template-columns:1fr;min-width:0}
+    .calcard .rodape{padding-left:27px}
+  }
+
+  @media (max-width:760px){
+    .hoje-grid > .composer{z-index:160}
+    .sheet-bg{z-index:150}
+    body.mais-on .sheet-bg{z-index:120}
+  }
+
+  @media (max-width:760px){
+    .composer-pe .limpar-form{position:static;padding:0 14px;font-size:14px}
+    body[data-tab="historico"] header.top .topright{display:contents}
+    body[data-tab="historico"] header.top .busca{order:9}
+  }
+
+  /* v17.1: menu lateral abre e fecha sem reorganizar o conteúdo */
+  .sidenav{transition:width 300ms cubic-bezier(.4,0,.2,1)}
+  .sn-topo{position:relative;height:40px;padding:0 0 0 3px;align-items:flex-start;transition:height 300ms cubic-bezier(.4,0,.2,1)}
+  .sn-marca{flex:none;width:142px}
+  .sn-recolher{position:absolute;margin:0;left:calc(100% - 34px);top:4px;transition:left 300ms cubic-bezier(.4,0,.2,1), top 300ms cubic-bezier(.4,0,.2,1), color var(--fast) var(--ease), border-color var(--fast) var(--ease)}
+  .sn-recolher svg{transition:transform 300ms cubic-bezier(.4,0,.2,1)}
+  .sn-marca,.sidenav .tab-txt,.sidenav .sn-grupo,#savedText,.sn-pnome{transition:opacity 180ms ease}
+  .sidenav nav.tabs button{overflow:hidden;position:relative;flex:none}
+  .sidenav nav.tabs button .tab-txt{flex:none}
+  .sidenav .sn-grupo{white-space:nowrap}
+  .sn-pnome{flex:none;width:150px}
+  .sn-perfil{overflow:hidden;transition:padding 300ms cubic-bezier(.4,0,.2,1), border-color 200ms ease, background 200ms ease}
+  .sn-status .saved{flex:none;white-space:nowrap}
+  .sn-status .theme-btn{margin-left:auto}
+  body.sn-mini .sn-status .theme-btn{margin-left:0}
+
+  /* ícones das notificações no mesmo estilo das listas */
+  .notif-ic{width:40px;height:40px;border-radius:12px;border:1px solid}
+  .notif-ic.v{background:var(--orange-wash);border-color:var(--orange-border);color:var(--orange-deep)}
+  .notif-ic.a{background:var(--teal-wash);border-color:var(--teal-border);color:var(--teal-deep)}
+  .notif-ic svg{width:18px;height:18px}
+
+  .pf-extra{display:flex;flex-direction:column;gap:14px;margin-top:14px;max-width:820px}
+  .pf-extra .box{margin:0}
+
+  /* Histórico: as barras sobem juntas, uma depois da outra, sem pedaços soltos */
+  .bars.anim .seg{animation:none}
+  .bars.anim .bar-col .bar{animation:barraRevela 560ms cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--i,0) * 22ms)}
+  .bars.anim .bar-col .bar-val{animation:fadein 300ms ease both;animation-delay:calc(var(--i,0) * 22ms + 260ms)}
+  @keyframes barraRevela{from{clip-path:inset(100% 0 0 0 round 7px);opacity:.4}to{clip-path:inset(0 0 0 0 round 7px);opacity:1}}
+  #panel-historico.entrando .track,#panel-historico.entrando .filters,#panel-historico.entrando .reg-seg{animation:painel 300ms var(--ease) both}
+  #panel-historico.entrando .filters{animation-delay:60ms}
+  #panel-historico.entrando .daycard{animation:painel 320ms var(--ease) both;animation-delay:110ms}
+  @media (prefers-reduced-motion:reduce){.bars.anim .bar-col .bar,.bars.anim .bar-col .bar-val{animation:none}}
+
+  /* menu fechado: os grupos somem e os ícones ficam juntos */
+  .sidenav .sn-grupo{max-height:40px;overflow:hidden;transition:opacity 180ms ease, max-height 300ms cubic-bezier(.4,0,.2,1), padding 300ms cubic-bezier(.4,0,.2,1)}
+  body.sn-mini .sidenav .sn-grupo{max-height:0;padding-top:0;padding-bottom:0}
+  body.sn-mini .sidenav .sn-grupo:not(:first-child){max-height:13px;padding:6px 0 0;margin:0 10px 6px;border-bottom:1px solid var(--line);opacity:1;font-size:0}
+  .sn-recolher{z-index:2}
+
+  .hj-abrir,.hj-sobre-cel{display:none}
+  @media (max-width:760px){
+    .hj-stats{grid-template-columns:auto auto minmax(0,1fr) auto;background:var(--paper);border-color:var(--line);padding:12px 8px 12px 4px;row-gap:0}
+    .hj-num{border-right-color:var(--line)}
+    .hj-abrir{display:flex;align-items:center;gap:6px;height:38px;min-width:38px;padding:0 9px;border-radius:12px;background:var(--field);border:1px solid var(--line);color:var(--soft);justify-content:center}
+    .hj-abrir svg{width:18px;height:18px;transition:transform 260ms var(--ease)}
+    .hj-abrir[aria-expanded="true"]{background:var(--orange-wash);border-color:var(--orange-border);color:var(--orange-deep)}
+    .hj-abrir[aria-expanded="true"] svg{transform:rotate(180deg)}
+    .hj-marca{font-size:11px;font-weight:700;color:var(--plum-deep)}
+    .hj-sobre-cel{grid-column:1 / -1;flex-direction:column;gap:10px;margin:12px 4px 0 12px;padding-top:12px;border-top:1px solid var(--line)}
+    .hj-sobre-cel:not([hidden]){display:flex}
+    .hj-sobre-cel.abrindo{animation:reveal 240ms var(--ease)}
+    .hj-sobre-tit{font-size:12.5px;font-weight:700;color:var(--soft)}
+    .hj-sobre-cel .diaextra{margin:0;padding:0;border:0;display:flex;flex-direction:column;gap:10px}
+    .hj-sobre-cel .folga-btn{flex-direction:row-reverse;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:14px;background:var(--field);border-color:var(--line);color:var(--ink);font-size:14.5px;font-weight:600}
+    .hj-sobre-cel .folga-marca{width:46px;height:28px;border-radius:99px;border:0;background:var(--line);position:relative;display:block}
+    .hj-sobre-cel .folga-marca::after,.hj-sobre-cel .folga-btn[aria-pressed="true"] .folga-marca::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;margin:0;border:0;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transform:none;transition:left 200ms var(--ease)}
+    .hj-sobre-cel .folga-btn[aria-pressed="true"]{background:var(--plum-wash);border-color:var(--plum-border);color:var(--plum-deep)}
+    .hj-sobre-cel .folga-btn[aria-pressed="true"] .folga-marca{background:var(--plum)}
+    .hj-sobre-cel .folga-btn[aria-pressed="true"] .folga-marca::after{left:21px}
+    .hj-sobre-cel .notabox{margin:0}
+    .hj-sobre-cel .notabox input{height:50px;border-radius:12px;background:var(--field)}
+    .hj-sobre-cel .bkAviso{margin:0}
+  }
+
+  .hj-sobre[hidden]{display:none}
+
+  @media (max-width:760px){
+    .hj-num{padding:0 11px}
+    .hj-media{padding:0 8px 0 11px}
+    .hj-abrir{position:relative;padding:0}
+    .hj-marca{position:absolute;top:-3px;right:-3px;width:10px;height:10px;border-radius:50%;background:var(--plum);border:2px solid var(--paper)}
+  }
+  @media (max-width:360px){ .hj-num span{display:none} }
+
+  .sem-dias{touch-action:pan-y;will-change:transform}
+  .sem-nav{transition:background var(--fast) var(--ease), border-color var(--fast) var(--ease), transform 120ms var(--ease)}
+  .sem-nav:active:not(:disabled){transform:scale(.92)}
+
 </style>
 </head>
 <body>
@@ -1914,11 +2529,10 @@
     <p class="lg-foot">Dá para mudar nome e foto depois, na aba Perfil.</p>
   </div>
 </div>
-<div class="shell">
-
-  <header class="top">
-    <div class="brand">
-      <span class="mark" aria-hidden="true">
+<div class="app" id="app">
+<aside class="sidenav" id="sidenav" aria-label="Menu do painel">
+  <div class="sn-topo">
+    <span class="mark" aria-hidden="true">
         <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <clipPath id="clap"><rect x="8.5" y="10" width="27" height="7.6" rx="2.2"/></clipPath>
@@ -1934,13 +2548,38 @@
           <path d="M19.2 23.4 L26.4 26.8 L19.2 30.2 Z" fill="#ff6a13"/>
         </svg>
       </span>
-      <div>
-        <h1>Painel do Editor <span>Mínimo</span></h1>
-        <p class="brand-sub">Registros de <span id="anoAtual">2026</span></p>
-      </div>
+    <div class="sn-marca"><b>Painel do Editor <span>Mínimo</span></b><span class="sn-ano">Registros de <span id="anoAtual">2026</span></span></div>
+    <button type="button" class="sn-recolher" id="snRecolher" aria-label="Recolher o menu" title="Recolher o menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6l-6 6 6 6"/></svg></button>
+  </div>
+  <nav class="tabs" role="tablist" aria-label="Seções do painel">
+    <span class="sn-grupo" role="presentation">Trabalho</span>
+    <button role="tab" id="tab-hoje" aria-controls="panel-hoje" aria-selected="true" tabindex="0" data-tab="hoje" title="Hoje"><span class="tab-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5L12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z"/></svg></span><span class="tab-txt"><span id="tabHojeNome">Hoje</span></span> <span class="count" id="tabCountHoje">0</span></button>
+    <button role="tab" id="tab-historico" aria-controls="panel-historico" aria-selected="false" tabindex="-1" data-tab="historico" title="Histórico"><span class="tab-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/></svg></span><span class="tab-txt">Histórico</span></button>
+    <button role="tab" id="tab-calendario" aria-controls="panel-calendario" aria-selected="false" tabindex="-1" data-tab="calendario" title="Calendário"><span class="tab-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><span class="tab-txt">Calendário</span></button>
+    <button role="tab" id="tab-arquivados" aria-controls="panel-arquivados" aria-selected="false" tabindex="-1" data-tab="arquivados" class="sn-oculto" title="Arquivados"><span class="tab-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="5" rx="1.5"/><path d="M5 9v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9"/><path d="M10 13h4"/></svg></span><span class="tab-txt">Arquivados</span></button>
+    <button role="tab" id="tab-excluidos" aria-controls="panel-excluidos" aria-selected="false" tabindex="-1" data-tab="excluidos" class="sn-oculto" title="Lixeira"><span class="tab-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6 7l1 13h10l1-13"/></svg></span><span class="tab-txt">Lixeira</span></button>
+    <span class="sn-grupo" role="presentation">Números</span>
+    <button role="tab" id="tab-resumo" aria-controls="panel-resumo" aria-selected="false" tabindex="-1" data-tab="resumo" title="Seu resumo"><span class="tab-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V11"/><path d="M12 20V5"/><path d="M19 20v-6"/></svg></span><span class="tab-txt">Seu resumo</span></button>
+    <button role="tab" id="tab-equipe" aria-controls="panel-equipe" aria-selected="false" tabindex="-1" data-tab="equipe" title="Equipe"><span class="tab-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7"/><path d="M21.5 20a6.5 6.5 0 0 0-4-6"/></svg></span><span class="tab-txt">Equipe</span></button>
+    <button role="tab" id="tab-perfil" aria-controls="panel-perfil" aria-selected="false" tabindex="-1" data-tab="perfil" class="sn-oculto" title="Perfil"><span class="tab-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span class="tab-txt">Perfil</span></button>
+  </nav>
+  <div class="sn-pe">
+    <div class="sn-status">
+      <div class="saved"><i class="dot" id="savedDot"></i><span id="savedText">Carregando</span></div>
+      <button class="theme-btn" id="themeBtn" aria-label="Alternar tema"><span id="themeIcon"></span><span id="themeLabel">Modo escuro</span></button>
+    </div>
+    <button type="button" class="sn-perfil" id="snPerfil" title="Perfil e relatório"><span class="avatar" id="snAvatar">?</span><span class="sn-pnome"><b id="snNome">Seu perfil</b><small>Perfil e relatório</small></span></button>
+  </div>
+</aside>
+<div class="shell">
+
+  <header class="top">
+    <div class="pg-tit">
+      <h1 id="pgTitulo">Hoje</h1>
+      <p id="pgSub"></p>
     </div>
     <div class="topright">
-      <div class="saved"><i class="dot" id="savedDot"></i><span id="savedText">Carregando</span></div>
+      <label class="busca" id="buscaBox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="search" id="buscaGlobal" placeholder="Buscar vídeo ou cliente" aria-label="Buscar vídeo ou cliente" autocomplete="off"><kbd>Ctrl K</kbd></label>
       <div class="datepick yearpick" id="anoPick">
         <button type="button" class="datepick-btn plain" id="anoBtn" aria-expanded="false" aria-label="Ano dos registros">
           <span class="dp-value" id="anoValor">----</span>
@@ -1948,7 +2587,6 @@
         </button>
         <div class="pick-menu datepick-menu anomenu" id="anoMenu" role="menu" aria-label="Escolher o ano" hidden></div>
       </div>
-      <button class="theme-btn" id="themeBtn" aria-label="Alternar tema"><span id="themeIcon"></span><span id="themeLabel">Modo escuro</span></button>
       <div class="notif" id="notif" hidden>
         <button type="button" class="notif-btn" id="notifBtn" aria-label="Notificações" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8.5a6 6 0 0 1 12 0c0 6 2.5 7.5 2.5 7.5h-17S6 14.5 6 8.5z"/><path d="M10 20a2.2 2.2 0 0 0 4 0"/></svg><span class="notif-badge" id="notifBadge" hidden>0</span></button>
         <div class="notif-painel" id="notifPainel" role="dialog" aria-label="Notificações" hidden>
@@ -1967,27 +2605,9 @@
     </div>
   </header>
 
-  <div class="aviso-grave" id="avisoGrave" role="alert" hidden>
-    <div class="texto"><b id="avisoTitulo"></b><p id="avisoTexto"></p></div>
-    <div class="acoes" id="avisoAcoes"></div>
-  </div>
-
-  <nav class="tabs" role="tablist" aria-label="Seções do painel">
-    <button role="tab" id="tab-hoje" aria-controls="panel-hoje" aria-selected="true" tabindex="0" data-tab="hoje"><span id="tabHojeNome">Hoje</span> <span class="count" id="tabCountHoje">0</span></button>
-    <button role="tab" id="tab-historico" aria-controls="panel-historico" aria-selected="false" tabindex="-1" data-tab="historico">Histórico</button>
-    <button role="tab" id="tab-calendario" aria-controls="panel-calendario" aria-selected="false" tabindex="-1" data-tab="calendario">Calendário</button>
-    <button role="tab" id="tab-arquivados" aria-controls="panel-arquivados" aria-selected="false" tabindex="-1" data-tab="arquivados">Arquivados</button>
-    <button role="tab" id="tab-excluidos" aria-controls="panel-excluidos" aria-selected="false" tabindex="-1" data-tab="excluidos">Excluídos</button>
-    <button role="tab" id="tab-resumo" aria-controls="panel-resumo" aria-selected="false" tabindex="-1" data-tab="resumo">Resumo</button>
-    <button role="tab" id="tab-equipe" aria-controls="panel-equipe" aria-selected="false" tabindex="-1" data-tab="equipe">Equipe</button>
-    <button role="tab" id="tab-perfil" aria-controls="panel-perfil" aria-selected="false" tabindex="-1" data-tab="perfil">Perfil</button>
-  </nav>
-
   <!-- HOJE -->
   <section class="panel on" id="panel-hoje" role="tabpanel" tabindex="-1" aria-labelledby="tab-hoje">
-    <div class="today-grid">
-
-      <aside class="totem">
+    <div class="legado" hidden>
         <button type="button" class="totem-day totem-head" id="totemHead" aria-expanded="true" aria-controls="totemCorpo">
           <span class="totem-saudacao" id="totemSaudacao">Olá!</span>
           <span class="totem-linha">
@@ -1997,21 +2617,14 @@
           </span>
           <span class="chev">▶</span>
         </button>
+      <div id="totemCorpo"></div>
+    </div>
 
-        <div id="totemCorpo">
-
-        <div class="totem-hero">
-          <div class="big" id="totemVideos">0</div>
-          <div class="big-label" id="totemVideosLabel">vídeos entregues</div>
-        </div>
-
-        <div class="totem-alt">
-          <b id="totemAlt">0</b>
-          <span id="totemAltLabel">alterações</span>
-        </div>
-
-        <div class="datebar">
-          <span class="datebar-label">Registrando no dia</span>
+    <section class="semana" id="semana" aria-label="Escolher o dia">
+      <button type="button" class="sem-nav" id="semPrev" aria-label="Semana anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6l-6 6 6 6"/></svg></button>
+      <div class="sem-dias" id="semDias"></div>
+      <button type="button" class="sem-nav" id="semNext" aria-label="Próxima semana"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 6l6 6-6 6"/></svg></button>
+      <div class="sem-extra">
           <div class="datepick" id="diaPick">
             <button type="button" class="datepick-btn plain" id="diaBtn" aria-expanded="false">
               <span class="dp-value" id="diaValor">--/--</span>
@@ -2023,43 +2636,18 @@
             <button type="button" id="btnHoje" aria-pressed="false">Hoje</button>
             <button type="button" id="btnOntem" aria-pressed="false">Ontem</button>
           </div>
-        </div>
+      </div>
+    </section>
 
-        <div class="diaextra">
-          <button type="button" class="folga-btn" id="btnFolga" aria-pressed="false">
-            <span class="folga-marca"></span>
-            <span id="btnFolgaTexto">Marcar como folga</span>
-          </button>
-          <div class="notabox">
-            <input type="text" id="inNota" maxlength="90" autocomplete="off"
-                   placeholder="Observação do dia, se precisar" aria-label="Observação do dia">
-            <span class="nota-conta" id="notaConta" hidden></span>
-          </div>
-        </div>
-
-        <div class="bkAviso" id="bkLembrete" hidden>
-          <p id="bkLembreteTexto"></p>
-          <div class="bkAviso-acoes">
-            <button type="button" id="bkAgora">Fazer backup</button>
-            <button type="button" id="bkDepois">Depois</button>
-          </div>
-        </div>
-        </div>
-      </aside>
-
-      <div>
-        <div class="composer">
+    <div class="hoje-grid">
+        <div class="composer" id="composer">
           <div class="composer-head">
-            <h2 class="composer-title">Fazer Registro</h2>
+            <h2 class="composer-title">Novo registro</h2>
+            <button type="button" class="sheet-x" id="sheetFechar" aria-label="Fechar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
             <div class="kind">
               <button data-kind="video" aria-pressed="true">Vídeo</button>
               <button data-kind="alteracao" aria-pressed="false">Alteração</button>
             </div>
-            <div class="marcas">
-            <button type="button" class="check" id="chkDemanda" aria-pressed="false"><span class="cbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l5 5 9-11"/></svg></span>Demanda</button>
-            <button type="button" class="check iachk" id="chkClaude" aria-pressed="false" title="Marque quando o vídeo foi feito com o Claude"><span class="cbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l5 5 9-11"/></svg></span>Claude</button>
-            </div>
-            <button type="button" class="limpar-form" id="btnLimparForm" title="Desmarca tudo, apaga nome e cliente e volta a data para o dia do registro" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4.6h4.6"/></svg><span>Limpar</span></button>
           </div>
           <div class="fields">
             <input type="text" id="inTitulo" placeholder="Nome do vídeo" autocomplete="off">
@@ -2076,18 +2664,75 @@
               </button>
               <div class="pick-menu datepick-menu" id="dateMenu" role="menu" aria-label="Escolher a data do vídeo" hidden></div>
             </div>
-            <button class="add" id="btnAdd">Adicionar</button>
+          </div>
+          <div class="dv-atalhos" aria-label="Atalhos para a data do vídeo"><span>Data do vídeo</span><button type="button" data-dv="0">Hoje</button><button type="button" data-dv="1">Amanhã</button><button type="button" data-dv="2">Depois de amanhã</button></div>
+          <div class="composer-pe">
+            <div class="marcas">
+            <button type="button" class="check" id="chkDemanda" aria-pressed="false"><span class="cbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l5 5 9-11"/></svg></span>Demanda</button>
+            <button type="button" class="check iachk" id="chkClaude" aria-pressed="false" title="Marque quando o vídeo foi feito com o Claude"><span class="cbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l5 5 9-11"/></svg></span>Claude</button>
+            </div>
+            <span class="pe-espaco"></span>
+            <button type="button" class="limpar-form" id="btnLimparForm" title="Desmarca tudo, apaga nome e cliente e volta a data para o dia do registro" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4.6h4.6"/></svg><span>Limpar</span></button>
+            <button class="add" id="btnAdd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Adicionar</button>
           </div>
         </div>
 
-        <div id="todayLists"></div>
-      </div>
+      <section class="card hj-stats" aria-label="Resumo do dia">
+        <h2 class="card-tit" id="hjStatsTit">Hoje até agora</h2>
+        <div class="hj-nums">
+          <div class="hj-num v"><b class="big" id="totemVideos">0</b><span id="totemVideosLabel">vídeos entregues</span></div>
+          <div class="hj-num a"><b id="totemAlt">0</b><span id="totemAltLabel">alterações</span></div>
+        </div>
+        <div class="hj-media">
+          <span id="hjMediaRot">Sua média no mês</span>
+          <b id="hjMedia">0,0 por dia</b>
+        </div>
+        <button type="button" class="hj-link" id="hjVerResumo">Ver resumo completo</button>
+        <button type="button" class="hj-abrir" id="hjAbrir" aria-expanded="false" aria-controls="hjSobreCel" aria-label="Mostrar folga e observação do dia"><span class="hj-marca" id="hjMarca" hidden></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="hj-sobre-cel" id="hjSobreCel" hidden><span class="hj-sobre-tit">Sobre o dia</span></div>
+      </section>
 
+      <section class="card hj-lista" aria-label="Entregas do dia">
+        <div class="hj-lista-topo">
+          <h2 class="card-tit" id="hjListaTit">Entregas de hoje</h2>
+          <div class="hj-filtro" id="hjFiltro" role="tablist" aria-label="Filtrar entregas">
+            <button type="button" data-f="todos" aria-pressed="true">Tudo <em id="hjF0">0</em></button>
+            <button type="button" data-f="video" aria-pressed="false">Vídeos <em id="hjF1">0</em></button>
+            <button type="button" data-f="alteracao" aria-pressed="false">Alterações <em id="hjF2">0</em></button>
+          </div>
+        </div>
+        <div id="todayLists"></div>
+      </section>
+
+      <section class="card hj-sobre" aria-label="Sobre o dia">
+        <h2 class="card-tit">Sobre o dia</h2>
+        <div class="diaextra">
+          <button type="button" class="folga-btn" id="btnFolga" aria-pressed="false">
+            <span class="folga-marca"></span>
+            <span id="btnFolgaTexto">Marcar como folga</span>
+          </button>
+          <div class="notabox">
+            <input type="text" id="inNota" maxlength="90" autocomplete="off"
+                   placeholder="Observação do dia, se precisar" aria-label="Observação do dia">
+            <span class="nota-conta" id="notaConta" hidden></span>
+          </div>
+        </div>
+        <div class="bkAviso" id="bkLembrete" hidden>
+          <p id="bkLembreteTexto"></p>
+          <div class="bkAviso-acoes">
+            <button type="button" id="bkAgora">Fazer backup</button>
+            <button type="button" id="bkDepois">Depois</button>
+          </div>
+        </div>
+      </section>
     </div>
+
   </section>
 
   <!-- HISTÓRICO -->
   <section class="panel" id="panel-historico" role="tabpanel" tabindex="-1" aria-labelledby="tab-historico">
+    <div class="reg-seg" role="group" aria-label="Quais registros"><button type="button" data-go="historico" aria-pressed="true">Ativos</button><button type="button" data-go="arquivados" aria-pressed="false">Arquivados</button><button type="button" data-go="excluidos" aria-pressed="false">Lixeira</button></div>
+    <div class="busca-aviso" id="buscaAviso" hidden><span id="buscaAvisoTxt"></span><button type="button" id="buscaLimpar">Limpar busca</button></div>
     <div class="track" id="trackBox">
       <div class="trackhead">
         <div>
@@ -2189,6 +2834,10 @@
         <button type="button" class="calnav" id="calNext" aria-label="Próximo mês"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
           <p class="cap" id="calResumo"></p>
         </div>
+        <div class="cal-modo" role="group" aria-label="Dias mostrados">
+          <button type="button" data-m="uteis" aria-pressed="true">Dias úteis</button>
+          <button type="button" data-m="todos" aria-pressed="false">Semana inteira</button>
+        </div>
       </div>
 
       <h2 class="filters-title acc-head divisor">
@@ -2221,13 +2870,18 @@
       </div>
     </div>
 
+    <div class="cal-legenda">
+      <span><i class="lv"></i>Vídeo</span><span><i class="ld"></i>Demanda</span><span><i class="lc"></i>Feito com Claude</span><span><i class="la"></i>Tem alteração</span>
+      <span class="cal-dica">Arraste um card para mudar a data do vídeo</span>
+    </div>
     <div class="calwrap">
-      <div class="calgrid" id="calGrid"></div>
+      <div class="calgrid uteis" id="calGrid"></div>
     </div>
   </section>
 
   <!-- ARQUIVADOS -->
   <section class="panel" id="panel-arquivados" role="tabpanel" tabindex="-1" aria-labelledby="tab-arquivados">
+    <div class="reg-seg" role="group" aria-label="Quais registros"><button type="button" data-go="historico" aria-pressed="false">Ativos</button><button type="button" data-go="arquivados" aria-pressed="true">Arquivados</button><button type="button" data-go="excluidos" aria-pressed="false">Lixeira</button></div>
     <div class="filters filters-block">
       <div class="cal-topo">
         <h2 class="filters-title">Arquivados</h2>
@@ -2302,9 +2956,10 @@
 
   <!-- EXCLUÍDOS -->
   <section class="panel" id="panel-excluidos" role="tabpanel" tabindex="-1" aria-labelledby="tab-excluidos">
+    <div class="reg-seg" role="group" aria-label="Quais registros"><button type="button" data-go="historico" aria-pressed="false">Ativos</button><button type="button" data-go="arquivados" aria-pressed="false">Arquivados</button><button type="button" data-go="excluidos" aria-pressed="true">Lixeira</button></div>
     <div class="filters filters-block">
       <div class="cal-topo">
-        <h2 class="filters-title">Excluídos</h2>
+        <h2 class="filters-title">Lixeira</h2>
         <p class="cap" id="lixoResumo"></p>
         <span class="spacer"></span>
         <button class="tool danger" id="btnEsvaziar" hidden>Esvaziar agora</button>
@@ -2445,7 +3100,7 @@
   <!-- PERFIL -->
   <section class="panel" id="panel-perfil" role="tabpanel" tabindex="-1" aria-labelledby="tab-perfil">
     <div class="box pf-card">
-      <h2 class="filters-title">Seu perfil</h2>
+      <div class="pf-topo"><h2 class="filters-title">Seu perfil</h2><button type="button" class="tool pf-guia" id="pfGuia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 0 1 4.8 1c0 1.7-2.3 2-2.3 3.5"/><path d="M12 17h.01"/></svg>Rever o guia do app</button></div>
       <p class="pf-cap">O nome e a foto aparecem no app e na aba Equipe, para quem for ver o seu histórico.</p>
       <div class="pf-grid">
         <div class="pf-foto">
@@ -2544,6 +3199,67 @@
       </div>
       <p class="pf-cap pf-semnuvem" id="pfSemNuvem" hidden>O perfil fica disponível no app instalado, com login.</p>
     </div>
+    <div class="pf-extra">
+    <div class="box dados-box">
+      <h3 class="acc-head">
+        <button type="button" class="filtros-head" id="dadosHead" aria-expanded="false" aria-controls="dadosBody">
+          <span class="chev">▶</span>Seus dados
+        </button>
+        <span class="filtros-tag arq-tag" id="arqTag" hidden></span>
+      </h3>
+      <div class="disc-body dados" id="dadosBody" hidden>
+        <div class="sub">
+        <button class="sub-head" id="arqDiscoHead" aria-expanded="false" aria-controls="arqDiscoBody">
+        <span class="chev">▶</span> Arquivo no computador
+        </button>
+              <div class="sub-body" id="arqDiscoBody" hidden>
+        <p class="arq-status" id="arqStatus"></p>
+        <div class="tools" id="arqAcoes"></div>
+        </div>
+        </div>
+
+        <div class="sub">
+        <button class="sub-head" id="toolsHead" aria-expanded="false" aria-controls="toolsBody">
+        <span class="chev">▶</span> Exportação e importação
+        </button>
+              <div class="sub-body" id="toolsBody" hidden>
+        <p class="arq-status">Backup manual. Leve os registros para outro computador ou guarde uma cópia fora daqui, quando quiser.</p>
+        <div class="tools">
+        <button class="tool" id="btnBackup">Baixar backup completo</button>
+        <button class="tool" id="btnRestaurar">Restaurar backup</button>
+        <input type="file" id="inBackup" accept="application/json,.json" hidden>
+        </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box risco">
+      <h3 class="acc-head">
+        <button type="button" class="filtros-head" id="riscoHead" aria-expanded="false" aria-controls="riscoBody">
+          <span class="chev">▶</span>Zona de risco
+        </button>
+      </h3>
+      <div id="riscoBody" hidden>
+        <p class="risco-texto">Apaga todos os registros salvos. Não tem como desfazer, então baixe o backup antes.</p>
+        <button class="tool danger" id="btnReset">Apagar todos os registros</button>
+      </div>
+    </div>
+    <div hidden aria-hidden="true">
+        <div class="sub" id="contaSub" hidden>
+        <button class="sub-head" id="contaHead" aria-expanded="false" aria-controls="contaBody">
+        <span class="chev">▶</span> Conta na nuvem
+        </button>
+              <div class="sub-body" id="contaBody" hidden>
+        <p class="arq-status" id="contaStatus"></p>
+        <p class="arq-status">Para mudar o nome ou a foto, use a aba Perfil.</p>
+        <div class="tools"><button class="tool" id="btnSair">Sair da conta</button></div>
+        </div>
+        </div>
+
+      <button class="tool" id="btnCopiar" type="button">Copiar este dia</button>
+    </div>
+    </div>
   </section>
 
   <!-- RESUMO -->
@@ -2601,65 +3317,57 @@
       <p class="rs-sub">Só dias úteis trabalhados. Sábado e domingo ficam fora.</p>
       <ul class="rank" id="rsRankSem"></ul>
     </div>
-    <div class="box dados-box">
-      <h3 class="acc-head">
-        <button type="button" class="filtros-head" id="dadosHead" aria-expanded="false" aria-controls="dadosBody">
-          <span class="chev">▶</span>Seus dados
-        </button>
-        <span class="filtros-tag arq-tag" id="arqTag" hidden></span>
-      </h3>
-      <div class="disc-body dados" id="dadosBody" hidden>
-        <div class="sub" id="contaSub" hidden>
-        <button class="sub-head" id="contaHead" aria-expanded="false" aria-controls="contaBody">
-        <span class="chev">▶</span> Conta na nuvem
-        </button>
-              <div class="sub-body" id="contaBody" hidden>
-        <p class="arq-status" id="contaStatus"></p>
-        <p class="arq-status">Para mudar o nome ou a foto, use a aba Perfil.</p>
-        <div class="tools"><button class="tool" id="btnSair">Sair da conta</button></div>
-        </div>
-        </div>
-
-        <div class="sub">
-        <button class="sub-head" id="arqDiscoHead" aria-expanded="false" aria-controls="arqDiscoBody">
-        <span class="chev">▶</span> Arquivo no computador
-        </button>
-              <div class="sub-body" id="arqDiscoBody" hidden>
-        <p class="arq-status" id="arqStatus"></p>
-        <div class="tools" id="arqAcoes"></div>
-        </div>
-        </div>
-
-        <div class="sub">
-        <button class="sub-head" id="toolsHead" aria-expanded="false" aria-controls="toolsBody">
-        <span class="chev">▶</span> Exportação e importação
-        </button>
-              <div class="sub-body" id="toolsBody" hidden>
-        <p class="arq-status">Backup manual. Leve os registros para outro computador ou guarde uma cópia fora daqui, quando quiser.</p>
-        <div class="tools">
-        <button class="tool" id="btnCopiar">Copiar este dia</button>
-        <button class="tool" id="btnBackup">Baixar backup completo</button>
-        <button class="tool" id="btnRestaurar">Restaurar backup</button>
-        <input type="file" id="inBackup" accept="application/json,.json" hidden>
-        </div>
-        </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="box risco">
-      <h3 class="acc-head">
-        <button type="button" class="filtros-head" id="riscoHead" aria-expanded="false" aria-controls="riscoBody">
-          <span class="chev">▶</span>Zona de risco
-        </button>
-      </h3>
-      <div id="riscoBody" hidden>
-        <p class="risco-texto">Apaga todos os registros salvos. Não tem como desfazer, então baixe o backup antes.</p>
-        <button class="tool danger" id="btnReset">Apagar todos os registros</button>
-      </div>
-    </div>
   </section>
 
+</div>
+</div>
+
+<nav class="bottombar" id="bottombar" aria-label="Menu principal">
+  <button type="button" data-go="hoje"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5L12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z"/></svg><span>Hoje</span></button>
+  <button type="button" data-go="historico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/></svg><span>Histórico</span></button>
+  <button type="button" class="bb-add" id="bbAdd" aria-label="Novo registro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+  <button type="button" data-go="calendario"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Calendário</span></button>
+  <button type="button" id="bbMais" data-go="mais"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/></svg><span>Mais</span></button>
+</nav>
+<div class="sheet-bg" id="sheetBg" hidden></div>
+<div class="mais-sheet" id="maisSheet" role="dialog" aria-label="Mais opções" hidden>
+  <span class="sheet-alca" aria-hidden="true"></span>
+  <div class="ms-grupo">
+    <span class="ms-tit">Números</span>
+    <button type="button" data-go="resumo"><span class="ms-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V11"/><path d="M12 20V5"/><path d="M19 20v-6"/></svg></span>Seu resumo</button>
+    <button type="button" data-go="equipe"><span class="ms-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7"/><path d="M21.5 20a6.5 6.5 0 0 0-4-6"/></svg></span>Equipe</button>
+  </div>
+  <div class="ms-grupo">
+    <span class="ms-tit">Registros guardados</span>
+    <button type="button" data-go="arquivados"><span class="ms-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="5" rx="1.5"/><path d="M5 9v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9"/><path d="M10 13h4"/></svg></span>Arquivados</button>
+    <button type="button" data-go="excluidos"><span class="ms-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6 7l1 13h10l1-13"/></svg></span>Lixeira</button>
+  </div>
+  <div class="ms-grupo">
+    <span class="ms-tit">Conta</span>
+    <button type="button" data-go="perfil"><span class="ms-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>Perfil e relatório</button>
+    <button type="button" id="msTema"><span class="ms-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg></span><span id="msTemaTxt">Modo escuro</span></button>
+    <button type="button" id="msGuia"><span class="ms-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 0 1 4.8 1c0 1.7-2.3 2-2.3 3.5"/><path d="M12 17h.01"/></svg></span>Rever o guia do app</button>
+  </div>
+</div>
+<div class="guia" id="guia" hidden>
+  <div class="guia-card" role="dialog" aria-modal="true" aria-labelledby="guiaTit">
+    <div class="guia-ilus">
+      <span class="guia-selo" id="guiaSelo"></span>
+      <button type="button" class="guia-pular" id="guiaPular">Pular guia</button>
+      <span class="guia-ic" id="guiaIc"></span>
+    </div>
+    <div class="guia-corpo">
+      <span class="guia-passo" id="guiaPasso"></span>
+      <h2 id="guiaTit"></h2>
+      <p id="guiaTxt"></p>
+      <div class="guia-pe">
+        <div class="guia-pontos" id="guiaPontos"></div>
+        <button type="button" class="guia-voltar" id="guiaVoltar">Voltar</button>
+        <button type="button" class="guia-prox" id="guiaProx">Próximo</button>
+      </div>
+      <small class="guia-nota">Dá para rever este guia quando quiser, no seu Perfil.</small>
+    </div>
+  </div>
 </div>
 
 
@@ -2958,6 +3666,8 @@
   var tab = "hoje";
   var filters = { period:"30", de:"", ate:"", nome:"", cliente:"", kind:"todos" };
   var justAdded = null;
+  var hjFiltro = "todos";        // filtro da lista de entregas do Hoje
+  var buscaTermo = "";           // busca global do topo
   var dataVideo = isoToday();
   var demanda = false;
   var claudeMarca = false;
@@ -3412,6 +4122,7 @@
     save();
     renderAll();
     justAdded = null;
+    if(document.body.classList.contains("sheet-on")){ fecharFolhas(); toast("Registro adicionado"); }
   }
 
   function removeItem(iso, k, id){ moverParaLixo(iso, k, id); }
@@ -3645,7 +4356,7 @@
     document.getElementById("inTitulo").focus();
   }
   function renderDatePick(){
-    setTimeout(estadoLimpar, 0);
+    setTimeout(function(){ estadoLimpar(); marcarAtalhoData(); }, 0);
     document.getElementById("dateValue").textContent = dataVideo ? shortDate(dataVideo) : "--/--";
   }
 
@@ -3770,7 +4481,7 @@
       bigEl.classList.add("pulse");
     }
     bigEl.textContent = d.videos.length;
-    document.getElementById("totemVideosLabel").textContent = d.videos.length === 1 ? "vídeo entregue" : "vídeos entregues";
+    document.getElementById("totemVideosLabel").textContent = d.videos.length === 1 ? "vídeo" : "vídeos";
     document.getElementById("totemAlt").textContent = d.alteracoes.length;
     document.getElementById("totemAltLabel").textContent = d.alteracoes.length === 1 ? "alteração" : "alterações";
     document.getElementById("diaValor").textContent = shortDate(activeDate);
@@ -3785,18 +4496,176 @@
     if(document.activeElement !== campoNota) campoNota.value = notaDe(activeDate);
     contarNota();
 
+    renderHojeExtras(d);
+
     var box = document.getElementById("todayLists");
     box.innerHTML = "";
     if(!d.videos.length && !d.alteracoes.length){
       box.innerHTML = '<div class="group"><div class="empty">' +
         (folgaDe(activeDate)
           ? (fimDeSemana(activeDate) ? "Fim de semana é folga. Se registrar algo, aparece aqui do mesmo jeito, mas não entra na média." : "Dia marcado como folga. Se registrar algo, aparece aqui do mesmo jeito.")
-          : "Nada registrado neste dia ainda. Escreva o nome do vídeo acima para começar.") +
+          : "Nada registrado neste dia ainda. Use o Novo registro para começar.") +
         '</div></div>';
       return;
     }
-    if(d.videos.length) box.appendChild(groupEl("Vídeos do dia", d.videos, activeDate, "video", ""));
-    if(d.alteracoes.length) box.appendChild(groupEl("Alterações do dia", d.alteracoes, activeDate, "alteracao", ""));
+    var mv = hjFiltro !== "alteracao" ? d.videos : [];
+    var ma = hjFiltro !== "video" ? d.alteracoes : [];
+    if(!mv.length && !ma.length){
+      box.innerHTML = '<div class="group"><div class="empty">' +
+        (hjFiltro === "video" ? "Nenhum vídeo neste dia, só alterações." : "Nenhuma alteração neste dia.") + '</div></div>';
+      return;
+    }
+    if(mv.length) box.appendChild(groupEl("Vídeos", mv, activeDate, "video", ""));
+    if(ma.length) box.appendChild(groupEl("Alterações", ma, activeDate, "alteracao", ""));
+  }
+
+  /* ---------- v17: partes novas do Hoje ---------- */
+  function renderHojeExtras(d){
+    var nV = d.videos.length, nA = d.alteracoes.length;
+    document.getElementById("hjF0").textContent = nV + nA;
+    document.getElementById("hjF1").textContent = nV;
+    document.getElementById("hjF2").textContent = nA;
+    document.querySelectorAll("#hjFiltro button").forEach(function(b){
+      b.setAttribute("aria-pressed", b.dataset.f === hjFiltro ? "true" : "false");
+    });
+    var ehHoje = activeDate === isoToday();
+    var rel = relative(activeDate);
+    document.getElementById("hjListaTit").textContent = ehHoje ? "Entregas de hoje" : (rel === "Ontem" ? "Entregas de ontem" : "Entregas de " + shortDate(activeDate));
+    document.getElementById("hjStatsTit").textContent = ehHoje ? "Hoje até agora" : (rel === "Ontem" ? "Ontem" : "No dia " + shortDate(activeDate));
+    var ym = activeDate.slice(0, 7);
+    var media = 0;
+    try{ media = calcular(registrosPessoais(), ym + "-01", activeDate, "").media; }catch(e){}
+    var nomeMes = monthName(ym).replace(/ de \d{4}$/, "").toLowerCase();
+    document.getElementById("hjMediaRot").innerHTML = '<span class="m-lg">Sua média em ' + esc(nomeMes) + '</span><span class="m-cl">Média no mês</span>';
+    document.getElementById("hjMedia").textContent = fmt1(media) + " por dia";
+    renderSemana();
+    var mk = document.getElementById("hjMarca");
+    if(mk){ var f = folgaDe(activeDate), nt = notaDe(activeDate); mk.hidden = !(f || nt); mk.title = f ? "Dia de folga" : "Tem observação"; }
+    if(tab === "hoje") atualizarTopo();
+  }
+
+  var NOMES_SEM = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
+  function irParaDia(iso){
+    if(iso > isoToday()) iso = isoToday();
+    activeDate = iso;
+    syncDataVideo();
+    ajustarAno(activeDate);
+    renderAll();
+  }
+  function renderSemana(){
+    var box = document.getElementById("semDias");
+    if(!box) return;
+    var base = fromISO(activeDate);
+    var w = base.getDay();
+    var seg = addDays(base, w === 0 ? -6 : 1 - w);     // segunda da semana do dia escolhido
+    var hj = isoToday();
+    box.innerHTML = "";
+    for(var i = 0; i < 5; i++){
+      var dia = addDays(seg, i), iso = toISO(dia);
+      var dd = ativo(iso), n = dd.videos.length + dd.alteracoes.length;
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "sem-dia" + (iso === activeDate ? " on" : "") + (iso === hj ? " hoje" : "") + (folgaDe(iso) ? " folga" : "");
+      b.disabled = iso > hj;
+      b.dataset.iso = iso;
+      b.setAttribute("aria-pressed", iso === activeDate ? "true" : "false");
+      b.setAttribute("aria-label", longDate(iso) + ", " + n + (n === 1 ? " entrega" : " entregas"));
+      b.innerHTML = '<span class="sd-wd">' + NOMES_SEM[dia.getDay()] + (iso === hj ? ' <i>hoje</i>' : '') + '</span>' +
+                    '<b class="sd-n">' + String(dia.getDate()).padStart(2, "0") + '</b>' +
+                    '<span class="sd-q">' + (iso > hj ? "&nbsp;" : (folgaDe(iso) && !n ? "folga" : n + '<span class="sd-ql">' + (n === 1 ? " entrega" : " entregas") + '</span>')) + '</span>';
+      b.addEventListener("click", function(){ irParaDia(this.dataset.iso); });
+      box.appendChild(b);
+    }
+    var next = document.getElementById("semNext");
+    next.disabled = toISO(addDays(seg, 7)) > hj;
+
+    // troca de semana: os dias deslizam para o lado, sem pulo seco
+    var segIso = toISO(seg);
+    if(semUltimaSeg && segIso !== semUltimaSeg && box.animate && !matchMedia("(prefers-reduced-motion: reduce)").matches){
+      var dir = segIso > semUltimaSeg ? 1 : -1;
+      box.animate([
+        { transform: "translateX(" + (dir * 56) + "px)", opacity: 0 },
+        { transform: "none", opacity: 1 }
+      ], { duration: 380, easing: "cubic-bezier(.22,1,.36,1)" });
+    }
+    semUltimaSeg = segIso;
+  }
+  var semUltimaSeg = null;
+
+  // celular: arrastar a faixa da semana com o dedo
+  (function(){
+    var box = document.getElementById("semDias");
+    if(!box) return;
+    var x0 = 0, y0 = 0, dx = 0, ativo = false, horizontal = null;
+    box.addEventListener("touchstart", function(e){
+      if(e.touches.length !== 1) return;
+      ativo = true; horizontal = null; dx = 0;
+      x0 = e.touches[0].clientX; y0 = e.touches[0].clientY;
+      box.style.transition = "none";
+    }, { passive: true });
+    box.addEventListener("touchmove", function(e){
+      if(!ativo) return;
+      var mx = e.touches[0].clientX - x0, my = e.touches[0].clientY - y0;
+      if(horizontal === null && (Math.abs(mx) > 6 || Math.abs(my) > 6)) horizontal = Math.abs(mx) > Math.abs(my);
+      if(!horizontal) return;
+      if(e.cancelable) e.preventDefault();
+      dx = mx;
+      var bloqueado = dx < 0 && document.getElementById("semNext").disabled;
+      var puxa = bloqueado ? dx * 0.25 : dx * 0.85;     // resiste quando não tem semana seguinte
+      box.style.transform = "translateX(" + puxa + "px)";
+      box.style.opacity = String(1 - Math.min(Math.abs(puxa) / 400, 0.35));
+    }, { passive: false });
+    function soltar(){
+      if(!ativo) return;
+      ativo = false;
+      var bloqueado = dx < 0 && document.getElementById("semNext").disabled;
+      if(horizontal && Math.abs(dx) > 55 && !bloqueado){
+        box.style.transition = "none"; box.style.transform = ""; box.style.opacity = "";
+        document.getElementById(dx < 0 ? "semNext" : "semPrev").click();
+      } else {
+        box.style.transition = "transform 300ms cubic-bezier(.22,1,.36,1), opacity 300ms ease";
+        box.style.transform = ""; box.style.opacity = "";
+      }
+      dx = 0;
+    }
+    box.addEventListener("touchend", soltar);
+    box.addEventListener("touchcancel", soltar);
+  })();
+
+  var TOPO = {
+    historico: ["Histórico", function(){ return "Tudo o que você registrou em " + anoAtivo; }],
+    arquivados: ["Arquivados", function(){ return "Registros guardados fora da contagem"; }],
+    excluidos: ["Lixeira", function(){ return "Registros apagados, dá para restaurar daqui"; }],
+    calendario: ["Calendário", function(){ return "Seus vídeos pela data de postagem"; }],
+    resumo: ["Seu resumo", function(){ return "Seus números, médias e comparações"; }],
+    equipe: ["Equipe", function(){ return "Como o time está indo"; }],
+    perfil: ["Perfil", function(){ return "Sua conta, sua foto e o relatório em PDF"; }]
+  };
+  function atualizarTopo(){
+    var t = document.getElementById("pgTitulo"), sb = document.getElementById("pgSub");
+    if(!t) return;
+    if(tab === "hoje"){
+      t.textContent = saudacao().replace(/!$/, "");
+      var txt = longDate(activeDate);
+      if(activeDate.slice(0,4) !== String(new Date().getFullYear())) txt += " de " + activeDate.slice(0,4);
+      if(activeDate !== isoToday()) txt = "Vendo " + txt.charAt(0).toLowerCase() + txt.slice(1);
+      sb.textContent = txt;
+    } else if(TOPO[tab]){
+      t.textContent = TOPO[tab][0];
+      sb.textContent = TOPO[tab][1]();
+    }
+  }
+  function marcarNav(){
+    var grupo = (tab === "arquivados" || tab === "excluidos") ? "historico" : tab;
+    var hist = document.getElementById("tab-historico");
+    if(hist) hist.classList.toggle("grupo-on", grupo === "historico" && tab !== "historico");
+    var sp = document.getElementById("snPerfil");
+    if(sp) sp.classList.toggle("on", tab === "perfil");
+    var bb = (tab === "resumo" || tab === "equipe" || tab === "perfil") ? "mais" : grupo;
+    document.querySelectorAll("#bottombar [data-go]").forEach(function(b){
+      b.classList.toggle("on", b.dataset.go === bb);
+    });
+    document.body.setAttribute("data-tab", tab);
   }
 
   function groupEl(title, arr, iso, k, term){
@@ -3835,37 +4704,59 @@
 
     abrir.appendChild(spanEl("n", idx+1));
 
+    var tile = document.createElement("span");
+    tile.className = "tile " + (k === "alteracao" ? "t-alt" : "t-vid");
+    tile.innerHTML = k === "alteracao" ? ICON_ALTE : ICON_VID;
+    abrir.appendChild(tile);
+
+    var corpo = document.createElement("span");
+    corpo.className = "corpo";
     var t = document.createElement("span");
     t.className = "title";
     t.innerHTML = highlight(item.titulo, term && term.n);
-    abrir.appendChild(t);
+    corpo.appendChild(t);
 
-    if(item.dem){
-      var demEl = document.createElement("span");
-      demEl.className = "dem";
-      demEl.innerHTML = ICON_CHECK + "<b>Demanda</b>";
-      abrir.appendChild(demEl);
-    }
-    if(item.cl){
-      var iaEl = document.createElement("span");
-      iaEl.className = "ia";
-      iaEl.title = "Feito com o Claude";
-      iaEl.innerHTML = ICON_IA + "<b>Claude</b>";
-      abrir.appendChild(iaEl);
-    }
-
-    if(item.dt){
-      var dtEl = document.createElement("span");
-      dtEl.className = "dt";
-      dtEl.innerHTML = ICON_CAL + "<b>" + shortDate(item.dt) + "</b>";
-      abrir.appendChild(dtEl);
-    }
-
+    var meta = document.createElement("span");
+    meta.className = "meta";
     if(item.ref){
       var r = document.createElement("span");
       r.className = "ref";
       r.innerHTML = highlight(item.ref, term && term.c);
-      abrir.appendChild(r);
+      meta.appendChild(r);
+    }
+    if(item.dt){
+      if(item.ref) meta.appendChild(spanEl("ponto", ""));
+      var dtEl = document.createElement("span");
+      dtEl.className = "dt";
+      dtEl.innerHTML = ICON_CAL + "<b>Posta em " + shortDate(item.dt) + "</b>";
+      meta.appendChild(dtEl);
+    }
+    if(!item.ref && !item.dt){
+      var semInfo = document.createElement("span");
+      semInfo.className = "sem-info";
+      semInfo.textContent = "Sem cliente e sem data";
+      meta.appendChild(semInfo);
+    }
+    corpo.appendChild(meta);
+    abrir.appendChild(corpo);
+
+    if(item.dem || item.cl){
+      var tags = document.createElement("span");
+      tags.className = "tags";
+      if(item.dem){
+        var demEl = document.createElement("span");
+        demEl.className = "dem";
+        demEl.innerHTML = ICON_CHECK + "<b>Demanda</b>";
+        tags.appendChild(demEl);
+      }
+      if(item.cl){
+        var iaEl = document.createElement("span");
+        iaEl.className = "ia";
+        iaEl.title = "Feito com o Claude";
+        iaEl.innerHTML = ICON_IA + "<b>Claude</b>";
+        tags.appendChild(iaEl);
+      }
+      abrir.appendChild(tags);
     }
 
     focoDeTeclado(abrir);
@@ -3903,6 +4794,9 @@
 
   var ICON_IA = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l1.75 5.6a2.4 2.4 0 0 0 1.6 1.6L21 11.8l-5.65 1.75a2.4 2.4 0 0 0-1.6 1.6L12 20.8l-1.75-5.65a2.4 2.4 0 0 0-1.6-1.6L3 11.8l5.65-1.8a2.4 2.4 0 0 0 1.6-1.6z"/></svg>';
   var ICON_MAIS = '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5.5" cy="12" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="18.5" cy="12" r="1.9"/></svg>';
+  var ICON_VID = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2.5"/><path d="M16 10.5l5-3v9l-5-3"/></svg>';
+  var ICON_ALTE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>';
+  var ICON_GRIP = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>';
   document.addEventListener("click", function(e){
     if(e.target.closest && e.target.closest("li.item.acoes-on")) return;
     document.querySelectorAll("li.item.acoes-on").forEach(function(x){ x.classList.remove("acoes-on"); });
@@ -3956,6 +4850,7 @@
 
   function rangeDates(){
     var fim = fimVisivel(dias());
+    if(buscaTermo.trim()) return { de: anoAtivo + "-01-01", ate: fim > anoAtivo + "-12-31" ? anoAtivo + "-12-31" : fim };
     var de, ate = fim;
     if(filters.de || filters.ate){
       de = filters.de || "1900-01-01";
@@ -3978,6 +4873,7 @@
     var r = rangeDates();
     var tn = filters.nome.trim().toLowerCase();
     var tc = filters.cliente.trim().toLowerCase();
+    var tb = buscaTermo.trim().toLowerCase();
     var out = [];
     dias().forEach(function(iso){
       if(iso < r.de || iso > r.ate) return;
@@ -3985,11 +4881,12 @@
       var v = filters.kind === "alteracao" ? [] : d.videos;
       var a = filters.kind === "video" ? [] : d.alteracoes;
       if(filters.kind === "claude"){ v = v.filter(function(x){ return !!x.cl; }); a = a.filter(function(x){ return !!x.cl; }); }
-      if(tn || tc){
+      if(tn || tc || tb){
         var m = function(x){
           var okN = !tn || filtraTexto(x.titulo, tn);
           var okC = !tc || filtraCliente(x.ref, tc);
-          return okN && okC;
+          var okB = !tb || filtraTexto(x.titulo, tb) || filtraCliente(x.ref, tb);
+          return okN && okC && okB;
         };
         v = v.filter(m); a = a.filter(m);
       }
@@ -3997,7 +4894,7 @@
     });
 
     // folga e observação também são informação do dia, mesmo sem registro
-    if(!tn && !tc && filters.kind === "todos"){
+    if(!tn && !tc && !tb && filters.kind === "todos"){
       Object.keys(data).forEach(function(iso){
         if(!noAno(iso) || iso < r.de || iso > r.ate) return;
         if(!diaMarcado(iso)) return;
@@ -4070,6 +4967,16 @@
 
   function renderHistory(){
     var days = filteredDays();
+    var avisoB = document.getElementById("buscaAviso");
+    if(avisoB){
+      avisoB.hidden = !buscaTermo.trim();
+      if(buscaTermo.trim()){
+        var achados = 0;
+        days.forEach(function(x){ achados += x.videos.length + x.alteracoes.length; });
+        document.getElementById("buscaAvisoTxt").innerHTML = 'Buscando <b>' + esc(buscaTermo.trim()) + '</b> em ' + anoAtivo + ': ' +
+          achados + (achados === 1 ? " registro encontrado" : " registros encontrados");
+      }
+    }
     var r = rangeDates();
     var totV = 0, totA = 0;
     days.forEach(function(d){ totV += d.videos.length; totA += d.alteracoes.length; });
@@ -4100,7 +5007,7 @@
     var comDem = function(arr){ return arr.filter(function(x){ return !!x.dem; }).length; };
     var asc = days.filter(function(d){ return d.videos.length || d.alteracoes.length; }).reverse();
 
-    asc.forEach(function(d){
+    asc.forEach(function(d, iCol){
       var vids = semDem(d.videos);
       var alts = semDem(d.alteracoes);
       var dems = comDem(d.videos) + comDem(d.alteracoes);
@@ -4110,6 +5017,7 @@
       var col = document.createElement("button");
       col.type = "button";
       col.className = "bar-col";
+      col.style.setProperty("--i", Math.min(iCol, 30));
       col.title = longDate(d.iso) + ": " + d.videos.length +
                   (d.videos.length === 1 ? " vídeo" : " vídeos") + ", " + d.alteracoes.length +
                   (d.alteracoes.length === 1 ? " alteração" : " alterações") +
@@ -4141,7 +5049,8 @@
       list.innerHTML = '<div class="daycard"><div class="empty">Nada encontrado. Tente ampliar o período ou limpar a busca.</div></div>';
       return;
     }
-    var term = { n: filters.nome.trim(), c: filters.cliente.trim() };
+    var bt = buscaTermo.trim();
+    var term = { n: filters.nome.trim() || bt, c: filters.cliente.trim() || bt };
     var forceOpen = (term.n + term.c).length > 0;
 
     var maisRecente = days[0].iso;
@@ -4429,10 +5338,18 @@
         (demMes ? ", " + demMes + (demMes === 1 ? " é demanda" : " são demandas") : "")
       : "Nenhum vídeo com data neste mês";
 
+    var fdsMes = 0;
+    for(var df = 1; df <= ultimo.getDate(); df++){
+      var isoF = ym + "-" + String(df).padStart(2,"0");
+      var wf = new Date(anoAtivo, calMes, df).getDay();
+      if(wf === 0 || wf === 6) fdsMes += (mapa[isoF] || []).length;
+    }
+    var btTodos = document.querySelector('.cal-modo [data-m="todos"]');
+    if(btTodos) btTodos.innerHTML = "Semana inteira" + (fdsMes ? ' <em>' + fdsMes + '</em>' : '');
     grid.innerHTML = "";
     DIAS_SEMANA.forEach(function(w){
       var h = document.createElement("div");
-      h.className = "calwd" + (w === "dom" ? " dom" : "");
+      h.className = "calwd" + (w === "dom" ? " dom" : "") + (w === "sáb" ? " sab" : "");
       h.textContent = w;
       grid.appendChild(h);
     });
@@ -4444,7 +5361,7 @@
       var iso = toISO(d);
       var dentro = d.getMonth() === calMes && d.getFullYear() === anoAtivo;
       var cel = document.createElement("div");
-      cel.className = "calday" + (d.getDay() === 0 ? " dom" : "") +
+      cel.className = "calday" + (d.getDay() === 0 ? " dom" : "") + (d.getDay() === 6 ? " sab" : "") +
                       (dentro ? "" : " fora") + (iso === isoToday() ? " hoje" : "");
       cel.dataset.iso = iso;
 
@@ -4500,7 +5417,7 @@
         lista.slice(0, limite).forEach(function(reg){
           var card = document.createElement("button");
           card.type = "button";
-          card.className = "calcard" + (reg.dem ? " dem" : "");
+          card.className = "calcard" + (reg.dem ? " dem" : "") + (reg.cl ? " cl" : "");
           card.draggable = !toqueGrosso();
           card.title = reg.item.titulo + (reg.item.ref ? " / " + reg.item.ref : "") +
                        (reg.alteracoes ? ", com " + reg.alteracoes +
@@ -4529,10 +5446,12 @@
                          (reg.alteracoes === 1 ? " alteração registrada" : " alterações registradas") + '">' +
                          ICON_REV + reg.alteracoes + '</em>'
                        : "") +
-                     (reg.cl ? '<em class="calia" title="Feito com o Claude">' + ICON_IA + 'Claude</em>' : "") +
+                     (reg.dem ? '<em class="caldem">Demanda</em>' : "") +
                      '</span>';
           }
-          card.innerHTML = "<b>" + esc(reg.item.titulo) + "</b>" + rodape;
+          card.innerHTML = '<span class="cc-topo"><span class="cc-ic">' + ICON_VID + '</span><b>' + esc(reg.item.titulo) + '</b>' +
+                           (reg.cl ? '<span class="cc-cl" title="Feito com o Claude">' + ICON_IA + '</span>' : '') +
+                           '<span class="cc-grip">' + ICON_GRIP + '</span></span>' + rodape;
           card.addEventListener("click", function(){ abrirDetalhe(reg); });
           caixa.appendChild(card);
         });
@@ -5813,7 +6732,7 @@
         "Seus registros estão ligados a " + arqNome + ", mas cada navegador autoriza o acesso uma vez. Enquanto isso, o painel salva só aqui no navegador.",
         [
           { rotulo:"Reconectar arquivo", fn:reconectarArquivo },
-          { rotulo:"Ver em Seus dados", fn:function(){ mostrarAba("resumo"); abrirBlocoArquivo(); } }
+          { rotulo:"Ver em Seus dados", fn:function(){ mostrarAba("perfil"); abrirBlocoArquivo(); } }
         ]);
     }
   }
@@ -6467,6 +7386,8 @@
     var topo = document.getElementById("avatarTopo");
     topo.hidden = !logado;
     if(logado) topo.innerHTML = avatarHTML(nome || u.email || "", pf.foto);
+    pintarAvatar(document.getElementById("snAvatar"), logado ? (nome || u.email || "") : "?", logado ? pf.foto : "");
+    document.getElementById("snNome").textContent = logado ? (nome || u.email || "Seu perfil") : "Seu perfil";
     document.querySelector("#panel-perfil .pf-grid").hidden = !logado;
     document.getElementById("pfSemNuvem").hidden = logado;
     document.getElementById("pfSeg").hidden = !logado;
@@ -6650,19 +7571,24 @@
       var atual = x.dataset.tab === nome;
       x.setAttribute("aria-selected", atual ? "true" : "false");
       x.setAttribute("tabindex", atual ? "0" : "-1");
-      if(atual && window.innerWidth <= 900){
+      if(false){
         var nav = x.parentNode;
         var alvo = x.offsetLeft - (nav.clientWidth - x.offsetWidth) / 2;
         try{ nav.scrollTo({ left: Math.max(0, alvo), behavior: "smooth" }); }catch(e){ nav.scrollLeft = alvo; }
       }
     });
-    if(window.innerWidth <= 900){
-      var topoAbas = document.querySelector("nav.tabs").getBoundingClientRect().top + window.scrollY;
-      if(window.scrollY > topoAbas) window.scrollTo(0, topoAbas);
-    }
+    if(window.scrollY > 0) window.scrollTo(0, 0);
     document.querySelectorAll('.panel').forEach(function(p){
       p.classList.toggle("on", p.id === "panel-" + nome);
     });
+    atualizarTopo();
+    marcarNav();
+    var ph = document.getElementById("panel-historico");
+    if(nome === "historico"){
+      ph.classList.add("entrando");
+      clearTimeout(ph._entra);
+      ph._entra = setTimeout(function(){ ph.classList.remove("entrando"); }, 900);
+    }
   }
 
   abas.forEach(function(b, i){
@@ -7943,6 +8869,7 @@
       esconderLogin(); renderConta();
       if(!String(user.displayName || "").trim()) mostrarBoasVindas();
       var db = window.__FB && window.__FB.db(); if(db) nuvemConectar(db);
+      agendarGuia(user.uid);
     } else {
       nuvemDesligar(); pf.foto = ""; pf.carregada = false; esconderBoasVindas(); renderConta(); mostrarLogin();
     }
@@ -8012,6 +8939,292 @@
 
   renderArquivo();
   applyTheme(document.documentElement.getAttribute("data-theme") || "light");
+
+  /* ================= v17: menu lateral, busca, celular e guia ================= */
+  (function(){
+    var KEY_MINI = "painel:sn-mini";
+    var mini = false;
+    var salvoMini = null;
+    try{ salvoMini = localStorage.getItem(KEY_MINI); }catch(e){}
+    mini = salvoMini === "1" || (salvoMini === null && window.innerWidth < 1100);
+    function aplicarMini(){
+      document.body.classList.toggle("sn-mini", mini);
+      var b = document.getElementById("snRecolher");
+      b.setAttribute("aria-label", mini ? "Abrir o menu" : "Recolher o menu");
+      b.title = mini ? "Abrir o menu" : "Recolher o menu";
+      b.setAttribute("aria-expanded", mini ? "false" : "true");
+    }
+    aplicarMini();
+    document.getElementById("snRecolher").addEventListener("click", function(){
+      mini = !mini;
+      try{ localStorage.setItem(KEY_MINI, mini ? "1" : "0"); }catch(e){}
+      aplicarMini();
+      setTimeout(function(){ try{ ajustarFormulario(); }catch(e){} }, 260);
+    });
+    document.getElementById("snPerfil").addEventListener("click", function(){ mostrarAba("perfil"); });
+
+    // qualquer botão com data-go troca de tela (barra de baixo, menu Mais, seletor do Histórico)
+    document.addEventListener("click", function(e){
+      var b = e.target.closest && e.target.closest("[data-go]");
+      if(!b) return;
+      var go = b.dataset.go;
+      if(go === "mais"){ abrirMais(); return; }
+      fecharFolhas();
+      if(RENDER[go]) mostrarAba(go);
+    });
+
+    // filtro da lista do Hoje
+    document.getElementById("hjFiltro").addEventListener("click", function(e){
+      var b = e.target.closest("button[data-f]");
+      if(!b) return;
+      hjFiltro = b.dataset.f;
+      renderToday();
+    });
+    document.getElementById("hjVerResumo").addEventListener("click", function(){ mostrarAba("resumo"); });
+
+    // faixa da semana
+    document.getElementById("semPrev").addEventListener("click", function(){ irParaDia(toISO(addDays(fromISO(activeDate), -7))); });
+    document.getElementById("semNext").addEventListener("click", function(){
+      var alvo = toISO(addDays(fromISO(activeDate), 7));
+      irParaDia(alvo > isoToday() ? isoToday() : alvo);
+    });
+
+    // calendário: dias úteis ou semana inteira
+    var KEY_CAL = "painel:cal-modo";
+    var modo = "uteis";
+    try{ modo = localStorage.getItem(KEY_CAL) || "uteis"; }catch(e){}
+    function aplicarModo(){
+      document.getElementById("calGrid").classList.toggle("uteis", modo === "uteis");
+      document.querySelectorAll(".cal-modo button").forEach(function(b){ b.setAttribute("aria-pressed", b.dataset.m === modo ? "true" : "false"); });
+    }
+    aplicarModo();
+    document.querySelector(".cal-modo").addEventListener("click", function(e){
+      var b = e.target.closest("button[data-m]");
+      if(!b) return;
+      modo = b.dataset.m;
+      try{ localStorage.setItem(KEY_CAL, modo); }catch(err){}
+      aplicarModo();
+    });
+
+    // busca global
+    var campo = document.getElementById("buscaGlobal");
+    var espera = null;
+    function buscar(){
+      buscaTermo = campo.value;
+      sujo.historico = true;
+      if(buscaTermo.trim() && tab !== "historico") mostrarAba("historico");
+      else if(tab === "historico"){ RENDER.historico(); sujo.historico = false; requestAnimationFrame(compactarItens); }
+    }
+    campo.addEventListener("input", function(){ clearTimeout(espera); espera = setTimeout(buscar, 220); });
+    campo.addEventListener("keydown", function(e){
+      if(e.key === "Enter"){ clearTimeout(espera); buscar(); }
+      if(e.key === "Escape"){ campo.value = ""; clearTimeout(espera); buscar(); campo.blur(); }
+    });
+    document.getElementById("buscaLimpar").addEventListener("click", function(){ campo.value = ""; buscar(); });
+    document.addEventListener("keydown", function(e){
+      if((e.ctrlKey || e.metaKey) && (e.key === "k" || e.key === "K")){
+        e.preventDefault();
+        campo.focus(); campo.select();
+      }
+    });
+
+    // celular: folha do novo registro e menu Mais
+    document.getElementById("bbAdd").addEventListener("click", abrirRegistroCel);
+    document.getElementById("sheetFechar").addEventListener("click", fecharFolhas);
+    document.getElementById("sheetBg").addEventListener("click", fecharFolhas);
+    document.getElementById("msTema").addEventListener("click", function(){ fecharFolhas(); toggleTheme(); });
+    document.getElementById("msGuia").addEventListener("click", function(){ fecharFolhas(); abrirGuia(true); });
+    document.getElementById("pfGuia").addEventListener("click", function(){ abrirGuia(true); });
+    var menuAberto = false;
+    document.addEventListener("keydown", function(e){
+      if(e.key === "Escape") menuAberto = !!document.querySelector(".pick-menu:not([hidden])") || !!document.querySelector(".modal:not([hidden])");
+    }, true);
+    document.addEventListener("keydown", function(e){
+      if(e.key !== "Escape" || menuAberto) return;
+      if(document.body.classList.contains("sheet-on") || document.body.classList.contains("mais-on")) fecharFolhas();
+    });
+
+    // guia
+    document.getElementById("guiaProx").addEventListener("click", function(){
+      if(guia.i >= guia.passos.length - 1) fecharGuia(); else { guia.i++; pintarGuia(); }
+    });
+    document.getElementById("guiaVoltar").addEventListener("click", function(){ if(guia.i > 0){ guia.i--; pintarGuia(); } });
+    document.getElementById("guiaPular").addEventListener("click", fecharGuia);
+    document.getElementById("guia").addEventListener("keydown", function(e){
+      if(e.key === "Escape") fecharGuia();
+      if(e.key === "ArrowRight") document.getElementById("guiaProx").click();
+      if(e.key === "ArrowLeft") document.getElementById("guiaVoltar").click();
+    });
+    if(!NUVEM) agendarGuia("local");
+    atualizarTopo();
+    marcarNav();
+  })();
+
+  function celular(){ return window.innerWidth <= 760; }
+  // no celular, "Sobre o dia" fica dentro do card do topo, abrindo com a setinha
+  (function(){
+    var mq = window.matchMedia("(max-width:760px)");
+    var sobre = document.querySelector(".hj-sobre");
+    var cel = document.getElementById("hjSobreCel");
+    var btn = document.getElementById("hjAbrir");
+    var partes = [sobre.querySelector(".diaextra"), document.getElementById("bkLembrete")];
+    var aberto = false;
+    function posicionar(){
+      var alvo = mq.matches ? cel : sobre;
+      partes.forEach(function(p){ if(p && p.parentNode !== alvo) alvo.appendChild(p); });
+      sobre.hidden = mq.matches;
+      cel.hidden = !(mq.matches && aberto);
+    }
+    btn.addEventListener("click", function(){
+      aberto = !aberto;
+      btn.setAttribute("aria-expanded", aberto ? "true" : "false");
+      cel.hidden = !aberto;
+      if(aberto){ cel.classList.remove("abrindo"); void cel.offsetWidth; cel.classList.add("abrindo"); }
+    });
+    if(mq.addEventListener) mq.addEventListener("change", posicionar); else mq.addListener(posicionar);
+    posicionar();
+  })();
+  document.querySelector(".dv-atalhos").addEventListener("click", function(e){
+    var b = e.target.closest("button[data-dv]");
+    if(!b) return;
+    dataVideo = toISO(addDays(new Date(), +b.dataset.dv));
+    if(dataVideo.slice(0,4) !== activeDate.slice(0,4) && dataVideo > activeDate.slice(0,4) + "-12-31") dataVideo = activeDate.slice(0,4) + "-12-31";
+    renderDatePick();
+    try{ estadoLimpar(); }catch(err){}
+    marcarAtalhoData();
+  });
+  function marcarAtalhoData(){
+    document.querySelectorAll(".dv-atalhos button").forEach(function(b){
+      b.setAttribute("aria-pressed", dataVideo === toISO(addDays(new Date(), +b.dataset.dv)) ? "true" : "false");
+    });
+  }
+  function abrirRegistroCel(){
+    if(tab !== "hoje") mostrarAba("hoje");
+    fecharFolhas();
+    document.body.classList.add("sheet-on");
+    document.getElementById("sheetBg").hidden = false;
+    setTimeout(function(){ try{ document.getElementById("inTitulo").focus(); }catch(e){} }, 120);
+  }
+  function abrirMais(){
+    var on = document.body.classList.contains("mais-on");
+    fecharFolhas();
+    if(on) return;
+    document.getElementById("msTemaTxt").textContent = document.documentElement.getAttribute("data-theme") === "dark" ? "Modo claro" : "Modo escuro";
+    document.body.classList.add("mais-on");
+    document.getElementById("maisSheet").hidden = false;
+    document.getElementById("sheetBg").hidden = false;
+  }
+  function fecharFolhas(){
+    document.body.classList.remove("sheet-on", "mais-on");
+    document.getElementById("maisSheet").hidden = true;
+    document.getElementById("sheetBg").hidden = true;
+  }
+
+  var GUIA = {
+    ic: {
+      ola: '<svg width="54" height="54" viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" rx="13.5" fill="#ff6a13"/><rect x="8.5" y="10" width="27" height="7.6" rx="2.2" fill="#fff"/><path d="M14.6 10 L11 17.6 M23.6 10 L20 17.6 M32.6 10 L29 17.6" stroke="#ff6a13" stroke-width="3"/><rect x="8.5" y="19.6" width="27" height="14.4" rx="2.8" fill="#fff"/><path d="M19.2 23.4 L26.4 26.8 L19.2 30.2 Z" fill="#ff6a13"/></svg>',
+      registro: '<rect x="3" y="6" width="13" height="12" rx="2.5"/><path d="M16 10.5l5-3v9l-5-3"/>',
+      semana: '<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M8 14h2M14 14h2M8 17h2"/>',
+      busca: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',
+      numeros: '<path d="M5 20V11"/><path d="M12 20V5"/><path d="M19 20v-6"/>',
+      sino: '<path d="M6 8.5a6 6 0 0 1 12 0c0 6 2.5 7.5 2.5 7.5h-17S6 14.5 6 8.5z"/><path d="M10 20a2.2 2.2 0 0 0 4 0"/>',
+      menu: '<rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16"/><path d="M5.5 8h1.5M5.5 11h1.5M5.5 14h1.5"/>',
+      pasta: '<rect x="3" y="4" width="18" height="5" rx="1.5"/><path d="M5 9v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9"/><path d="M10 13h4"/>',
+      celular: '<rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M12 9v6M9 12h6"/>'
+    },
+    primeiro: [
+      ["ola", "Bem-vindo ao Painel do Editor", "Aqui você registra cada vídeo e alteração que entrega. Tudo fica salvo na nuvem e aparece igual no celular e no computador."],
+      ["registro", "Registre cada entrega", "Em Novo registro, escolha Vídeo ou Alteração, coloque o nome, o cliente e a data do vídeo. Marque Demanda e Claude quando for o caso e clique em Adicionar."],
+      ["semana", "Navegue pelos dias", "A faixa da semana mostra quantas entregas teve em cada dia. No Calendário você vê o mês inteiro e arrasta um registro para outro dia."],
+      ["busca", "Ache qualquer vídeo", "Use a busca no topo, ou Ctrl K. No Histórico ficam todos os seus registros, com filtros por período, cliente e tipo."],
+      ["numeros", "Acompanhe seus números", "Em Seu resumo você vê totais, médias e a comparação com o mês anterior. No Perfil dá para baixar um relatório em PDF."],
+      ["sino", "Registros que chegam do ClickUp", "Quando um vídeo é aprovado pelo Claude, o registro entra sozinho e avisa no sininho. Pronto, é só começar."]
+    ],
+    novidades: [
+      ["ola", "O painel ficou de cara nova", "Tudo o que você já fazia continua igual, só ficou mais fácil de achar. Nenhum registro seu mudou."],
+      ["menu", "As abas viraram um menu do lado", "Hoje, Histórico, Calendário, Resumo e Equipe ficam no menu lateral. Use o botão de recolher para deixar ele compacto e ganhar espaço na tela."],
+      ["semana", "A semana na sua frente", "No lugar do seletor de data, a faixa da semana mostra quantas entregas teve em cada dia. Um clique troca o dia."],
+      ["pasta", "Arquivados e Lixeira no Histórico", "Eles agora ficam dentro do Histórico, num seletor no topo. No celular, também aparecem no menu Mais."],
+      ["busca", "Busca em qualquer tela", "A busca fica sempre no topo. Aperte Ctrl K para achar um vídeo ou cliente sem sair de onde está."],
+      ["celular", "No celular, o botão +", "O botão laranja no meio da barra de baixo abre o novo registro com campos maiores e atalhos de data."]
+    ],
+    primeiroCel: [
+      ["ola", "Bem-vindo ao Painel do Editor", "Aqui você registra cada vídeo e alteração que entrega. Tudo fica salvo na nuvem e aparece igual no celular e no computador."],
+      ["registro", "Registre cada entrega", "Toque no botão + e escolha Vídeo ou Alteração. Coloque nome, cliente e data do vídeo, marque Demanda e Claude quando for o caso."],
+      ["semana", "Navegue pelos dias", "A faixa da semana mostra quantas entregas teve em cada dia. No Calendário você vê o mês inteiro."],
+      ["busca", "Ache qualquer vídeo", "No Histórico ficam todos os seus registros, com busca e filtros por período, cliente e tipo."],
+      ["numeros", "Acompanhe seus números", "Em Mais, abra Seu resumo para ver totais e médias, ou baixe o relatório em PDF no Perfil."],
+      ["sino", "Registros do ClickUp", "Quando um vídeo é aprovado pelo Claude, o registro entra sozinho e avisa no sininho. Pronto, é só começar."]
+    ],
+    novidadesCel: [
+      ["ola", "O painel ficou de cara nova", "Tudo o que você já fazia continua igual, só ficou mais fácil de achar. Nenhum registro seu mudou."],
+      ["celular", "O botão + no meio", "Para registrar, toque no botão laranja da barra de baixo. Os campos são maiores e tem atalho de data."],
+      ["semana", "A semana na sua frente", "No topo do Hoje, os dias da semana com quantas entregas teve em cada um. Toque para trocar o dia."],
+      ["menu", "Tudo o resto fica em Mais", "Resumo, Equipe, Perfil, relatório em PDF, Arquivados, Lixeira e o modo escuro ficam no menu Mais."],
+      ["sino", "Avisos no sininho", "Os registros que chegam do ClickUp aparecem no sininho do topo, com o número de novos."]
+    ]
+  };
+  var guia = { i: 0, passos: [], novidades: false, chave: "" };
+  var GUIA_VERSAO = "v17";
+  var guiaTimer = null;
+  function agendarGuia(uid){
+    clearTimeout(guiaTimer);
+    guia.chave = "painel:guia:" + uid;
+    var visto = "";
+    try{ visto = localStorage.getItem(guia.chave) || ""; }catch(e){ return; }
+    if(visto === GUIA_VERSAO) return;
+    var tentativas = 0;
+    (function esperar(){
+      tentativas++;
+      var ob = document.getElementById("ob"), lg = document.querySelector(".lg:not(.ob)");
+      var ocupado = (ob && !ob.hidden) || (lg && !lg.hidden) || document.querySelector(".modal:not([hidden])");
+      if(ocupado && tentativas < 400){ guiaTimer = setTimeout(esperar, 700); return; }
+      guiaTimer = setTimeout(function(){ abrirGuia(false, !!visto || dias().length > 0); }, 1200);
+    })();
+  }
+  function abrirGuia(manual, novidades){
+    if(manual) novidades = false;
+    var cel = celular();
+    guia.novidades = !!novidades;
+    guia.passos = guia.novidades ? (cel ? GUIA.novidadesCel : GUIA.novidades) : (cel ? GUIA.primeiroCel : GUIA.primeiro);
+    guia.i = 0;
+    var el = document.getElementById("guia");
+    el.hidden = false;
+    document.body.classList.add("guia-on");
+    requestAnimationFrame(function(){ el.classList.add("on"); });
+    pintarGuia();
+    setTimeout(function(){ try{ document.getElementById("guiaProx").focus(); }catch(e){} }, 200);
+  }
+  function pintarGuia(){
+    var p = guia.passos[guia.i], ultimo = guia.i === guia.passos.length - 1;
+    document.getElementById("guiaSelo").textContent = guia.novidades ? "Novidades da atualização" : "Guia do app";
+    var ic = GUIA.ic[p[0]];
+    document.getElementById("guiaIc").innerHTML = p[0] === "ola" ? ic :
+      '<svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ic + '</svg>';
+    document.getElementById("guiaPasso").textContent = "Passo " + (guia.i + 1) + " de " + guia.passos.length;
+    document.getElementById("guiaTit").textContent = p[1];
+    document.getElementById("guiaTxt").textContent = p[2];
+    document.getElementById("guiaVoltar").hidden = guia.i === 0;
+    document.getElementById("guiaProx").textContent = ultimo ? (guia.novidades ? "Entendi" : "Começar a usar") : "Próximo";
+    var pts = document.getElementById("guiaPontos");
+    pts.innerHTML = "";
+    guia.passos.forEach(function(x, k){
+      var s = document.createElement("i");
+      s.className = k === guia.i ? "on" : (k < guia.i ? "foi" : "");
+      pts.appendChild(s);
+    });
+    var ilus = document.querySelector("#guia .guia-ilus .guia-ic");
+    ilus.classList.remove("pula"); void ilus.offsetWidth; ilus.classList.add("pula");
+  }
+  function fecharGuia(){
+    var el = document.getElementById("guia");
+    if(el.hidden) return;
+    try{ if(guia.chave) localStorage.setItem(guia.chave, GUIA_VERSAO); }catch(e){}
+    el.classList.remove("on");
+    document.body.classList.remove("guia-on");
+    setTimeout(function(){ if(!el.classList.contains("on")) el.hidden = true; }, 260);
+  }
+
   ajustarTotem();
   ajustarClientes();
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(ajustarClientes);
