@@ -2500,6 +2500,125 @@
   #todayLists .group + .group{margin-top:8px;padding-top:6px;border-top:1px solid var(--line)}
   #todayLists .group:has(.empty) h2{display:none}
 
+  /* =====================================================================
+     v18: filtros completos (mesmo componente em todas as telas)
+     ===================================================================== */
+  .fx-velho{display:none !important}
+  .fx{position:relative;display:flex;flex-direction:column;gap:12px;background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:14px;margin-bottom:18px}
+  .fx:empty{display:none}
+  .fx-topo{display:flex;flex-wrap:wrap;align-items:center;gap:10px;position:relative}
+  .fx-busca{flex:1 1 240px;min-width:0;display:flex;align-items:center;gap:10px;height:44px;padding:0 14px;border:1px solid var(--line);border-radius:12px;background:var(--field);color:var(--soft);cursor:text;transition:border-color var(--fast) var(--ease), box-shadow var(--fast) var(--ease), background var(--fast) var(--ease)}
+  .fx-busca:focus-within{border-color:var(--orange-border);box-shadow:0 0 0 3px var(--orange-wash);background:var(--paper)}
+  .fx-busca svg{width:17px;height:17px;flex:none}
+  .fx-busca input{flex:1;min-width:0;border:0;outline:none;background:transparent;font:500 14.5px Montserrat,sans-serif;color:var(--ink);padding:0}
+  .fx-drop{position:relative;min-width:0}
+  .fx-btn{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 14px;max-width:100%;border:1px solid var(--line);border-radius:12px;background:var(--field);color:var(--ink);font-size:14px;font-weight:600;white-space:nowrap;transition:border-color var(--fast) var(--ease), background var(--fast) var(--ease), color var(--fast) var(--ease)}
+  .fx-btn:hover{border-color:var(--soft)}
+  .fx-btn > svg{width:17px;height:17px;flex:none;color:var(--soft)}
+  .fx-btn .fx-chev{width:15px;height:15px;transition:transform 200ms var(--ease)}
+  .fx-btn[aria-expanded="true"] .fx-chev{transform:rotate(180deg)}
+  .fx-btn .fx-rot{overflow:hidden;text-overflow:ellipsis;max-width:220px}
+  .fx-btn.on,.fx-btn[aria-expanded="true"]{background:var(--orange-wash);border-color:var(--orange-border);color:var(--orange-deep)}
+  .fx-btn.on > svg,.fx-btn[aria-expanded="true"] > svg{color:var(--orange-deep)}
+  .fx-mais-btn em{font-style:normal;min-width:20px;height:20px;padding:0 6px;border-radius:99px;background:var(--orange);color:#fff;font-size:11.5px;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+  html[data-theme="dark"] .fx-mais-btn em{color:#1f1c1a}
+  .fx-mais-btn em[hidden]{display:none}
+
+  .fx-pop{position:absolute;z-index:70;top:calc(100% + 8px);left:0;min-width:250px;max-width:min(340px, calc(100vw - 32px));max-height:360px;overflow-y:auto;overscroll-behavior:contain;
+    background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:6px;box-shadow:0 2px 6px rgba(0,0,0,.06), 0 22px 46px -18px rgba(0,0,0,.35);animation:reveal 200ms var(--ease)}
+  .fx-pop[hidden]{display:none}
+  .fx-op{display:flex;align-items:center;gap:10px;width:100%;min-height:40px;padding:0 10px;border-radius:9px;font-size:14px;font-weight:600;color:var(--ink);text-align:left}
+  .fx-op:hover{background:var(--wash)}
+  .fx-op > span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .fx-op > svg{width:15px;height:15px;flex:none;opacity:0;color:var(--orange-deep)}
+  .fx-op[aria-pressed="true"]{background:var(--orange-wash);color:var(--orange-deep)}
+  .fx-op[aria-pressed="true"] > svg{opacity:1}
+  .fx-op small{font-size:12px;font-weight:700;color:var(--soft);font-variant-numeric:tabular-nums}
+  .fx-caixa{width:18px;height:18px;flex:none;border-radius:6px;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;color:transparent;background:var(--field)}
+  .fx-caixa svg{width:11px;height:11px}
+  .fx-chk[aria-pressed="true"]{background:transparent;color:var(--ink)}
+  .fx-chk[aria-pressed="true"] .fx-caixa{background:var(--orange);border-color:var(--orange);color:#fff}
+  .fx-chk:hover{background:var(--wash)}
+  .fx-pop-busca{display:flex;align-items:center;gap:8px;height:40px;padding:0 10px;margin-bottom:4px;border:1px solid var(--line);border-radius:10px;background:var(--field);color:var(--soft)}
+  .fx-pop-busca svg{width:15px;height:15px;flex:none}
+  .fx-pop-busca input{flex:1;min-width:0;border:0;outline:none;background:transparent;font:500 14px Montserrat,sans-serif;color:var(--ink)}
+  .fx-cli-lista{border-top:1px solid var(--line);margin-top:4px;padding-top:4px}
+  .fx-vazio{margin:10px;font-size:13.5px;color:var(--soft)}
+  .fx-datas{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px 4px 4px;margin-top:4px;border-top:1px solid var(--line)}
+  .fx-datas[hidden]{display:none}
+  .fx-datas label{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:600;color:var(--soft)}
+  .fx-datas input{height:40px;padding:0 8px;border:1px solid var(--line);border-radius:10px;background:var(--field);font:600 14px Montserrat,sans-serif;color:var(--ink);min-width:0}
+
+  .fx-grot{font-size:12.5px;font-weight:600;color:var(--soft)}
+  .fx-eds{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+  .fx-eds .fx-grot{margin-right:4px}
+  .fx-ed{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 14px 0 5px;border-radius:99px;border:1px solid var(--line);background:var(--field);font-size:13.5px;font-weight:600;color:var(--nav-ink);transition:background var(--fast) var(--ease), border-color var(--fast) var(--ease), color var(--fast) var(--ease)}
+  .fx-ed .avatar{width:28px;height:28px;font-size:11px}
+  .fx-ed-todos{padding:0 16px}
+  .fx-ed:hover{border-color:var(--soft)}
+  .fx-ed[aria-pressed="true"]{background:var(--orange-wash);border-color:var(--orange-border);color:var(--orange-deep);font-weight:700}
+
+  .fx-mais{display:grid;grid-template-columns:repeat(auto-fill, minmax(270px, 1fr));gap:14px 20px;padding-top:12px;border-top:1px solid var(--line)}
+  .fx-mais[hidden]{display:none}
+  .fx-grupo{display:flex;flex-direction:column;gap:7px;min-width:0}
+  .fx-seg{display:flex;flex-wrap:wrap;gap:4px;padding:4px;background:var(--wash);border-radius:12px}
+  .fx-seg button{flex:1 1 auto;height:34px;padding:0 12px;border-radius:9px;font-size:13.5px;font-weight:600;color:var(--soft);white-space:nowrap}
+  .fx-seg button:hover{color:var(--ink)}
+  .fx-seg button[aria-pressed="true"]{background:var(--paper);color:var(--orange-deep);font-weight:700;box-shadow:0 1px 3px rgba(26,21,18,.12)}
+
+  .fx-pe{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+  .fx-ativos{display:flex;flex-wrap:wrap;align-items:center;gap:6px;flex:1 1 auto;min-width:0}
+  .fx-ativos:empty{display:none}
+  .fx-pill{display:inline-flex;align-items:center;gap:4px;height:30px;padding:0 4px 0 12px;border-radius:99px;background:var(--orange-wash);border:1px solid var(--orange-border);color:var(--orange-deep);font-size:13px;font-weight:600;max-width:100%;animation:reveal 180ms var(--ease)}
+  .fx-pill button{width:22px;height:22px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--orange-deep)}
+  .fx-pill button:hover{background:var(--paper)}
+  .fx-pill button svg{width:12px;height:12px}
+  .fx-limpar{height:30px;padding:0 10px;font-size:13px;font-weight:700;color:var(--soft);border-radius:99px}
+  .fx-limpar:hover{color:var(--danger);background:var(--danger-wash)}
+  .fx-total{margin-left:auto;font-size:13px;font-weight:600;color:var(--soft);font-variant-numeric:tabular-nums}
+  .fx-total:empty{display:none}
+  .fx:not(.tem-ativos) .fx-total{margin-left:0}
+
+  /* quem editou, no histórico da equipe */
+  li.item .quem{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px 0 3px;border-radius:99px;background:var(--wash);border:1px solid var(--line);font-size:12.5px;font-weight:700;color:var(--nav-ink)}
+  li.item .quem .avatar{width:22px;height:22px;font-size:9.5px}
+  li.item.leitura .abrir{cursor:default}
+  #eqHistView .fx{margin-top:4px}
+  #panel-calendario .fx{margin:16px 0 0}
+
+  .fx-mais{grid-template-columns:repeat(2, minmax(0, 1fr))}
+  .fx-seg{flex-wrap:nowrap}
+  .fx-seg button{flex:1 1 0;min-width:0;padding:0 8px;overflow:hidden;text-overflow:ellipsis}
+  @media (max-width:980px){ .fx-mais{grid-template-columns:1fr} }
+
+  @media (max-width:760px){
+    .fx{padding:12px;border-radius:18px;gap:10px}
+    .fx-topo{gap:8px}
+    .fx-busca{flex:1 1 100%;height:46px}
+    .fx-busca input{font-size:16px}
+    .fx-drop{position:static;flex:1 1 0}
+    .fx-drop .fx-btn{width:100%;justify-content:flex-start}
+    .fx-btn .fx-rot{flex:1;max-width:none;text-align:left}
+    .fx-mais-btn{flex:none}
+    .fx-mais-btn > span{display:none}
+    .fx-pop{left:0;right:0;max-width:none;min-width:0}
+    .fx-mais{grid-template-columns:1fr;gap:12px}
+    .fx-seg button{padding:0 8px;font-size:13px}
+    .fx-eds{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -12px;padding:0 12px}
+    .fx-eds::-webkit-scrollbar{display:none}
+    .fx-ed{flex:none}
+    .fx-total{margin-left:0;flex:1 1 100%}
+    li.item .tags .quem{order:-1}
+  }
+
+  @media (max-width:760px){
+    .fx-drop .fx-btn > svg:first-child{display:none}
+    .fx-drop .fx-btn{padding:0 10px 0 12px;gap:6px;font-size:13.5px}
+    .fx-seg{flex-wrap:wrap}
+    .fx-seg button{flex:1 1 auto;padding:0 10px;overflow:visible}
+    .fx-eds .fx-grot{white-space:nowrap}
+  }
+
 </style>
 </head>
 <body>
@@ -2740,6 +2859,7 @@
   <!-- HISTÓRICO -->
   <section class="panel" id="panel-historico" role="tabpanel" tabindex="-1" aria-labelledby="tab-historico">
     <div class="reg-seg" role="group" aria-label="Quais registros"><button type="button" data-go="historico" aria-pressed="true">Ativos</button><button type="button" data-go="arquivados" aria-pressed="false">Arquivados</button><button type="button" data-go="excluidos" aria-pressed="false">Lixeira</button></div>
+    <div class="fx" id="fxHist"></div>
     <div class="busca-aviso" id="buscaAviso" hidden><span id="buscaAvisoTxt"></span><button type="button" id="buscaLimpar">Limpar busca</button></div>
     <div class="track" id="trackBox">
       <div class="trackhead">
@@ -2757,7 +2877,7 @@
       </div>
     </div>
 
-    <div class="filters filters-block">
+    <div class="filters filters-block fx-velho" hidden>
       <h2 class="filters-title acc-head">
         <button type="button" class="filtros-head" id="filtrosHead" aria-expanded="false" aria-controls="filtrosBody">
           <span class="chev">▶</span>Filtros<span class="filtros-tag" id="filtrosTag" hidden></span>
@@ -2848,12 +2968,12 @@
         </div>
       </div>
 
-      <h2 class="filters-title acc-head divisor">
+      <h2 class="filters-title acc-head divisor fx-velho" hidden>
         <button type="button" class="filtros-head" id="calFiltrosHead" aria-expanded="false" aria-controls="calFiltrosBody">
           <span class="chev">▶</span>Filtros<span class="filtros-tag" id="calFiltrosTag" hidden></span>
         </button>
       </h2>
-      <div class="filters-row cal-filtros" id="calFiltrosBody" hidden>
+      <div class="filters-row cal-filtros fx-velho" id="calFiltrosBody" hidden>
         <div class="fgroup grow">
           <span>Nome do vídeo</span>
           <input type="search" id="calNome" placeholder="Buscar por nome">
@@ -2878,6 +2998,7 @@
       </div>
     </div>
 
+    <div class="fx" id="fxCal"></div>
     <div class="cal-legenda">
       <span><i class="lv"></i>Vídeo</span><span><i class="ld"></i>Demanda</span><span><i class="lc"></i>Feito com Claude</span><span><i class="la"></i>Tem alteração</span>
       <span class="cal-dica">Arraste um card para mudar a data do vídeo</span>
@@ -2896,13 +3017,13 @@
         <p class="cap" id="arqResumo"></p>
       </div>
 
-      <h2 class="filters-title acc-head divisor">
+      <h2 class="filters-title acc-head divisor fx-velho" hidden>
         <button type="button" class="filtros-head" id="arqFiltrosHead" aria-expanded="false" aria-controls="arqFiltrosBody">
           <span class="chev">▶</span>Filtros<span class="filtros-tag" id="arqFiltrosTag" hidden></span>
         </button>
       </h2>
 
-      <div class="filters-row cal-filtros" id="arqFiltrosBody" hidden>
+      <div class="filters-row cal-filtros fx-velho" id="arqFiltrosBody" hidden>
         <div class="fgroup">
           <span>Período</span>
           <div class="chips" id="arqPeriodChips">
@@ -2959,6 +3080,7 @@
         </div>
       </div>
     </div>
+    <div class="fx" id="fxArq"></div>
     <div id="arqList"></div>
   </section>
 
@@ -2981,11 +3103,12 @@
   <section class="panel" id="panel-equipe" role="tabpanel" tabindex="-1" aria-labelledby="tab-equipe">
     <div class="eq-seg" id="eqSeg" role="tablist" aria-label="Visões da equipe">
       <button type="button" role="tab" data-v="resumo" aria-selected="true">Resumo geral</button>
-      <button type="button" role="tab" data-v="historico" aria-selected="false">Histórico por editor</button>
+      <button type="button" role="tab" data-v="historico" aria-selected="false">Histórico da equipe</button>
     </div>
 
     <div id="eqHistView" hidden>
-      <div class="filters eh-topo">
+      <div class="fx" id="fxEh"></div>
+      <div class="filters eh-topo fx-velho" hidden>
         <div class="eh-linha">
           <div class="fgroup eh-editor">
             <span>Editor</span>
@@ -3056,7 +3179,8 @@
       <span class="eq-pill" id="eqPill">Carregando</span>
     </div>
     <div class="eq-aviso" id="eqAviso" hidden></div>
-    <div class="box rs-filtros">
+    <div class="fx" id="fxEq"></div>
+    <div class="box rs-filtros fx-velho" hidden>
       <div class="rs-filtro-linha">
         <span class="rs-flabel">Período</span>
         <div class="chips rs-per" id="eqPer"><button class="chip" data-per="mes" aria-pressed="true">Este mês</button><button class="chip" data-per="mespassado">Mês passado</button><button class="chip" data-per="30">30 dias</button><button class="chip" data-per="3m">3 meses</button><button class="chip" data-per="ano"><span class="rs-ano">Ano</span></button><button class="chip" data-per="tudo">Tudo</button><button class="chip" data-per="custom">Personalizado</button></div>
@@ -3280,7 +3404,8 @@
       
     </div>
     
-    <div class="box rs-filtros">
+    <div class="fx" id="fxRs"></div>
+    <div class="box rs-filtros fx-velho" hidden>
       <div class="rs-filtro-linha">
         <span class="rs-flabel">Período</span>
         <div class="chips rs-per" id="rsPer"><button class="chip" data-per="mes" aria-pressed="true">Este mês</button><button class="chip" data-per="mespassado">Mês passado</button><button class="chip" data-per="30">30 dias</button><button class="chip" data-per="3m">3 meses</button><button class="chip" data-per="ano"><span class="rs-ano">Ano</span></button><button class="chip" data-per="tudo">Tudo</button><button class="chip" data-per="custom">Personalizado</button></div>
@@ -3674,6 +3799,412 @@
   var tab = "hoje";
   var filters = { period:"30", de:"", ate:"", nome:"", cliente:"", kind:"todos" };
   var justAdded = null;
+
+  /* ================= v18: filtros completos, iguais em todo o painel ================= */
+  var fxH = fxNovo({ per:"30" }), fxA = fxNovo({ per:"tudo" }), fxC = fxNovo({ per:"tudo" }),
+      fxR = fxNovo({ per:"mes" }), fxE = fxNovo({ per:"mes" }), fxEh = fxNovo({ per:"30" });
+  var FXC = {};          // controles montados de cada tela
+  var eqCache = {};      // registros completos de cada editor (para os filtros da equipe)
+
+  function fxNovo(padrao){
+    var st = { per:"30", de:"", ate:"", tipo:"todos", dem:"todos", cl:"todos", post:"todos", clientes:[], busca:"", eds:[] };
+    Object.keys(padrao || {}).forEach(function(k){ st[k] = padrao[k]; });
+    st._padrao = JSON.parse(JSON.stringify(padrao || {}));
+    return st;
+  }
+  function fxZerar(st, manterEds){
+    var p = st._padrao || {}, eds = st.eds;
+    st.per = p.per || "30"; st.de = ""; st.ate = ""; st.tipo = "todos"; st.dem = "todos"; st.cl = "todos";
+    st.post = "todos"; st.clientes = []; st.busca = ""; st.eds = manterEds ? eds : [];
+  }
+  var FX_PER = [["mes","Este mês"],["mespassado","Mês passado"],["7","Últimos 7 dias"],["30","Últimos 30 dias"],["3m","Últimos 3 meses"],["ano","Ano inteiro"],["tudo","Tudo"],["custom","Escolher datas"]];
+  var FX_GRUPOS = {
+    tipo: { rot:"Tipo", ops:[["todos","Tudo"],["video","Vídeos"],["alteracao","Alterações"]], pill:{ video:"Só vídeos", alteracao:"Só alterações" } },
+    dem:  { rot:"Demanda", ops:[["todos","Tanto faz"],["sim","Só demandas"],["nao","Sem demanda"]], pill:{ sim:"Só demandas", nao:"Sem demanda" } },
+    cl:   { rot:"Claude", ops:[["todos","Tanto faz"],["sim","Feitos com Claude"],["nao","Sem Claude"]], pill:{ sim:"Feitos com Claude", nao:"Sem Claude" } },
+    post: { rot:"Data de postagem", ops:[["todos","Qualquer"],["postado","Já postados"],["agendado","Vão postar"],["sem","Sem data"]], pill:{ postado:"Já postados", agendado:"Vão postar", sem:"Sem data de postagem" } }
+  };
+  var FX_IC = {
+    busca:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>',
+    cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+    cli:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14"/><path d="M9 21v-6h6v6"/><path d="M8 10h.01M12 10h.01M16 10h.01"/></svg>',
+    filtro:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>',
+    chev:'<svg class="fx-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
+    ok:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l5 5 9-11"/></svg>',
+    x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg>'
+  };
+
+  // o registro passa nos filtros? (o período é tratado por quem chama)
+  function fxCliOk(sel, ref){
+    if(!sel.length) return true;
+    if(!ref) return false;
+    var nome = clientePadrao(ref) || String(ref).trim();
+    return sel.some(function(c){ return compacto(c) === compacto(nome) || mesmoCliente(c, ref); });
+  }
+  function fxPassa(st, k, x, uid){
+    if(st.tipo !== "todos" && st.tipo !== k) return false;
+    if(st.dem === "sim" && !x.dem) return false;
+    if(st.dem === "nao" && x.dem) return false;
+    if(st.cl === "sim" && !x.cl) return false;
+    if(st.cl === "nao" && x.cl) return false;
+    if(st.post !== "todos"){
+      var hj = isoToday();
+      if(st.post === "sem" && x.dt) return false;
+      if(st.post === "postado" && !(x.dt && x.dt <= hj)) return false;
+      if(st.post === "agendado" && !(x.dt && x.dt > hj)) return false;
+    }
+    if(!fxCliOk(st.clientes, x.ref)) return false;
+    if(uid && st.eds.length && st.eds.indexOf(uid) < 0) return false;
+    var b = (st.busca || "").trim();
+    if(b && !(filtraTexto(x.titulo || "", b) || filtraCliente(x.ref, b))) return false;
+    return true;
+  }
+  // algum filtro que olha registro por registro?
+  function fxDetalhe(st){
+    return st.tipo !== "todos" || st.dem !== "todos" || st.cl !== "todos" || st.post !== "todos" || !!(st.busca || "").trim();
+  }
+  function fxAtivos(st, cfg){
+    var n = 0;
+    ["tipo","dem","cl","post"].forEach(function(g){ if(st[g] !== "todos") n++; });
+    n += st.clientes.length ? 1 : 0;
+    if(cfg && cfg.editores) n += st.eds.length ? 1 : 0;
+    return n;
+  }
+  function fxPerRot(st){
+    if(st.per === "custom"){
+      if(st.de && st.ate) return shortDate(st.de) + " a " + shortDate(st.ate);
+      return "Escolher datas";
+    }
+    var o = FX_PER.filter(function(p){ return p[0] === st.per; })[0];
+    if(window.innerWidth <= 760){
+      var curto = { mes:"Este mês", mespassado:"Mês passado", "7":"7 dias", "30":"30 dias", "3m":"3 meses", ano:String(anoAtivo), tudo:"Tudo" };
+      if(curto[st.per]) return curto[st.per];
+    }
+    return o ? (st.per === "ano" ? "Ano de " + anoAtivo : o[1]) : "Período";
+  }
+  // período em datas, preso ao ano escolhido no topo
+  function fxPeriodo(st, lim){
+    var p = periodoDe({ per:st.per, de:st.de, ate:st.ate }, lim);
+    return p;
+  }
+
+  // ---------- componente ----------
+  function fxMontar(id, st, cfg){
+    var box = document.getElementById(id);
+    if(!box) return null;
+    var grupos = cfg.grupos || ["tipo","dem","cl","post"];
+    var html = '<div class="fx-topo">';
+    if(cfg.busca) html += '<label class="fx-busca">' + FX_IC.busca + '<input type="search" id="' + id + 'Busca" placeholder="' + esc(cfg.busca) + '" aria-label="' + esc(cfg.busca) + '" autocomplete="off"></label>';
+    if(cfg.per) html += '<div class="fx-drop" data-drop="per"><button type="button" class="fx-btn" aria-haspopup="true" aria-expanded="false">' + FX_IC.cal + '<span class="fx-rot" data-rot="per"></span>' + FX_IC.chev + '</button><div class="fx-pop fx-pop-per" hidden></div></div>';
+    if(cfg.clientes) html += '<div class="fx-drop" data-drop="cli"><button type="button" class="fx-btn" aria-haspopup="true" aria-expanded="false">' + FX_IC.cli + '<span class="fx-rot" data-rot="cli"></span>' + FX_IC.chev + '</button><div class="fx-pop fx-pop-cli" hidden></div></div>';
+    if(grupos.length) html += '<button type="button" class="fx-btn fx-mais-btn" aria-expanded="false">' + FX_IC.filtro + '<span>Filtros</span><em hidden></em></button>';
+    html += '</div>';
+    if(cfg.editores) html += '<div class="fx-eds" role="group" aria-label="Quem editou"></div>';
+    if(grupos.length){
+      html += '<div class="fx-mais" hidden>';
+      grupos.forEach(function(g){
+        var G = FX_GRUPOS[g];
+        html += '<div class="fx-grupo"><span class="fx-grot">' + G.rot + '</span><div class="fx-seg" data-g="' + g + '">' +
+          G.ops.map(function(o){ return '<button type="button" data-v="' + o[0] + '">' + o[1] + '</button>'; }).join("") + '</div></div>';
+      });
+      html += '</div>';
+    }
+    html += '<div class="fx-pe"><div class="fx-ativos"></div><span class="fx-total"></span></div>';
+    box.innerHTML = html;
+
+    var ctl = { box:box, st:st, cfg:cfg };
+    var espera = null;
+    function mudou(rapido){
+      pintar();
+      clearTimeout(espera);
+      if(rapido) cfg.onChange(); else espera = setTimeout(cfg.onChange, 200);
+    }
+    ctl.mudou = mudou;
+
+    function fecharPops(exceto){
+      box.querySelectorAll(".fx-drop").forEach(function(d){
+        if(d === exceto) return;
+        d.querySelector(".fx-pop").hidden = true;
+        d.querySelector(".fx-btn").setAttribute("aria-expanded", "false");
+      });
+    }
+    ctl.fechar = function(){ fecharPops(null); };
+
+    // período
+    function popPer(pop){
+      pop.innerHTML = FX_PER.map(function(p){
+        return '<button type="button" class="fx-op" data-per="' + p[0] + '" aria-pressed="' + (st.per === p[0]) + '"><span>' + (p[0] === "ano" ? "Ano de " + anoAtivo : p[1]) + '</span>' + FX_IC.ok + '</button>';
+      }).join("") +
+      '<div class="fx-datas"' + (st.per === "custom" ? "" : " hidden") + '><label><span>De</span><input type="date" data-d="de" value="' + (st.de || "") + '"></label><label><span>Até</span><input type="date" data-d="ate" value="' + (st.ate || "") + '"></label></div>';
+    }
+    // clientes
+    function popCli(pop){
+      var lista = (cfg.clientes() || []);
+      pop.innerHTML = '<label class="fx-pop-busca">' + FX_IC.busca + '<input type="search" placeholder="Procurar cliente" autocomplete="off"></label>' +
+        '<button type="button" class="fx-op fx-todos" aria-pressed="' + (!st.clientes.length) + '"><span>Todos os clientes</span>' + FX_IC.ok + '</button>' +
+        '<div class="fx-cli-lista"></div>';
+      var alvo = pop.querySelector(".fx-cli-lista"), campo = pop.querySelector("input");
+      function lis(){
+        var t = campo.value.trim();
+        var vis = lista.filter(function(c){ return !t || casaCliente(c.nome, t) || filtraTexto(c.nome, t); });
+        alvo.innerHTML = vis.length ? vis.map(function(c){
+          var on = st.clientes.some(function(x){ return compacto(x) === compacto(c.nome); });
+          return '<button type="button" class="fx-op fx-chk" data-cli="' + esc(c.nome) + '" aria-pressed="' + on + '"><i class="fx-caixa">' + FX_IC.ok + '</i><span>' + esc(c.nome) + '</span><small>' + c.n + '</small></button>';
+        }).join("") : '<p class="fx-vazio">Nenhum cliente com esse nome.</p>';
+      }
+      lis();
+      campo.addEventListener("input", lis);
+      setTimeout(function(){ if(!toqueGrosso()) campo.focus(); }, 30);
+    }
+
+    box.addEventListener("click", function(e){
+      var drop = e.target.closest(".fx-drop");
+      var b;
+      if((b = e.target.closest(".fx-drop > .fx-btn"))){
+        var pop = drop.querySelector(".fx-pop"), abrir = pop.hidden;
+        fecharPops(drop);
+        if(abrir){
+          if(drop.dataset.drop === "per") popPer(pop); else popCli(pop);
+          pop.hidden = false; b.setAttribute("aria-expanded", "true");
+        } else { pop.hidden = true; b.setAttribute("aria-expanded", "false"); }
+        return;
+      }
+      if((b = e.target.closest("[data-per]"))){
+        st.per = b.dataset.per;
+        if(st.per === "custom"){
+          if(!st.de){ var h = fromISO(isoToday()); st.de = toISO(new Date(h.getFullYear(), h.getMonth(), 1)); st.ate = isoToday(); }
+          popPer(b.closest(".fx-pop"));
+        } else fecharPops(null);
+        mudou(true); return;
+      }
+      if((b = e.target.closest(".fx-todos"))){ st.clientes = []; popCli(b.closest(".fx-pop")); mudou(true); return; }
+      if((b = e.target.closest("[data-cli]"))){
+        var nome = b.dataset.cli, i = -1;
+        st.clientes.forEach(function(x, k){ if(compacto(x) === compacto(nome)) i = k; });
+        if(i > -1) st.clientes.splice(i, 1); else st.clientes.push(nome);
+        b.setAttribute("aria-pressed", i > -1 ? "false" : "true");
+        var td = b.closest(".fx-pop").querySelector(".fx-todos"); if(td) td.setAttribute("aria-pressed", st.clientes.length ? "false" : "true");
+        mudou(true); return;
+      }
+      if((b = e.target.closest(".fx-mais-btn"))){
+        var mais = box.querySelector(".fx-mais"), ab = mais.hidden;
+        mais.hidden = !ab; b.setAttribute("aria-expanded", ab ? "true" : "false");
+        if(ab) revelar(mais);
+        return;
+      }
+      if((b = e.target.closest(".fx-seg button"))){
+        st[b.parentNode.dataset.g] = b.dataset.v; mudou(true); return;
+      }
+      if((b = e.target.closest("[data-ed]"))){
+        var u = b.dataset.ed;
+        if(u === "*") st.eds = [];
+        else { var j = st.eds.indexOf(u); if(j > -1) st.eds.splice(j, 1); else st.eds.push(u); }
+        mudou(true); return;
+      }
+      if((b = e.target.closest("[data-tira]"))){
+        var q = b.dataset.tira;
+        if(q === "per"){ st.per = (st._padrao && st._padrao.per) || "30"; st.de = ""; st.ate = ""; }
+        else if(q === "busca"){ st.busca = ""; var cb = box.querySelector(".fx-busca input"); if(cb) cb.value = ""; }
+        else if(q === "eds") st.eds = [];
+        else if(q.indexOf("cli:") === 0){ var nm = q.slice(4); st.clientes = st.clientes.filter(function(x){ return x !== nm; }); }
+        else if(q.indexOf("ed:") === 0){ var ue = q.slice(3); st.eds = st.eds.filter(function(x){ return x !== ue; }); }
+        else st[q] = "todos";
+        mudou(true); return;
+      }
+      if(e.target.closest(".fx-limpar")){
+        fxZerar(st, false);
+        var bi = box.querySelector(".fx-busca input"); if(bi) bi.value = "";
+        fecharPops(null);
+        mudou(true); return;
+      }
+    });
+    box.addEventListener("change", function(e){
+      var d = e.target.closest("[data-d]");
+      if(!d) return;
+      st[d.dataset.d] = d.value;
+      if(st.de && st.ate && st.de > st.ate){ var t = st.de; st.de = st.ate; st.ate = t; }
+      mudou(true);
+    });
+    var bInput = box.querySelector(".fx-busca input");
+    if(bInput){
+      bInput.value = st.busca || "";
+      bInput.addEventListener("input", function(){ st.busca = bInput.value; mudou(false); });
+      bInput.addEventListener("keydown", function(e){ if(e.key === "Escape" && bInput.value){ bInput.value = ""; st.busca = ""; mudou(true); } });
+    }
+
+    function pintar(){
+      var r = box.querySelector('[data-rot="per"]'); if(r) r.textContent = fxPerRot(st);
+      var rc = box.querySelector('[data-rot="cli"]');
+      if(rc){
+        rc.textContent = !st.clientes.length ? "Todos os clientes" : (st.clientes.length === 1 ? st.clientes[0] : st.clientes.length + " clientes");
+        rc.parentNode.classList.toggle("on", !!st.clientes.length);
+      }
+      var perBtn = box.querySelector('[data-drop="per"] .fx-btn');
+      if(perBtn) perBtn.classList.toggle("on", st.per !== ((st._padrao && st._padrao.per) || "30"));
+      box.querySelectorAll(".fx-seg").forEach(function(sg){
+        sg.querySelectorAll("button").forEach(function(b){ b.setAttribute("aria-pressed", st[sg.dataset.g] === b.dataset.v ? "true" : "false"); });
+      });
+      var nAv = ["tipo","dem","cl","post"].filter(function(g){ return st[g] !== "todos"; }).length;
+      var em = box.querySelector(".fx-mais-btn em");
+      if(em){ em.hidden = !nAv; em.textContent = nAv; em.parentNode.classList.toggle("on", !!nAv); }
+
+      // editores
+      var ed = box.querySelector(".fx-eds");
+      if(ed){
+        var eds = cfg.editores();
+        var meu = window.__FB && window.__FB.user && window.__FB.user.uid;
+        ed.innerHTML = '<span class="fx-grot">Quem editou</span>' +
+          '<button type="button" class="fx-ed fx-ed-todos" data-ed="*" aria-pressed="' + (!st.eds.length) + '">Todos</button>' +
+          eds.map(function(e){
+            return '<button type="button" class="fx-ed" data-ed="' + esc(e.uid) + '" aria-pressed="' + (st.eds.indexOf(e.uid) > -1) + '">' +
+              avatarHTML(e.nome, e.foto) + '<span>' + esc(e.nome.split(/\s+/)[0]) + (e.uid === meu ? " (você)" : "") + '</span></button>';
+          }).join("");
+      }
+
+      // filtros ligados, com x para tirar um por um
+      var p = [];
+      var padPer = (st._padrao && st._padrao.per) || "30";
+      if(cfg.per && st.per !== padPer) p.push(['per', fxPerRot(st)]);
+      if((st.busca || "").trim() && cfg.busca) p.push(['busca', '“' + st.busca.trim() + '”']);
+      ["tipo","dem","cl","post"].forEach(function(g){
+        var rot = (cfg.rotulos && cfg.rotulos[g] && cfg.rotulos[g][st[g]]) || FX_GRUPOS[g].pill[st[g]];
+        if(st[g] !== "todos" && rot) p.push([g, rot]);
+      });
+      st.clientes.forEach(function(c){ p.push(['cli:' + c, c]); });
+      if(cfg.editores && st.eds.length){
+        var nomes = {}; cfg.editores().forEach(function(e){ nomes[e.uid] = e.nome.split(/\s+/)[0]; });
+        st.eds.forEach(function(u){ p.push(['ed:' + u, "Editado por " + (nomes[u] || "editor")]); });
+      }
+      var at = box.querySelector(".fx-ativos");
+      at.innerHTML = p.map(function(x){
+        return '<span class="fx-pill">' + esc(x[1]) + '<button type="button" data-tira="' + esc(x[0]) + '" aria-label="Tirar filtro ' + esc(x[1]) + '">' + FX_IC.x + '</button></span>';
+      }).join("") + (p.length > 1 ? '<button type="button" class="fx-limpar">Limpar tudo</button>' : '');
+      box.classList.toggle("tem-ativos", !!p.length);
+    }
+    ctl.pintar = pintar;
+    ctl.total = function(txt){ box.querySelector(".fx-total").textContent = txt || ""; };
+    pintar();
+    return ctl;
+  }
+  // fecha os menus dos filtros ao clicar fora
+  document.addEventListener("click", function(e){
+    if(e.target.closest && e.target.closest(".fx-drop")) return;
+    Object.keys(FXC).forEach(function(k){ if(FXC[k]) FXC[k].fechar(); });
+  });
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape") Object.keys(FXC).forEach(function(k){ if(FXC[k]) FXC[k].fechar(); });
+  });
+  function fxPintarTodos(){ Object.keys(FXC).forEach(function(k){ if(FXC[k]) FXC[k].pintar(); }); }
+  function fxTotalTxt(v, a){
+    var t = v + a;
+    if(!t) return "Nada encontrado";
+    return t + (t === 1 ? " registro" : " registros") + " · " + v + (v === 1 ? " vídeo" : " vídeos") + ", " + a + (a === 1 ? " alteração" : " alterações");
+  }
+
+  // ---------- clientes para escolher ----------
+  function fxContarCli(lista){
+    var m = {};
+    lista.forEach(function(it){
+      if(!it.x.ref) return;
+      var n = clientePadrao(it.x.ref) || String(it.x.ref).trim();
+      if(!n) return;
+      var achou = null;
+      Object.keys(m).forEach(function(k){ if(!achou && compacto(k) === compacto(n)) achou = k; });
+      m[achou || n] = (m[achou || n] || 0) + 1;
+    });
+    return Object.keys(m).map(function(n){ return { nome:n, n:m[n] }; })
+      .sort(function(a, b){ return b.n - a.n || a.nome.localeCompare(b.nome, "pt-BR"); });
+  }
+
+  // ---------- registros como lista única ----------
+  function itensPessoais(soArquivados){
+    var out = [];
+    Object.keys(data).forEach(function(iso){
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return;
+      var d = day(iso);
+      [["video", d.videos], ["alteracao", d.alteracoes]].forEach(function(par){
+        (par[1] || []).forEach(function(x){
+          if(!!x.arq !== !!soArquivados) return;
+          out.push({ uid:"eu", iso:iso, k:par[0], x:x });
+        });
+      });
+    });
+    return out;
+  }
+  function meuUid(){ return (window.__FB && window.__FB.user && window.__FB.user.uid) || "eu"; }
+  function itensDoEditor(uid){
+    if(uid === meuUid()) return itensPessoais(false).map(function(it){ it.uid = uid; return it; });
+    var c = eqCache[uid], out = [];
+    if(!c || !c.dias) return out;
+    Object.keys(c.dias).forEach(function(iso){
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return;
+      var d = c.dias[iso] || {};
+      [["video", d.videos], ["alteracao", d.alteracoes]].forEach(function(par){
+        (par[1] || []).forEach(function(x){ if(x && !x.arq) out.push({ uid:uid, iso:iso, k:par[0], x:x }); });
+      });
+    });
+    return out;
+  }
+  function folgaDoEditor(uid, iso){
+    if(uid === meuUid() || uid === "eu") return folgaMarcada(iso);
+    var c = eqCache[uid];
+    if(c && c.dias && c.dias[iso]) return !!c.dias[iso].folga;
+    var eq = (nv && nv.equipe && nv.equipe[uid] && nv.equipe[uid].dias) || {};
+    return !!(eq[iso] && eq[iso].f);
+  }
+  // volta para o formato de dias que o resumo já sabe somar
+  function regsDeItens(itens){
+    var mapa = {};
+    itens.forEach(function(it){
+      var chave = it.uid + "|" + it.iso;
+      var r = mapa[chave] || (mapa[chave] = { uid:it.uid, iso:it.iso, v:0, a:0, d:0, ia:0, f:folgaDoEditor(it.uid, it.iso), c:{} });
+      var t = it.k === "video" ? "v" : "a";
+      r[t]++; if(it.x.dem) r.d++; if(it.x.cl) r.ia++;
+      var n = it.x.ref ? (clientePadrao(it.x.ref) || String(it.x.ref).trim()) : "";
+      if(n){ var c = r.c[n] || (r.c[n] = { v:0, a:0, d:0, ia:0 }); c[t]++; if(it.x.dem) c.d++; if(it.x.cl) c.ia++; }
+    });
+    return Object.keys(mapa).map(function(k){ return mapa[k]; });
+  }
+  // resumo da equipe sem baixar tudo: filtra editor e cliente nos totais publicados
+  function regsEquipeFiltrados(st){
+    return registrosEquipe().filter(function(r){ return !st.eds.length || st.eds.indexOf(r.uid) > -1; }).map(function(r){
+      if(!st.clientes.length) return r;
+      var n = { uid:r.uid, iso:r.iso, v:0, a:0, d:0, ia:0, f:r.f, c:{} };
+      Object.keys(r.c).forEach(function(nome){
+        if(!fxCliOk(st.clientes, nome)) return;
+        var c = r.c[nome]; n.v += c.v; n.a += c.a; n.d += c.d; n.ia += c.ia; n.c[nome] = c;
+      });
+      return n;
+    }).filter(function(r){ return r.v || r.a; });
+  }
+
+  // baixa o histórico completo dos editores que faltam (fica guardado)
+  var eqCarregando = {};
+  function eqGarantir(uids, depois){
+    var faltam = uids.filter(function(u){ return u !== meuUid() && (!eqCache[u] || eqCache[u].velho) && !eqCarregando[u]; });
+    var esperando = uids.filter(function(u){ return u !== meuUid() && (!eqCache[u] && eqCarregando[u]); });
+    if(!faltam.length) return !esperando.length;
+    if(!window.__FB || !window.__FB.historicoDe) return true;
+    faltam.forEach(function(u){
+      eqCarregando[u] = true;
+      window.__FB.historicoDe(u).then(function(meses){
+        var dias = {};
+        Object.keys(meses || {}).forEach(function(ym){
+          var dd = (meses[ym] && meses[ym].dias) || {};
+          Object.keys(dd).forEach(function(iso){ dias[iso] = dd[iso]; });
+        });
+        eqCache[u] = { dias:dias, quando:Date.now() };
+        delete eqCarregando[u];
+        depois();
+      }, function(){
+        eqCache[u] = { dias:{}, quando:Date.now(), erro:true };
+        delete eqCarregando[u];
+        depois();
+      });
+    });
+    return faltam.every(function(u){ return eqCache[u] && eqCache[u].velho; });   // dados antigos ainda servem
+  }
+
   var hjFiltro = "todos";        // filtro da lista de entregas do Hoje
   var buscaTermo = "";           // busca global do topo
   var dataVideo = isoToday();
@@ -3967,6 +4498,9 @@
 
   // devolve os três filtros ao estado inicial e atualiza os controles na tela
   function limparFiltros(){
+    [fxH, fxA, fxC, fxEh].forEach(function(st){ fxZerar(st, st === fxEh); });
+    if(anoAtivo !== new Date().getFullYear()){ fxH.per = "tudo"; fxEh.per = "tudo"; }
+    if(typeof fxPintarTodos === "function") fxPintarTodos();
     filters.de = ""; filters.ate = ""; filters.nome = ""; filters.cliente = ""; filters.kind = "todos";
     calFiltro = { nome:"", cliente:"", kind:"todos" };
     arqFiltro = { period:"tudo", de:"", ate:"", kind:"todos", nome:"", cliente:"" };
@@ -4857,21 +5391,12 @@
   }
 
   function rangeDates(){
-    var fim = fimVisivel(dias());
-    if(buscaTermo.trim()) return { de: anoAtivo + "-01-01", ate: fim > anoAtivo + "-12-31" ? anoAtivo + "-12-31" : fim };
-    var de, ate = fim;
-    if(filters.de || filters.ate){
-      de = filters.de || "1900-01-01";
-      ate = filters.ate || fim;
-      return { de:de, ate:ate };
-    }
-    if(filters.period === "tudo"){
-      var all = dias();
-      de = all.length ? all[all.length-1] : isoToday();
-    } else {
-      de = toISO(addDays(new Date(), -(parseInt(filters.period,10)-1)));
-    }
+    var lista = dias(), fim = fimVisivel(lista);
     var limDe = anoAtivo + "-01-01", limAte = anoAtivo + "-12-31";
+    if(buscaTermo.trim()) return { de: limDe, ate: fim > limAte ? limAte : fim };
+    var p = fxPeriodo(fxH, { min: lista.length ? lista[lista.length - 1] : isoToday(), max: fim });
+    var de = p.de, ate = p.ate;
+    if(fxH.per === "tudo" && fim > ate) ate = fim;
     if(de < limDe) de = limDe;
     if(ate > limAte) ate = limAte;
     return { de:de, ate:ate };
@@ -4879,30 +5404,22 @@
 
   function filteredDays(){
     var r = rangeDates();
-    var tn = filters.nome.trim().toLowerCase();
-    var tc = filters.cliente.trim().toLowerCase();
-    var tb = buscaTermo.trim().toLowerCase();
+    var tb = buscaTermo.trim();
+    var detalhe = fxDetalhe(fxH) || fxH.clientes.length || !!tb;
     var out = [];
     dias().forEach(function(iso){
       if(iso < r.de || iso > r.ate) return;
       var d = ativo(iso);
-      var v = filters.kind === "alteracao" ? [] : d.videos;
-      var a = filters.kind === "video" ? [] : d.alteracoes;
-      if(filters.kind === "claude"){ v = v.filter(function(x){ return !!x.cl; }); a = a.filter(function(x){ return !!x.cl; }); }
-      if(tn || tc || tb){
-        var m = function(x){
-          var okN = !tn || filtraTexto(x.titulo, tn);
-          var okC = !tc || filtraCliente(x.ref, tc);
-          var okB = !tb || filtraTexto(x.titulo, tb) || filtraCliente(x.ref, tb);
-          return okN && okC && okB;
-        };
-        v = v.filter(m); a = a.filter(m);
-      }
+      var m = function(k){ return function(x){
+        if(!fxPassa(fxH, k, x)) return false;
+        return !tb || filtraTexto(x.titulo, tb) || filtraCliente(x.ref, tb);
+      }; };
+      var v = d.videos.filter(m("video")), a = d.alteracoes.filter(m("alteracao"));
       if(v.length || a.length) out.push({ iso:iso, videos:v, alteracoes:a });
     });
 
     // folga e observação também são informação do dia, mesmo sem registro
-    if(!tn && !tc && !tb && filters.kind === "todos"){
+    if(!detalhe){
       Object.keys(data).forEach(function(iso){
         if(!noAno(iso) || iso < r.de || iso > r.ate) return;
         if(!diaMarcado(iso)) return;
@@ -4989,14 +5506,7 @@
     var totV = 0, totA = 0;
     days.forEach(function(d){ totV += d.videos.length; totA += d.alteracoes.length; });
 
-    var ativos = 0;
-    if(filters.de || filters.ate) ativos++;
-    if(filters.kind !== "todos") ativos++;
-    if(filters.nome.trim()) ativos++;
-    if(filters.cliente.trim()) ativos++;
-    var tag = document.getElementById("filtrosTag");
-    tag.hidden = ativos === 0;
-    tag.textContent = ativos + (ativos === 1 ? " ativo" : " ativos");
+    if(FXC.h){ FXC.h.pintar(); FXC.h.total(fxTotalTxt(totV, totA)); }
 
     var comRegistro = days.filter(function(d){ return d.videos.length || d.alteracoes.length; }).length;
     document.getElementById("trackCap").textContent =
@@ -5054,12 +5564,12 @@
     var list = document.getElementById("historyList");
     list.innerHTML = "";
     if(!days.length){
-      list.innerHTML = '<div class="daycard"><div class="empty">Nada encontrado. Tente ampliar o período ou limpar a busca.</div></div>';
+      list.innerHTML = '<div class="daycard"><div class="empty">Nada encontrado com esses filtros. Tente outro período ou tire algum filtro.</div></div>';
       return;
     }
     var bt = buscaTermo.trim();
-    var term = { n: filters.nome.trim() || bt, c: filters.cliente.trim() || bt };
-    var forceOpen = (term.n + term.c).length > 0;
+    var term = { n: bt, c: bt };
+    var forceOpen = bt.length > 0 || fxDetalhe(fxH) || fxH.clientes.length > 0;
 
     var maisRecente = days[0].iso;
     days.forEach(function(d){
@@ -5191,8 +5701,6 @@
   }
 
   function porDataDoVideo(){
-    var fn = calFiltro.nome.trim().toLowerCase();
-    var fc = calFiltro.cliente.trim().toLowerCase();
 
     // um card por vídeo: o registro original e suas alterações viram o mesmo item
     var bruto = {};
@@ -5239,11 +5747,15 @@
         g.alteracoes = g.regs.filter(function(r){ return r.k === "alteracao"; }).length;
         return g;
       }).filter(function(g){
-        if(calFiltro.kind === "video" && g.dem) return false;
-        if(calFiltro.kind === "demanda" && !g.dem) return false;
-        if(calFiltro.kind === "claude" && !g.cl) return false;
-        if(fn && !filtraTexto(g.item.titulo, fn)) return false;
-        if(fc && !filtraCliente(g.item.ref, fc)) return false;
+        if(fxC.dem === "sim" && !g.dem) return false;
+        if(fxC.dem === "nao" && g.dem) return false;
+        if(fxC.cl === "sim" && !g.cl) return false;
+        if(fxC.cl === "nao" && g.cl) return false;
+        if(fxC.tipo === "alteracao" && !g.alteracoes) return false;
+        if(fxC.tipo === "video" && g.alteracoes) return false;
+        if(!fxCliOk(fxC.clientes, g.item.ref)) return false;
+        var bc = fxC.busca.trim();
+        if(bc && !(filtraTexto(g.item.titulo, bc) || filtraCliente(g.item.ref, bc))) return false;
         return true;
       });
 
@@ -5334,9 +5846,7 @@
       demMes += doDia.filter(function(g){ return g.dem; }).length;
     }
     var ativosCal = 0;
-    if(calFiltro.nome.trim()) ativosCal++;
-    if(calFiltro.cliente.trim()) ativosCal++;
-    if(calFiltro.kind !== "todos") ativosCal++;
+    if(FXC.c){ FXC.c.pintar(); FXC.c.total(totalMes ? totalMes + (totalMes === 1 ? " vídeo neste mês" : " vídeos neste mês") : "Nenhum vídeo neste mês"); }
     var tagCal = document.getElementById("calFiltrosTag");
     tagCal.hidden = ativosCal === 0;
     tagCal.textContent = ativosCal + (ativosCal === 1 ? " ativo" : " ativos");
@@ -5523,16 +6033,10 @@
 
   /* ---------- arquivados ---------- */
   function rangeArq(){
-    var fim = fimVisivel(diasArq());
-    var de, ate = fim;
-    if(arqFiltro.de || arqFiltro.ate){
-      de = arqFiltro.de || "1900-01-01";
-      ate = arqFiltro.ate || fim;
-    } else if(arqFiltro.period === "tudo"){
-      de = "1900-01-01";
-    } else {
-      de = toISO(addDays(new Date(), -(parseInt(arqFiltro.period,10) - 1)));
-    }
+    var lista = diasArq(), fim = fimVisivel(lista);
+    var p = fxPeriodo(fxA, { min: lista.length ? lista[lista.length - 1] : isoToday(), max: fim });
+    var de = p.de, ate = p.ate;
+    if(fxA.per === "tudo"){ de = "1900-01-01"; ate = fim; }
     var limDe = anoAtivo + "-01-01", limAte = anoAtivo + "-12-31";
     if(de < limDe) de = limDe;
     if(ate > limAte) ate = limAte;
@@ -5540,8 +6044,6 @@
   }
 
   function renderArquivados(){
-    var tn = arqFiltro.nome.trim().toLowerCase();
-    var tc = arqFiltro.cliente.trim().toLowerCase();
     var r = rangeArq();
     var list = document.getElementById("arqList");
     list.innerHTML = "";
@@ -5549,30 +6051,15 @@
     var linhas = [], totV = 0, totA = 0;
     diasArq().forEach(function(iso){
       if(iso < r.de || iso > r.ate) return;
-      var v = arqFiltro.kind === "alteracao" ? [] : arqOf(day(iso).videos);
-      var a = arqFiltro.kind === "video" ? [] : arqOf(day(iso).alteracoes);
-      if(tn || tc){
-        var m = function(x){
-          var okN = !tn || filtraTexto(x.titulo, tn);
-          var okC = !tc || filtraCliente(x.ref, tc);
-          return okN && okC;
-        };
-        v = v.filter(m); a = a.filter(m);
-      }
+      var v = arqOf(day(iso).videos).filter(function(x){ return fxPassa(fxA, "video", x); });
+      var a = arqOf(day(iso).alteracoes).filter(function(x){ return fxPassa(fxA, "alteracao", x); });
       if(v.length || a.length){
         linhas.push({ iso:iso, videos:v, alteracoes:a });
         totV += v.length; totA += a.length;
       }
     });
-
-    var ativos = 0;
-    if(arqFiltro.de || arqFiltro.ate) ativos++;
-    if(arqFiltro.kind !== "todos") ativos++;
-    if(tn) ativos++;
-    if(tc) ativos++;
-    var tag = document.getElementById("arqFiltrosTag");
-    tag.hidden = ativos === 0;
-    tag.textContent = ativos + (ativos === 1 ? " ativo" : " ativos");
+    var ativos = fxAtivos(fxA) + (fxA.busca.trim() ? 1 : 0) + (fxA.per !== "tudo" ? 1 : 0);
+    if(FXC.a){ FXC.a.pintar(); FXC.a.total(diasArq().length ? fxTotalTxt(totV, totA) : ""); }
 
     document.getElementById("arqResumo").textContent = linhas.length
       ? totV + (totV === 1 ? " vídeo e " : " vídeos e ") + totA +
@@ -5589,8 +6076,8 @@
       return;
     }
 
-    var term = { n: arqFiltro.nome.trim(), c: arqFiltro.cliente.trim() };
-    var forceOpen = (term.n + term.c).length > 0;
+    var term = { n: fxA.busca.trim(), c: fxA.busca.trim() };
+    var forceOpen = !!term.n || fxDetalhe(fxA) || fxA.clientes.length > 0;
     linhas.forEach(function(d){
       list.appendChild(dayCard(d, term, expandedArq, forceOpen, "a-", false));
     });
@@ -5681,6 +6168,10 @@
         de = toISO(new Date(y, m - 1, 1)); ate = fimDoMes(y, m - 1);
         ant = { de: toISO(new Date(y, m - 2, 1)), ate: fimDoMes(y, m - 2) };
         rot = monthName(de.slice(0, 7)); comp = "vs mês anterior"; break;
+      case "7":
+        ate = isoToday(); de = toISO(addDays(hoje, -6));
+        ant = { de: toISO(addDays(hoje, -13)), ate: toISO(addDays(hoje, -7)) };
+        rot = "Últimos 7 dias"; comp = "vs 7 dias anteriores"; break;
       case "30":
         ate = isoToday(); de = toISO(addDays(hoje, -29));
         ant = { de: toISO(addDays(hoje, -59)), ate: toISO(addDays(hoje, -30)) };
@@ -5907,7 +6398,22 @@
     return t;
   }
 
-  function renderResumo(){ renderPainel("rs", registrosPessoais(), rsFiltro, false); }
+  function renderResumo(){
+    var itens = itensPessoais(false).filter(function(it){ return fxPassa(fxR, it.k, it.x); });
+    var t = renderPainel("rs", regsDeItens(itens), { per:fxR.per, de:fxR.de, ate:fxR.ate, cliente:"" }, false);
+    if(FXC.r){ FXC.r.pintar(); FXC.r.total(fxTotalTxt(t.v, t.a) + " no período"); }
+    fxCapResumo("rs", fxR);
+  }
+  // texto do topo do resumo lembra os filtros ligados
+  function fxCapResumo(px, st){
+    var extra = [];
+    ["tipo","dem","cl","post"].forEach(function(g){ if(st[g] !== "todos") extra.push(FX_GRUPOS[g].pill[st[g]].toLowerCase()); });
+    if(st.clientes.length) extra.push(st.clientes.length === 1 ? "cliente: " + st.clientes[0] : st.clientes.length + " clientes");
+    if((st.busca || "").trim()) extra.push("busca: “" + st.busca.trim() + "”");
+    if(!extra.length) return;
+    var cap = document.getElementById(px + "Cap");
+    if(cap) cap.innerHTML += " · " + esc(extra.join(" · "));
+  }
 
   function renderEquipe(){
     var aviso = document.getElementById("eqAviso"), pill = document.getElementById("eqPill");
@@ -5915,7 +6421,18 @@
     if(!NUVEM) msg = "O resumo da equipe aparece no app instalado, com login.";
     else if(nv.equipeErro) msg = "Não consegui ler o resumo da equipe. Confira se as regras novas do Firestore foram publicadas no Firebase.";
     aviso.hidden = !msg; aviso.textContent = msg;
-    var t = renderPainel("eq", registrosEquipe(), eqFiltro, true);
+    var regs, carregando = false;
+    if(fxDetalhe(fxE)){
+      var uids = (fxE.eds.length ? fxE.eds : ehEditores().map(function(e){ return e.uid; }));
+      var pronto = eqGarantir(uids, function(){ if(tab === "equipe" && eqVisao === "resumo") renderEquipe(); });
+      carregando = !pronto;
+      var itens = [];
+      uids.forEach(function(u){ itensDoEditor(u).forEach(function(it){ if(fxPassa(fxE, it.k, it.x, it.uid)) itens.push(it); }); });
+      regs = regsDeItens(itens);
+    } else regs = regsEquipeFiltrados(fxE);
+    var t = renderPainel("eq", regs, { per:fxE.per, de:fxE.de, ate:fxE.ate, cliente:"" }, true);
+    if(FXC.e){ FXC.e.pintar(); FXC.e.total(carregando ? "Carregando os registros dos editores..." : fxTotalTxt(t.v, t.a) + " no período"); }
+    fxCapResumo("eq", fxE);
     pill.textContent = eq ? t.editores + (t.editores === 1 ? " editor com registro" : " editores com registro") : (msg ? "Indisponível" : "Carregando");
   }
 
@@ -6814,101 +7331,91 @@
   }
 
   function ehEscolher(uid){
-    eh.uid = uid; eh.dados = null; eh.erro = false; eh.abertos = {};
-    var ed = ehEditores().filter(function(e){ return e.uid === uid; })[0];
-    document.getElementById("ehEdValor").textContent = ed ? ed.nome : "Escolha um editor";
-    ehCarregar();
+    fxEh.eds = uid ? [uid] : [];
+    eh.abertos = {};
+    renderEhLista();
   }
-
-  function ehCarregar(){
-    if(!eh.uid || !window.__FB || !window.__FB.historicoDe){ renderEhLista(); return; }
-    var pedido = ++eh.pedido;
-    eh.carregando = true; renderEhLista();
-    window.__FB.historicoDe(eh.uid).then(function(meses){
-      if(pedido !== eh.pedido) return;
-      var dados = {};
-      Object.keys(meses || {}).forEach(function(ym){
-        var dias = (meses[ym] && meses[ym].dias) || {};
-        Object.keys(dias).forEach(function(iso){ dados[iso] = dias[iso]; });
-      });
-      eh.dados = dados; eh.carregando = false; eh.erro = false;
-      renderEhLista();
-    }, function(){
-      if(pedido !== eh.pedido) return;
-      eh.carregando = false; eh.erro = true; eh.dados = null;
-      renderEhLista();
-    });
-  }
+  function ehCarregar(){ renderEhLista(); }
 
   function ehVis(arr){ return (arr || []).filter(function(x){ return x && !x.arq; }); }
 
-  function ehDias(){
-    var dados = eh.dados || {}, ano = String(anoAtivo), hoje = isoToday();
-    var de = "0000-00-00";
-    if(eh.period !== "tudo") de = toISO(addDays(new Date(hoje + "T12:00:00"), -(parseInt(eh.period, 10) - 1)));
-    var tn = eh.nome.trim(), tc = eh.cliente.trim(), out = [];
-    Object.keys(dados).forEach(function(iso){
-      if(!/^\d{4}-\d{2}-\d{2}$/.test(iso) || iso.slice(0,4) !== ano || iso < de) return;
-      var d = dados[iso] || {};
-      var v = eh.kind === "alteracao" ? [] : ehVis(d.videos);
-      var a = eh.kind === "video" ? [] : ehVis(d.alteracoes);
-      if(eh.kind === "claude"){ v = v.filter(function(x){ return !!x.cl; }); a = a.filter(function(x){ return !!x.cl; }); }
-      if(tn || tc){
-        var m = function(x){ return (!tn || filtraTexto(x.titulo || "", tn)) && (!tc || filtraCliente(x.ref, tc)); };
-        v = v.filter(m); a = a.filter(m);
-      }
-      if(v.length || a.length) out.push({ iso:iso, videos:v, alteracoes:a, nota:typeof d.nota === "string" ? d.nota : "", folga:!!d.folga || fimDeSemana(iso) });
+  function ehDias(uids){
+    var itens = [];
+    uids.forEach(function(u){ itensDoEditor(u).forEach(function(it){ itens.push(it); }); });
+    var lim = limitesDe(itens.map(function(it){ return { iso:it.iso }; }));
+    var p = fxPeriodo(fxEh, lim);
+    var de = p.de, ate = p.ate, ano = String(anoAtivo);
+    if(fxEh.per === "tudo"){ de = "0000-00-00"; ate = "9999-12-31"; }
+    var mapa = {};
+    itens.forEach(function(it){
+      if(it.iso.slice(0,4) !== ano || it.iso < de || it.iso > ate) return;
+      if(!fxPassa(fxEh, it.k, it.x, it.uid)) return;
+      var d = mapa[it.iso] || (mapa[it.iso] = { iso:it.iso, videos:[], alteracoes:[] });
+      var item = Object.assign({}, it.x, { __uid: it.uid });
+      (it.k === "video" ? d.videos : d.alteracoes).push(item);
     });
-    return out.sort(function(x, y){ return x.iso < y.iso ? 1 : -1; });
+    return Object.keys(mapa).map(function(k){ return mapa[k]; }).sort(function(x, y){ return x.iso < y.iso ? 1 : -1; });
   }
 
-  function ehItem(item, idx, term){
+  function ehItem(item, idx, term, nomes){
     var li = document.createElement("li");
     li.className = "item leitura";
     var box = document.createElement("div");
     box.className = "abrir";
-    box.appendChild(spanEl("n", idx + 1));
-    var t = document.createElement("span");
-    t.className = "title";
-    t.innerHTML = highlight(item.titulo || "", term.n);
-    box.appendChild(t);
-    if(item.dem){ var de = document.createElement("span"); de.className = "dem"; de.innerHTML = ICON_CHECK + "<b>Demanda</b>"; box.appendChild(de); }
-    if(item.cl){ var ie = document.createElement("span"); ie.className = "ia"; ie.innerHTML = ICON_IA + "<b>Claude</b>"; box.appendChild(ie); }
-    if(item.dt){ var dt = document.createElement("span"); dt.className = "dt"; dt.innerHTML = ICON_CAL + "<b>" + shortDate(item.dt) + "</b>"; box.appendChild(dt); }
-    if(item.ref){ var r = document.createElement("span"); r.className = "ref"; r.innerHTML = highlight(item.ref, term.c); box.appendChild(r); }
+    var alt = !!item.__alt;
+    box.innerHTML = '<span class="tile ' + (alt ? "t-alt" : "t-vid") + '">' + (alt ? ICON_ALTE : ICON_VID) + '</span>';
+    var corpo = document.createElement("span");
+    corpo.className = "corpo";
+    var meta = [];
+    if(item.ref) meta.push('<span class="ref">' + highlight(item.ref, term.c) + '</span>');
+    if(item.dt) meta.push('<span class="dt">' + ICON_CAL + '<b>Posta em ' + shortDate(item.dt) + '</b></span>');
+    corpo.innerHTML = '<span class="title">' + highlight(item.titulo || "", term.n) + '</span>' +
+      '<span class="meta">' + (meta.length ? meta.join('<span class="ponto"></span>') : '<span class="sem-info">Sem cliente e sem data</span>') + '</span>';
+    box.appendChild(corpo);
+    var tags = document.createElement("span");
+    tags.className = "tags";
+    if(nomes && nomes[item.__uid]){
+      var e = nomes[item.__uid];
+      tags.innerHTML += '<span class="quem">' + avatarHTML(e.nome, e.foto) + '<b>' + esc(e.nome.split(/\s+/)[0]) + '</b></span>';
+    }
+    if(item.dem) tags.innerHTML += '<span class="dem">' + ICON_CHECK + '<b>Demanda</b></span>';
+    if(item.cl) tags.innerHTML += '<span class="ia">' + ICON_IA + '<b>Claude</b></span>';
+    if(tags.innerHTML) box.appendChild(tags);
     li.appendChild(box);
     return li;
   }
 
-  function ehGrupo(titulo, arr, alt, term){
+  function ehGrupo(titulo, arr, alt, term, nomes){
     var g = document.createElement("div");
     g.className = "group" + (alt ? " alt" : "");
     g.innerHTML = '<h2><i></i>' + esc(titulo) + ' <em>' + arr.length + '</em></h2>';
     var ul = document.createElement("ul");
     ul.className = "items";
-    arr.forEach(function(it, i){ ul.appendChild(ehItem(it, i, term)); });
+    arr.forEach(function(it, i){ if(alt) it.__alt = true; ul.appendChild(ehItem(it, i, term, nomes)); });
     g.appendChild(ul);
     return g;
   }
 
-  function ehCard(d, term, aberto){
+  function ehCard(d, term, aberto, nomes){
     var rel = relative(d.iso);
     var card = document.createElement("div");
     card.className = "daycard";
     var head = document.createElement("button");
     head.className = "dayhead";
     head.setAttribute("aria-expanded", aberto ? "true" : "false");
+    var quem = {};
+    d.videos.concat(d.alteracoes).forEach(function(x){ quem[x.__uid] = 1; });
+    var nq = Object.keys(quem).length;
     head.innerHTML = '<span class="chev">▶</span><span class="dayname">' + esc(longDate(d.iso)) + '</span>' +
       '<span class="tally">' + d.videos.length + (d.videos.length === 1 ? " vídeo" : " vídeos") + ", " +
       d.alteracoes.length + (d.alteracoes.length === 1 ? " alteração" : " alterações") + '</span>' +
-      (d.folga ? '<span class="marca">Folga</span>' : '') + (d.nota ? '<span class="marca nota">obs</span>' : '') +
+      (nomes && nq > 1 ? '<span class="marca">' + nq + ' editores</span>' : '') +
       '<span class="spacer"></span>' + (rel ? '<span class="tally">' + rel + '</span>' : '');
     var body = document.createElement("div");
     body.className = "daybody";
     body.hidden = !aberto;
-    if(d.nota){ var pn = document.createElement("p"); pn.className = "daynota"; pn.innerHTML = "<b>Observação</b>" + esc(d.nota); body.appendChild(pn); }
-    if(d.videos.length) body.appendChild(ehGrupo("Vídeos", d.videos, false, term));
-    if(d.alteracoes.length) body.appendChild(ehGrupo("Alterações", d.alteracoes, true, term));
+    if(d.videos.length) body.appendChild(ehGrupo("Vídeos", d.videos, false, term, nomes));
+    if(d.alteracoes.length) body.appendChild(ehGrupo("Alterações", d.alteracoes, true, term, nomes));
     head.addEventListener("click", function(){
       var abrir = body.hidden;
       body.hidden = !abrir;
@@ -6921,41 +7428,35 @@
   }
 
   function renderEhLista(){
-    var lista = document.getElementById("ehLista"), cap = document.getElementById("ehCap"), aviso = document.getElementById("ehAviso");
+    var lista = document.getElementById("ehLista"), aviso = document.getElementById("ehAviso");
     lista.innerHTML = ""; aviso.hidden = true;
-    var ativos = (eh.period !== "30" ? 1 : 0) + (eh.kind !== "todos" ? 1 : 0) + (eh.nome.trim() ? 1 : 0) + (eh.cliente.trim() ? 1 : 0);
-    var tag = document.getElementById("ehFiltrosTag");
-    tag.hidden = !ativos; tag.textContent = ativos + (ativos === 1 ? " ativo" : " ativos");
-    var ed = ehEditores().filter(function(e){ return e.uid === eh.uid; })[0];
-    if(ed) document.getElementById("ehEdValor").textContent = ed.nome;
-
-    if(!NUVEM){ cap.textContent = "O histórico dos editores aparece no app instalado, com login."; return; }
-    if(!eh.uid){
-      var qtd = ehEditores().length;
-      cap.textContent = qtd ? "Escolha um editor para ver o histórico de registros dele." : "Nenhum editor com registros ainda. Cada editor aparece aqui depois de abrir o app atualizado.";
-      return;
-    }
-    if(eh.carregando){ cap.textContent = "Carregando o histórico de " + (ed ? ed.nome : "editor") + "..."; return; }
-    if(eh.erro){
-      cap.textContent = "";
+    if(FXC.eh) FXC.eh.pintar();
+    function total(t){ if(FXC.eh) FXC.eh.total(t); }
+    if(!NUVEM){ total(""); lista.innerHTML = '<div class="daycard"><div class="empty" style="margin:16px">O histórico da equipe aparece no app instalado, com login.</div></div>'; return; }
+    var eds = ehEditores();
+    if(!eds.length){ total(""); lista.innerHTML = '<div class="daycard"><div class="empty" style="margin:16px">Nenhum editor com registros ainda. Cada editor aparece aqui depois de abrir o app atualizado.</div></div>'; return; }
+    var uids = fxEh.eds.length ? fxEh.eds.filter(function(u){ return eds.some(function(e){ return e.uid === u; }); }) : eds.map(function(e){ return e.uid; });
+    var pronto = eqGarantir(uids, function(){ if(tab === "equipe" && eqVisao === "historico") renderEhLista(); });
+    if(!pronto){ total("Carregando os registros dos editores..."); return; }
+    var comErro = uids.filter(function(u){ return eqCache[u] && eqCache[u].erro; });
+    if(comErro.length){
       aviso.hidden = false;
-      aviso.textContent = "Não consegui abrir o histórico desse editor. Confira se as regras novas do Firestore foram publicadas no Firebase.";
+      aviso.textContent = "Não consegui abrir o histórico de " + (comErro.length === 1 ? "um editor" : comErro.length + " editores") + ". Confira se as regras do Firestore foram publicadas no Firebase.";
+    }
+    var nomes = null;
+    if(uids.length > 1){ nomes = {}; eds.forEach(function(e){ nomes[e.uid] = e; }); }
+    var diasEh = ehDias(uids), totV = 0, totA = 0;
+    diasEh.forEach(function(d){ totV += d.videos.length; totA += d.alteracoes.length; });
+    total(fxTotalTxt(totV, totA));
+    if(!diasEh.length){
+      lista.innerHTML = '<div class="daycard"><div class="empty" style="margin:16px">Nenhum registro encontrado com esses filtros. Tente outro período ou tire algum filtro.</div></div>';
       return;
     }
-    var dias = ehDias(), totV = 0, totA = 0;
-    dias.forEach(function(d){ totV += d.videos.length; totA += d.alteracoes.length; });
-    var periodoTxt = eh.period === "tudo" ? "em " + anoAtivo : "nos últimos " + eh.period + " dias";
-    cap.textContent = dias.length
-      ? totV + (totV === 1 ? " vídeo" : " vídeos") + " e " + totA + (totA === 1 ? " alteração" : " alterações") + " " + periodoTxt + ", em " + dias.length + (dias.length === 1 ? " dia." : " dias.")
-      : "";
-    if(!dias.length){
-      lista.innerHTML = '<div class="daycard"><div class="empty" style="margin:16px">Nenhum registro encontrado ' + esc(periodoTxt) + '. Tente o período "Tudo" ou limpe os filtros.</div></div>';
-      return;
-    }
-    var term = { n:eh.nome.trim(), c:eh.cliente.trim() }, forcar = !!(term.n || term.c);
-    dias.forEach(function(d, i){
+    var bt = fxEh.busca.trim();
+    var term = { n:bt, c:bt }, forcar = !!bt || fxDetalhe(fxEh) || fxEh.clientes.length > 0;
+    diasEh.forEach(function(d, i){
       var aberto = forcar || eh.abertos[d.iso] === true || (eh.abertos[d.iso] === undefined && i === 0);
-      lista.appendChild(ehCard(d, term, aberto));
+      lista.appendChild(ehCard(d, term, aberto, nomes));
     });
     requestAnimationFrame(compactarItens);
   }
@@ -8594,6 +9095,7 @@
     if(!window.__FB || !window.__FB.equipeOuvir) return;
     nv.unsubs.push(window.__FB.equipeOuvir(function(mapa){
       nv.equipe = mapa; nv.equipeErro = false;
+      Object.keys(eqCache).forEach(function(u){ if(eqCache[u]) eqCache[u].velho = true; });
       if(tab === "equipe") RENDER.equipe(); else sujo.equipe = true;
     }, function(){
       nv.equipeErro = true;
@@ -8820,6 +9322,7 @@
     nv.db = null; nv.pronto = false; nv.equipe = null; nv.eqJSON = null; nv.equipeErro = false;
     notifDesligar();
     eh.uid = ""; eh.dados = null; eh.abertos = {};
+    eqCache = {}; eqCarregando = {}; fxEh.eds = []; fxE.eds = [];
     var ehv = document.getElementById("ehEdValor"); if(ehv) ehv.textContent = "Escolha um editor";
   }
   function limparAparelho(){
@@ -8947,6 +9450,34 @@
 
   renderArquivo();
   applyTheme(document.documentElement.getAttribute("data-theme") || "light");
+
+  /* ================= v18: monta os filtros de cada tela ================= */
+  (function(){
+    function clientesMeus(){ return fxContarCli(itensPessoais(false)); }
+    function clientesArq(){ return fxContarCli(itensPessoais(true)); }
+    function clientesEquipe(){
+      var m = {};
+      registrosEquipe().forEach(function(r){ Object.keys(r.c).forEach(function(n){ m[n] = (m[n] || 0) + r.c[n].v + r.c[n].a; }); });
+      itensPessoais(false).forEach(function(it){ if(it.x.ref){ var n = clientePadrao(it.x.ref) || String(it.x.ref).trim(); if(!(n in m)) m[n] = 1; } });
+      return Object.keys(m).map(function(n){ return { nome:n, n:m[n] }; }).sort(function(a, b){ return b.n - a.n || a.nome.localeCompare(b.nome, "pt-BR"); });
+    }
+    FXC.h = fxMontar("fxHist", fxH, { per:true, clientes:clientesMeus, onChange:function(){ expanded = {}; RENDER.historico(); requestAnimationFrame(compactarItens); } });
+    FXC.a = fxMontar("fxArq", fxA, { per:true, clientes:clientesArq, busca:"Buscar nos arquivados", onChange:function(){ renderArquivados(); requestAnimationFrame(compactarItens); } });
+    FXC.c = fxMontar("fxCal", fxC, { per:false, clientes:clientesMeus, busca:"Buscar vídeo no calendário", grupos:["dem","cl"], rotulos:{ tipo:{ alteracao:"Com alteração", video:"Sem alteração" } }, onChange:function(){ renderCalendario(); } });
+    FXC.r = fxMontar("fxRs", fxR, { per:true, clientes:clientesMeus, busca:"Buscar por nome do vídeo", onChange:function(){ renderResumo(); } });
+    FXC.e = fxMontar("fxEq", fxE, { per:true, clientes:clientesEquipe, busca:"Buscar por nome do vídeo", editores:ehEditores, onChange:function(){ renderEquipe(); } });
+    FXC.eh = fxMontar("fxEh", fxEh, { per:true, clientes:clientesEquipe, busca:"Buscar vídeo ou cliente", editores:ehEditores, onChange:function(){ eh.abertos = {}; renderEhLista(); } });
+    // no calendário, o filtro "Tipo" vira "com ou sem alteração"
+    try{
+      var segC = document.querySelector("#fxCal .fx-mais");
+      if(segC){
+        segC.insertAdjacentHTML("afterbegin", '<div class="fx-grupo"><span class="fx-grot">Alterações</span><div class="fx-seg" data-g="tipo"><button type="button" data-v="todos">Tanto faz</button><button type="button" data-v="alteracao">Com alteração</button><button type="button" data-v="video">Sem alteração</button></div></div>');
+        FXC.c.pintar();
+      }
+    }catch(e){}
+    sujo.historico = true; sujo.arquivados = true; sujo.calendario = true; sujo.resumo = true; sujo.equipe = true;
+    if(RENDER[tab]){ RENDER[tab](); sujo[tab] = false; }
+  })();
 
   /* ================= v17: menu lateral, busca, celular e guia ================= */
   (function(){
